@@ -2,3 +2,4 @@ venv/
 webscrapper/scrapper.log
 webscrapper/browser.log
 BDD/bdd.log
+config/Variables/variables.py
