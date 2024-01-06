@@ -6,16 +6,6 @@
 sudo apt update -y
 sudo apt install git -y
 
-# Confirm the installation
-if command -v git > /dev/null; then
-    echo "Git installé avec succès."
-else
-    echo "L'installation de Git a échoué."
-    exit 1
-fi
-
-git clone https://github.com/Recitasse/OncheDATA.git
-
 # ========================================
 # Install python3.11
 sudo apt-get install python3.11
@@ -65,10 +55,10 @@ GLOBAL_PATH = "${installation_path}/"
 
 # Mysql
 SAVE_FREQUENCY = 10
-MYSQL_USER = 'onche'
-MYSQL_PASSWORD = 'OnchePass1#'
-MYSQL_DATABASE = 'Onche'
-MYSQL_HOST = 'localhost'
+MYSQL_USER = '${MYSQL_USER}'
+MYSQL_PASSWORD = '${MYSQL_PASSWORD}'
+MYSQL_DATABASE = '${MYSQL_DATABASE}'
+MYSQL_HOST = '${MYSQL_HOST}'
 MYSQL_PATH_EXPORT = GLOBAL_PATH + "BDD/exports/"
 
 # Encryption
