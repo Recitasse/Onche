@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forums>
+  <forum name="blabla general" id="1">
+    <profile json_link="">False</profile>
+    <topics type="array">
+       <topic>https://onche.org/topic/18435/topic-de-moderation-de-onche</topic>
+       <topic>https://onche.org/topic/1/a-lire-regles-du-forum</topic>
+    </topics>
+  </forum>
+  <forum name="suggestions reclamations" id="2">
+    <profile json_link="">False</profile>
+    <topics type="array">
+       <topic>https://onche.org/topic/34982/to-do</topic>
+    </topics>
+  </forum>
+  <forum name="plus de 18 an" id="3">
+    <profile json_link="">True</profile>
+    <topics type="array">
+       <topic>a lire les limites du forum plus de 18 ans</topic>
+       <topic>topic de moderation pour le 18</topic>
+       <topic>le vieux qui pisse dans un seau</topic>
+    </topics>
+  </forum>
+  <forum name="goulag" id="4">
+    <profile json_link="">False</profile>
+    <topics type="array">
+       <topic>demande de sortie du goulag</topic>
+       <topic>ouin ouin pourquoi je suis ici</topic>
+    </topics>
+  </forum>
+  <forum name="forums des anciens" id="5">
+    <profile json_link="">True</profile>
+    <topics type="array">
+       <topic>a lire regles du forum des anciens</topic>
+       <topic>ici on compile les topics qualitatifs du blabla general</topic>
+    </topics>
+  </forum>
+  <forum name="moderation" id="6">
+    <profile json_link="">True</profile>
+  </forum>
+  <forum name="finance crypto" id="7">
+    <profile json_link="">False</profile>
+    <topics>
+       <topic>https://onche.org/topic/37691/topic-de-moderation-du-forum-finance-crypto</topic>
+       <topic>https://onche.org/topic/31801/a-lire-les-regles-du-forum-finance-crypto</topic>
+    </topics>
+  </forum>
+  <forum name="jeux video" id="8">
+    <profile json_link="">False</profile>
+    <topics>
+       <topic>https://onche.org/topic/48766/topic-de-moderation-du-forum-jeux-video</topic>
+    </topics>
+  </forum>
+  <forum name="autonomie lifehack" id="9">
+    <profile json_link="">False</profile>
+    <topics>
+       <topic>https://onche.org/topic/160741/topic-de-moderation-du-lifehack</topic>
+       <topic>https://onche.org/topic/160099/bienvenue-le-forum-autonomie-lifehack</topic>
+    </topics>
+  </forum>
+</forums>
