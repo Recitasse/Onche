@@ -1,0 +1,4 @@
+venv/
+webscrapper/scrapper.log
+webscrapper/browser.log
+BDD/bdd.log
