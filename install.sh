@@ -76,4 +76,7 @@ FORUM_XML = GLOBAL_PATH + "config/forums.xml"
 BASE_URL = "https://onche.org/forum/"
 USER_AGENT = "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 8_6_7; en-US) Gecko/20100101 Firefox/70.4"
 DEFAULT_PROFILE = GLOBAL_PATH + "utils/cryptage/profile/default.json"
+
+# QUERIES
+ONHISATEUR_QUERIES = GLOBAL_PATH + "BDD/queries/onchois_analyseur/queries.json"
 EOF

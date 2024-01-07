@@ -1,0 +1,6 @@
+{
+    "info":
+    {
+        "all": "SELECT * FROM onchois WHERE onchois_id = %s"
+    }
+}
