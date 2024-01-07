@@ -11,14 +11,18 @@ from utils.cryptage.encryption import Encrypteur
 from utils.logger import logger
 
 class BrowserRequests:
-    def __init__(self, user: str, password: str, salt: str = None, profile: str = None):
+    def __init__(self, user: str, password: str, salt: str = None, profile: str = None, verbose: bool = False):
+        # public
         self.data = Encrypteur().decrypte_file(profile, salt, password)
         self.token = self.data[1]
         self.auth = HTTPBasicAuth(user, password)
         self.headers = {'Content-Type': 'application/json',
                         'Authorization': f'Bearer {self.token}'}
         self.profile = self.data[0]
-        self._logger = logger(PATH_WEB_BROWSER, "WEB")
+
+        # private
+        self._verbose = verbose
+        self._logger = logger(PATH_WEB_BROWSER, "WEB", self._verbose)
 
     def req_html(self, url: str) -> Response:
         """Renvoie la réponse d'une requête"""

@@ -1,6 +1,6 @@
 import logging
 
-def logger(output: str, name: str):
+def logger(output: str, name: str, verbose: bool):
     """Créer la fonction logger pour tout les fichiers
 
     Args:
@@ -8,7 +8,10 @@ def logger(output: str, name: str):
     """
     logger = logging.getLogger(__name__)
     logger.propagate = False
-    logger.setLevel(logging.DEBUG)
+    if verbose:
+        logger.setLevel(logging.DEBUG)
+    else:
+        logger.setLevel(logging.ERROR)
 
     # Create file handler for output to a file
     file_handler = logging.FileHandler(output)
