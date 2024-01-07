@@ -21,10 +21,26 @@ pip install --upgrade mysql-connector-python
 
 # ========================================
 # install mysql
-MYSQL_USER="onche"
+USERS=("BOT_blabla", "BOT_sugg", "BOT_pron", "BOT_goulag", "BOT_anciens", "BOT_mode", "BOT_crypto", "BOT_jv", "BOT_auto")
 MYSQL_PASSWORD="OnchePass1#"
 MYSQL_DATABASE="Onche"
 SQL_SCRIPT="BDD/install/DDBONCHE.sql"
+
+check_user_exists() {
+    sudo mysql -sse "SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = '$MYSQL_USER')"
+}
+
+for MYSQL_USER in "${USERS[@]}"; do
+    # Check if the user already exists
+    if [ $(check_user_exists "$MYSQL_USER") -eq 0 ]; then
+        sudo mysql -e "CREATE USER '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_PASSWORD';"
+        sudo mysql -e "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'localhost';"
+        sudo mysql -e "FLUSH PRIVILEGES;"
+        echo "Bot $MYSQL_USER créé avec succès."
+    else
+        echo "Bot $MYSQL_USER existe déjà."
+    fi
+done
 
 sudo apt install mysql-server
 sudo mysql < "$SQL_SCRIPT"
@@ -55,7 +71,19 @@ GLOBAL_PATH = "${installation_path}/"
 
 # Mysql
 SAVE_FREQUENCY = 10
-MYSQL_USER = '${MYSQL_USER}'
+MYSQL_USER = 'onche'
+# -- > BOT
+USERS=("BOT_blabla", "BOT_sugg", "BOT_pron", "BOT_goulag", "BOT_anciens", "BOT_mode", "BOT_crypto", "BOT_jv", "BOT_auto")
+MYSQL_BOT_BLABLA = BOT_blabla
+MYSQL_BOT_SUGG = BOT_sugg
+MYSQL_BOT_PRON = BOT_pron
+MYSQL_BOT_GOULAG = BOT_goulag
+MYSQL_BOT_ANCIENS = BOT_anciens
+MYSQL_BOT_MODE = BOT_mode
+MYSQL_BOT_CRYPTO = BOT_crypto
+MYSQL_BOT_JV = BOT_jv
+MYSQL_BOT_AUTO = BOT_auto
+# -- <
 MYSQL_PASSWORD = '${MYSQL_PASSWORD}'
 MYSQL_DATABASE = '${MYSQL_DATABASE}'
 MYSQL_HOST = '${MYSQL_HOST}'
