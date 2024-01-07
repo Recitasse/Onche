@@ -7,18 +7,26 @@ import json
 
 parent = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 sys.path.append(parent)
-print(parent)
 
 from BDD.bdd import BDD
+from config.Variables.variables import *
+
 
 class ONCHISATEUR:
-    def __init__(self, id:int=None, nom:str="") -> None:
-        self.nom = nom
-        self.id = id
+    def __init__(self, user: int | str, database: str = MYSQL_DATABASE, verbose: bool = False) -> None:
+        # public
+        if isinstance(user, str):
+            user = self._local_BDD.user_name2id(user)
 
-        # Initialisation via la base de donnée
-        query = "SELECT * FROM onchois WHERE onchois_id = %s OR onchois_nom = %s;"
-        DATA = bdd.QUERY(query, (self.id, self.nom,))
+        # private
+        self._database = database
+        self._verbose = verbose
+        self._local_BDD = BDD(user=MYSQL_USER, database=self._database, verbose=self._verbose)
+
+        # Initialisation via la base de donnée (données élémentaires)
+        query = "SELECT * FROM onchois WHERE onchois_id = %s;"
+        params = (user,)
+        DATA = self._local_BDD.QUERY(query, params)
 
         self.id = DATA[0]
         self.nom = DATA[1]
@@ -26,6 +34,8 @@ class ONCHISATEUR:
         self.age = DATA[3]
         self.QI = DATA[4]
         self.qualite = DATA[5]
+
+        # Onchois liens
         self.Lien_int = {}
         self.Lien_ext_f = {}
 
