@@ -13,7 +13,7 @@ from utils.logger import logger
 
 class BDD:
     def __init__(self, user: str = MYSQL_USER, host: str = MYSQL_HOST,
-                 mdp: str = MYSQL_PASSWORD, database: str = MYSQL_DATABASE) -> None:
+                 mdp: str = MYSQL_PASSWORD, database: str = MYSQL_DATABASE, verbose: bool = False) -> None:
 
         # public
         self.user = user
@@ -22,8 +22,9 @@ class BDD:
         self.badgeList = []
 
         # private
+        self._verbose = verbose
         self._mdp = mdp
-        self._logger = logger(PATH_BDD_LOG, "BDD")
+        self._logger = logger(PATH_BDD_LOG, "BDD", self._verbose)
 
         # connexion
         try:

@@ -15,7 +15,7 @@ from config.Variables.variables import *
 from BDD.bdd import BDD
 
 class ScrapperOnche:
-    def __init__(self, nom: str | int, pseudo: str = "Agent-PCO-001", pwd: str = "DwpNU4cs5Uaugwj", salt: str = "1kd0S", profil: str = DEFAULT_PROFILE) -> None:
+    def __init__(self, nom: str | int, BOT_agent: str = MYSQL_USER, pseudo: str = "Agent-PCO-001", pwd: str = "DwpNU4cs5Uaugwj", salt: str = "1kd0S", profil: str = DEFAULT_PROFILE, verbose: bool = False) -> None:
         
         # public
         self.forum = forum_xml(nom)
@@ -24,9 +24,11 @@ class ScrapperOnche:
         self.profile = self.forum['profile']['profile']
 
         # private
-        self._logger = logger(PATH_SCRAPPER_LOG, "SCRAPPER")
+        self._verbose = verbose
+        self._logger = logger(PATH_SCRAPPER_LOG, "SCRAPPER", self._verbose)
         self._browser = BrowserRequests(pseudo, pwd, salt, profil)
-        self.local_BDD = BDD(database=MYSQL_DATABASE)
+        self._local_BDD = BDD(database=MYSQL_DATABASE, user=BOT_agent)
+        
 
     def get_front_page_info(self, page_it:int=1) -> dict:
         """
@@ -97,19 +99,19 @@ class ScrapperOnche:
 
                 # TODO Trouvé pourquoi l'on récupère l'id et non pas le nom
                 if isinstance(nom_user, int):
-                    nom_user = self.local_BDD.user_id2name(nom_user)
-                self.local_BDD.add_user(nom_user)
+                    nom_user = self._local_BDD.user_id2name(nom_user)
+                self._local_BDD.add_user(nom_user)
                 timedelta("365j")
 
                 # le topic n'est pas dans la base de donnée
                 START = 0
                 STOP = 0
-                if not self.local_BDD.is_topic_in_bdd(lien):
+                if not self._local_BDD.is_topic_in_bdd(lien):
                     START = 0
                     STOP = 1
-                    self.local_BDD.add_topic(sujet, nom_user, nb, lien, self.forum['id'])
+                    self._local_BDD.add_topic(sujet, nom_user, nb, lien, self.forum['id'])
                 else:
-                    START, STOP = self.local_BDD.nb_mess_start_stop(sujet)
+                    START, STOP = self._local_BDD.nb_mess_start_stop(sujet)
                     self._logger.info(f"Scrappe de {sujet} de {START} à {STOP}.")
                 it = 0             
 
@@ -225,7 +227,7 @@ class ScrapperOnche:
                             liste_message['cite_state'].append(1)
                         else:
                             liste_message['cite_state'].append(0)
-                    bar_etape(STOP-START, it, f"Topic {sujet}")
+                    bar_etape(STOP-START, it, f"Topic {sujet} sur le forum {self.forum['name']}")
                     self.add_data_to_bdd(sujet, liste_message, liste_cit)
                     it+=1
                 time.sleep(1)
@@ -272,20 +274,20 @@ class ScrapperOnche:
         
         for k in range(len(liste_message['user'])):
             # Ajout de l'user (nécessaire à l'intégrité de la bdd)
-            self.local_BDD.add_user(liste_message['user'][k])
+            self._local_BDD.add_user(liste_message['user'][k])
 
             # Pour tout les badges dans badguser
             try:
                 for badge in liste_message['badguser'][k]:
-                    self.local_BDD.add_badges_users(badge, liste_message['user'][k])
+                    self._local_BDD.add_badges_users(badge, liste_message['user'][k])
             except IndexError as e:
                 self._logger.warning(f"ATTENTION : {e}")
             
             # Ajout des messages
-            self.local_BDD.add_message(user=liste_message['user'][k], topic=topic, msg=liste_message['msg'][k], toUser=liste_message['touser'][k], date=liste_message['date'][k], citation=liste_message['cite_state'][k])
+            self._local_BDD.add_message(user=liste_message['user'][k], topic=topic, msg=liste_message['msg'][k], toUser=liste_message['touser'][k], date=liste_message['date'][k], citation=liste_message['cite_state'][k])
 
         for k in range(len(liste_cit['user'])):
             # Ajout de l'user (nécessaire à l'intégrité de la bdd)
-            self.local_BDD.add_user(liste_cit['user'][k])
+            self._local_BDD.add_user(liste_cit['user'][k])
 
-            #self.local_BDD.add_message(user=liste_cit['user'][k], topic=topic, msg=liste_cit['msg'][k], toUser=liste_cit['touser'][k], date=liste_cit['date'][k], citation=0)
+            #self._local_BDD.add_message(user=liste_cit['user'][k], topic=topic, msg=liste_cit['msg'][k], toUser=liste_cit['touser'][k], date=liste_cit['date'][k], citation=0)
