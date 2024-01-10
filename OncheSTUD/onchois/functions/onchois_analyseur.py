@@ -22,7 +22,7 @@ class ONCHISATEUR:
         # public
         if isinstance(user, str):
             user = self._local_BDD.user_name2id(user)
-        self.queries = ONHISATEUR_QUERIES
+        self.queries = ONCHISATEUR_QUERIES
 
         # private
         self._queries = self._get_queries()
@@ -114,33 +114,38 @@ class ONCHISATEUR:
     
     def relation(self):
 
-        list1 = [(x, y) for x, y in zip(self.Lien_int['onchois'], self.Lien_int['nbmsg'])]
-        list2 = [(x, y) for x, y in zip(self.Lien_ext_f['onchois'], self.Lien_ext_f['RapNbMsg'])]
-        list3_center = (self.nom, self._local_BDD.get_results(self._queries['user']['message_user'], params=(self.nom,)))
+        list1 = [(id_, nb_msg) for id_, nb_msg in zip(self.Lien_int['onchois'], self.Lien_int['nbmsg'])]
+        list2 = [(id_, nb_msg) for id_, nb_msg in zip(self.Lien_ext_f['onchois'], self.Lien_ext_f['RapNbMsg'])]
+        list3_center = (self.nom, self._local_BDD.get_results(self._queries['user']['message_user'], params=(self.id,)))
+
+        # Normalisation des poids
+        m_w = np.max(self.Lien_int['nbmsg'] + self.Lien_ext_f['RapNbMsg'] + [list3_center[1]])
+        print(list1)
 
         G = nx.Graph()
 
         for user, weight in list1:
-            G.add_node(user, color='blue', weight=weight)
+            G.add_node(user, color='blue', weight=int(1000*weight/m_w))
 
         for user, weight in list2:
-            G.add_node(user, color='yellow', weight=weight)
+            G.add_node(user, color='yellow', weight=int(1000*weight/m_w))
 
         # noeud central
         user_center, weight_center = list3_center
-        G.add_node(user_center, color='red', weight=weight_center)
+        G.add_node(user_center, color='red', weight=int(1000*weight_center/m_w))
 
         fig = plt.figure(figsize=(15, 15), dpi=300, facecolor='black')
 
         # Ajout des liens
         for user, _ in list1 + list2:
-            edge_weight = G.nodes[user]['weight'] / (weight_center+1)
-            G.add_edge(user_center, user, weight=edge_weight)
+            edge_weight = G.nodes[user]['weight']
+            G.add_edge(user_center, user, weight=int(edge_weight/100))
 
         # Couleur, taille
         node_colors = [G.nodes[node]['color'] for node in G.nodes()]
         node_sizes = [G.nodes[node]['weight']*5 for node in G.nodes()]
-        edge_weights = [G[u][v]['weight']*20 for u, v in G.edges()]
+        alpha_values = [al/5000 for al in node_sizes]
+        edge_weights = [G[u][v]['weight']*2 for u, v in G.edges()]
         edge_colors = [G.nodes[node]['color'] for node in G.nodes()]
         font_sizes = [G.nodes[node]['weight'] for node in G.nodes()]
 
@@ -165,8 +170,10 @@ class ONCHISATEUR:
             # Positions centrale du noeud principal
             pos[user_center] = (0, 0)
 
+        print(node_sizes, node_colors)
         nx.draw_networkx_nodes(G, pos, node_color=node_colors, node_size=node_sizes, alpha=0.8)
-        nx.draw_networkx_edges(G, pos, width=edge_weights, edge_color=edge_colors, alpha=0.5, arrows=True,connectionstyle="arc3,rad=0.3")
+
+        # Mettre le bon alpha
 
         node_labels = {node: node for node in G.nodes()}
         it_size = 0
@@ -186,6 +193,6 @@ class ONCHISATEUR:
         plt.axis('off')
         plt.savefig("test.png",format="png")
 
-Emiliano = ONCHISATEUR('jouhn_ingroum')
+Emiliano = ONCHISATEUR('Recitasse')
 Emiliano.relation_sociale_onchienne(seuil_rep=2, seuil_topic=2)
 Emiliano.relation()

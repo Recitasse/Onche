@@ -230,6 +230,7 @@ class ScrapperOnche:
                     bar_etape(STOP-START, it, f"Topic {sujet} sur le forum {self.forum['name']}")
                     self.add_data_to_bdd(sujet, liste_message, liste_cit)
                     it+=1
+                    time.sleep(1)
                 time.sleep(1)
                 self._logger.info("Ajout des messages effectué.")
 

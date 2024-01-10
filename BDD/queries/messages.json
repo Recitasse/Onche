@@ -1,0 +1,94 @@
+{
+    "user":
+    {
+        "touser":
+        {
+            "forum":
+            {
+                "topic":
+                {
+                    "id": "",
+                    "by_user": "",
+                    "regex": ""
+                },
+                "id": "",
+                "by_user": "",
+                "regex": ""
+            },
+            "topic":
+            {
+                "id": "",
+                "by_user": "",
+                "regex": ""
+            },
+            "id": "",
+            "by_user": "",
+            "regex": ""
+
+        },
+        "forum":
+        {
+            "topic":
+            {
+                "id": "",
+                "by_user": "",
+                "regex": ""
+            },
+            "id": "",
+            "by_user": "",
+            "regex": ""
+        },
+        "topic":
+        {
+            "id": "",
+            "by_user": "",
+            "regex": ""
+        }
+    },
+    "touser":
+    {
+        "forum":
+        {
+            "topic":
+            {
+                "id": "",
+                "by_user": "",
+                "regex": ""
+            },
+            "id": "",
+            "by_user": "",
+            "regex": ""
+        },
+        "topic":
+        {
+            "id": "SELECT messages.message_message FROM messages  JOIN topics ON messages.common_column = topics.common_column WHERE messages.message_toUser IN (%s) AND messages.message_id IN (%s) AND topics.id_topic IN (%s);",
+            "by_user": "",
+            "regex": ""
+        },
+        "id": "SELECT message_message FROM messages WHERE message_toUser IN (%s) and id_message IN (%s)",
+        "by_user": "SELECT message_message FROM messages WHERE message_toUser IN (%s) and message_user IN (%s)",
+        "regex": "SELECT message_message FROM messages WHERE message_toUser IN (%s) and message_message REGEXP %s"
+
+    },
+    "forum":
+    {
+        "topic":
+        {
+            "id": "SELECT message_message  FROM messages  WHERE message_topic IN (SELECT id_topic FROM topic WHERE topic_forum IN (%s)) AND message_id IN (%s);",
+            "by_user": "SELECT message_message  FROM messages  WHERE message_topic IN (SELECT id_topic FROM topic WHERE topic_forum IN (%s)) AND message_user IN (%s);",
+            "regex": "SELECT message_message  FROM messages  WHERE message_topic IN (SELECT id_topic FROM topic WHERE topic_forum IN (%s)) AND message_message REGEXP %s;"
+        },
+        "id": "SELECT message_message FROM messages WHERE id_forum = %s AND message_id IN (%s);",      
+        "by_user": "SELECT m.message_message FROM messages m WHERE m.id_forum = %s AND m.message_user IN (%s)", 
+        "regex": "SELECT message_message FROM messages WHERE id_forum = %s AND message_user NOT REGEXP %s;"
+    },
+    "topic":
+    {
+        "id": "SELECT message_message FROM messages WHERE id_message IN (%s) AND message_topic IN (%s);",
+        "by_user": "SELECT message_message FROM messages WHERE message_user IN (%s) AND message_topic IN (%s);",
+        "regex": "SELECT message_message FROM messages WHERE message_message REGEXP %s AND message_topic IN (%s);"
+    },
+    "id": "SELECT message_message FROM messages WHERE id_message IN (%s);",
+    "by_user": "SELECT message_message FROM messages WHERE message_user IN (%s);",
+    "regex": "SELECT message_message FROM messages WHERE message_message REGEXP %s;"
+}

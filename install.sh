@@ -106,5 +106,6 @@ USER_AGENT = "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 8_6_7; en-US) Gecko/2010
 DEFAULT_PROFILE = GLOBAL_PATH + "utils/cryptage/profile/default.json"
 
 # QUERIES
-ONHISATEUR_QUERIES = GLOBAL_PATH + "BDD/queries/onchois_analyseur/queries.json"
+BDD_QUERIES = GLOBAL_PATH + "BDD/queries/BDD.json"
+ONCHISATEUR_QUERIES = GLOBAL_PATH + "BDD/queries/onchois_analyseur.json"
 EOF

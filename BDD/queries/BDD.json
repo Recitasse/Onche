@@ -1,0 +1,51 @@
+{
+    "utils":
+    {
+        "size_bdd": "SELECT table_schema 'Database Name', SUM(data_length + index_length) / 1024 / 1024 'Database Size in MB' FROM information_schema.tables WHERE table_schema = %s;"
+    },
+    "convert":
+    {
+        "user":
+        {
+            "id2name": "SELECT onchois_nom FROM onchois WHERE onchois_id = %s;",
+            "name2id": "SELECT onchois_id FROM onchois WHERE onchois_nom = %s"
+        },
+        "badge":
+        {
+            "name2id": "SELECT badges_id FROM badges WHERE badges_nom = %s;",
+            "id2name": "SELECT badges_nom FROM badges WHERE badges_id = %s"
+        },
+        "topic":
+        {
+            "name2id": "SELECT id_topic FROM topic WHERE topic_nom = %s;",
+            "id2name": "SELECT topic_nom FROM topic WHERE id_topic = %s;",
+            "url2name": "SELECT topic_nom FROM topic WHERE topic_lien = %s;",
+            "name2url": "SELECT topic_lien FROM topic WHERE topic_nom = %s;"
+        }
+    },
+    "add":
+    {
+        "user": "INSERT INTO onchois (onchois_nom) VALUES (%s);",
+        "topic": "INSERT INTO topic (topic_user, topic_nom, topic_message, topic_lien, topic_forum) VALUES (%s, %s, %s, %s, %s);",
+        "badge": "INSERT INTO badges (badges_nom) VALUES (%s);",
+        "badge2user": "INSERT INTO onchois_badges (ob_userid, ob_badgeid) VALUES (%s, %s);",
+        "message2user": "INSERT INTO messages (message_user, message_topic, message_toUser, message_message, message_date, message_citation) VALUES (%s, %s, %s, %s, %s, %s);",
+        "message": "INSERT INTO messages (message_user, message_topic, message_message, message_date, message_citation) VALUES (%s, %s, %s, %s, %s);"
+    },
+    "get":
+    {
+        "data": "SELECT topic_nom, topic_user, topic_message FROM topic WHERE topic_date > %s;"
+    },
+    "web":
+    {
+        "nbmessINtopic": "SELECT COUNT(id_message) FROM messages WHERE message_topic = %s;",
+        "messINtopic": "SELECT topic_message FROM topic WHERE topic_nom = %s;"
+    },
+    "is_in":
+    {
+        "message": "SELECT * FROM messages WHERE message_date = %s AND message_user = %s AND message_topic = %s",
+        "user": "SELECT onchois_id FROM onchois WHERE onchois_nom = %s;",
+        "topic":  "SELECT id_topic FROM topic WHERE topic_lien = %s;",
+        "badge": "SELECT badges_id FROM topic WHERE badges_nom = %s;"
+    }
+}

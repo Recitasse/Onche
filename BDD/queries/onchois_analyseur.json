@@ -10,6 +10,10 @@
     {
         "message_user": "SELECT COUNT(message_toUser) FROM messages WHERE message_user = %s;"
     },
+    "relation":
+    {
+        "u12u2": "SELECT "
+    },
     "ToUser": "SELECT o.onchois_nom, COUNT(*) AS message_count FROM messages m JOIN onchois o ON (m.message_user = o.onchois_id AND o.onchois_id != %s) OR (m.message_toUser = o.onchois_id AND o.onchois_id != %s) WHERE (m.message_user = %s AND m.message_toUser = %s) OR (m.message_user = %s AND m.message_toUser = %s) AND m.message_date >= DATE_SUB(NOW(), INTERVAL %s DAY) AND m.message_date <= NOW() GROUP BY o.onchois_nom, m.message_user, m.message_toUser HAVING COUNT(*) >= %s;",
     "ConstInt" : "SELECT t.topic_user, t.topic_nom, t.topic_message, COUNT(*) AS message_count FROM messages m JOIN onchois o ON (m.message_user = o.onchois_id) JOIN topic t ON m.message_topic = t.id_topic WHERE m.message_user = %s AND t.topic_user = %s AND m.message_date >= DATE_SUB(NOW(), INTERVAL %s DAY) AND m.message_date <= NOW() GROUP BY t.topic_user, t topic_nom, t.topic_message, o.onchois_nom HAVING COUNT(*) >= %s",
     "ActiveUserDate": "SELECT o.onchois_nom FROM onchois o JOIN messages m ON o.onchois_id = m.message_user WHERE m.message_date >= DATE_SUB(NOW(), INTERVAL %s DAY) GROUP BY o.onchois_id, o.onchois_nom HAVING COUNT(m.id_message) >= %s ORDER BY o.onchois_nom"

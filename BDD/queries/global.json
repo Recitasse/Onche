@@ -1,0 +1,20 @@
+{
+    "user":
+    {
+        "topics": "SELECT id_topic FROM topic WHERE topic_user = %s WHERE topic_forum = %s;",
+        "messages_simple": "SELECT m.message_message FROM messages AS m JOIN topic AS t ON m.message_topic = t.id_topic WHERE m message_user = %s AND t.topic_forum = %s AND m.message_citation = 0;",
+        "messages_citation": "SELECT m.message_message FROM messages AS m JOIN topic AS t ON m.message_topic = t.id_topic WHERE m message_user = %s AND t.topic_forum = %s AND m.message_citation = 1;",
+        "messages_all": "SELECT m.message_message FROM messages AS m JOIN topic AS t ON m.message_topic = t.id_topic WHERE m message_user = %s AND t.topic_forum = %s",
+        "touser":
+        {
+            "topics": "SELECT DISTINCT t.id_topic FROM messages AS m JOIN topic AS t ON m.message_topic = t.id_topic WHERE m.message_user = %s AND m.message_toUser = %s AND t.topic_forum = %s;",
+            "messages_all": "SELECT m.message_message FROM messages AS m JOIN onchois AS u ON m.message_user = u.onchois_id JOIN topic AS t ON m.message_topic = t.id_topic WHERE u.onchois_id = %s AND t.topic_forum = %s AND m.message_toUser = %s;"
+        }
+    },
+    "on_topic":
+    {
+        "messages_simple": "SELECT * FROM messages WHERE message_user = %s AND message_topic = %s AND message_citation = 0;",
+        "messages_citation": "SELECT * FROM messages WHERE message_user = %s AND message_topic = %s AND message_citation = 1;",
+        "messages_all": "SELECT * FROM messages WHERE message_user = %s AND message_topic = %s;"
+    }
+}

@@ -40,11 +40,9 @@ class BDD:
         
     def size(self):
         """Renvoie la taille de la base de donnée """
-        query = f"SELECT table_schema 'Database Name', SUM(data_length + index_length) / 1024 / 1024 'Database Size in MB' FROM information_schema.tables WHERE table_schema = '{MYSQL_DATABASE}';"
-        try:
-            return self.get_results(query)
-        except Exception as e:
-            self._logger.error(f"Une erreur est survenue : {e}.")
+        query = "SELECT table_schema 'Database Name', SUM(data_length + index_length) / 1024 / 1024 'Database Size in MB' FROM information_schema.tables WHERE table_schema = %s;"
+        params = (MYSQL_DATABASE,)
+        return self.get_results(query, params=params)
 
     def change_bdd(self, database: str):
         """Change de base de donnée
@@ -94,7 +92,7 @@ class BDD:
             self._logger.error(f"Impossible d'importer la base de donnée {path.split('/')[-1]} : {e}")
             raise Exception(f"Impossible d'importer la base de donnée {path.split('/')[-1]} : {e}")
 
-    def QUERY(self, query: str, values: tuple = None):
+    def QUERY(self, query: str, values: tuple = None, type_: str = "none"):
         """
         Permet d'éxécuter n'importe quelle query
 
@@ -113,15 +111,17 @@ class BDD:
                 else:
                     cursor.execute(query, params=values)
                 res = cursor.fetchall()
-            if res and res[0]:
+            if res and res[0] and type_ == "none":
                 return [item.decode('utf-8') if isinstance(item, (bytearray, bytes)) else item for item in res[0]]
+            if res and type_ == "all":
+                return res
         except Exception as e:
             self._logger.error(f"Une erreur est survenue : {e}.")
         return []
 
     @property
     def outils(self):
-        return self.connexion
+        return self.connexion.cursor, self.connexion
 
     # Convert methods
 
@@ -437,6 +437,7 @@ class BDD:
             self._logger.error(f"Une erreur est survenue : {e}.")
             mm = -1
 
+        # Récupère les messages dans un topic
         query = "SELECT topic_message FROM topic WHERE topic_nom = %s;"
         params = (nom,)
         try:
