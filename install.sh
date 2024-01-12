@@ -111,6 +111,7 @@ DEFAULT_PROFILE = GLOBAL_PATH + "utils/cryptage/profile/default.json"
 ONHISATEUR_QUERIES = GLOBAL_PATH + "BDD/queries/onchois_analyseur/queries.json"
 
 # SAVE
+CYCLIC_EXPORT = 86400
 BDD_EXPORT = GLOBAL_PATH + "BDD/export/"
 SAVE_SUJET = GLOBAL_PATH + "OncheSTUD/communautes/Sujet/"
 EOF

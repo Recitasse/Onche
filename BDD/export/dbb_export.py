@@ -9,9 +9,14 @@ sys.path.append(parent_dir)
 from config.Variables.variables import *
 from BDD.bdd import BDD
 
+def cyclic_task_export(database: str = MYSQL_DATABASE):
+    BDD(database=database).exporter_bdd()
+    command = f"sh {GLOBAL_PATH}BDD/export/export_bdd.sh {database} {GLOBAL_PATH}"
+    subprocess.run(command, shell=True)
+
 # Export ddb
 if __name__ == "__main__":
-    print(MYSQL_DATABASE, GLOBAL_PATH)
-    BDD(database=MYSQL_DATABASE).exporter_bdd()
-    command = f"sh {GLOBAL_PATH}BDD/export/export_bdd.sh {MYSQL_DATABASE} {GLOBAL_PATH}"
-    subprocess.run(command, shell=True)
+    while True:
+        cyclic_task_export()
+        time.sleep(CYCLIC_EXPORT)
+
