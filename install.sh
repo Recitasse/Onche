@@ -65,6 +65,8 @@ sudo systemctl restart mysql.service
 
 installation_path=$(pwd)
 
+sudo ./${installation_path}/BDD/export/git-lfs-3.4.1/install.sh
+
 cat << EOF > "config/Variables/variables.py"
 # CONFIG
 GLOBAL_PATH = "${installation_path}/"
@@ -107,4 +109,8 @@ DEFAULT_PROFILE = GLOBAL_PATH + "utils/cryptage/profile/default.json"
 
 # QUERIES
 ONHISATEUR_QUERIES = GLOBAL_PATH + "BDD/queries/onchois_analyseur/queries.json"
+
+# SAVE
+BDD_EXPORT = GLOBAL_PATH + "BDD/export/"
+SAVE_SUJET = GLOBAL_PATH + "OncheSTUD/communautes/Sujet/"
 EOF
