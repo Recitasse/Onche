@@ -1,7 +1,9 @@
 import os
 import sys
 import subprocess
+
 from datetime import datetime
+from pathlib import Path
 
 from mysql.connector import connect
 
@@ -63,10 +65,13 @@ class BDD:
 
     def exporter_bdd(self) -> None:
         """Exporte les éléments de la table SQL choisie au format sql"""
-        backup_path = GLOBAL_PATH+"BDD/exports/backup_"+datetime.now().strftime("%d_%m_%Y")
+        date = datetime.now().strftime("%d_%m_%Y")
+        backup_path = GLOBAL_PATH+"BDD/export/bdd_"
+        if "bdd_" in os.listdir(GLOBAL_PATH+"BDD/export/"):
+            os.remove(os.path.join(backup_path, f"bdd_{date}.sql"))
         try:
-            subprocess.run(f"mysqldump -u{MYSQL_USER} -p{MYSQL_PASSWORD} {self.database} > '{backup_path}_{self.database}.sql'", shell=True, check=True)
-            self._logger.info(f"Base de donnée {self.database} exportée : {backup_path}_{self.database}.sql")
+            subprocess.run(f"mysqldump -u{MYSQL_USER} -p{MYSQL_PASSWORD} {self.database} > '{backup_path}{self.database}.sql'", shell=True, check=True)
+            self._logger.info(f"Base de donnée {self.database} exportée : {backup_path}{self.database}.sql")
         except subprocess.CalledProcessError as e:
             self._logger.error(f"Impossible d'exporter la base de donnée {self.database} : {e}")
             raise subprocess.CalledProcessError(f"Impossible d'exporter la base de donnée {self.database} : {e}")
