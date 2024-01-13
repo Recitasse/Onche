@@ -9,7 +9,6 @@ sudo apt install git -y
 # ========================================
 # Install python3.11
 sudo apt-get install python3.11
-sudo apt update
 sudo apt install python3 python3-tk
 python3.11 -m pip install --upgrade pip
 python3.11 -m pip install virtualenv
@@ -34,38 +33,24 @@ MYSQL_PASSWORD="OnchePass1#"
 MYSQL_DATABASE="Onche"
 SQL_SCRIPT="BDD/install/DDBONCHE.sql"
 
-check_user_exists() {
-    sudo mysql -sse "SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = '$MYSQL_USER')"
-}
+#check_user_exists() {
+#    sudo mysql -sse "SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = '$MYSQL_USER')"
+#}
 
-for MYSQL_USER in "${USERS[@]}"; do
-    # Check if the user already exists
-    if [ $(check_user_exists "$MYSQL_USER") -eq 0 ]; then
-        sudo mysql -e "CREATE USER '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_PASSWORD';"
-        sudo mysql -e "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'localhost';"
-        sudo mysql -e "FLUSH PRIVILEGES;"
-        echo "Bot $MYSQL_USER créé avec succès."
-    else
-        echo "Bot $MYSQL_USER existe déjà."
-    fi
-done
+#for MYSQL_USER in "${USERS[@]}"; do
+#    # Check if the user already exists
+#    if [ $(check_user_exists "$MYSQL_USER") -eq 0 ]; then
+#        sudo mysql -e "CREATE USER '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_PASSWORD';"
+#        sudo mysql -e "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'localhost';"
+#        sudo mysql -e "FLUSH PRIVILEGES;"
+#        echo "Bot $MYSQL_USER créé avec succès."
+#    else
+#        echo "Bot $MYSQL_USER existe déjà."
+#    fi
+#done
 
 sudo apt install mysql-server
 sudo mysql < "$SQL_SCRIPT"
-# =======================================
-file_path="/etc/hosts"
-line_to_search="127.0.6.5       Onche"
-
-# Search for the line in the file
-if grep -qF "$line_to_search" "$file_path"; then
-    echo "Host déjà présent."
-else
-    temp_file=$(mktemp)
-
-    echo "$line_to_search" | cat - /etc/hosts > "$temp_file"
-
-    sudo mv "$temp_file" /etc/hosts
-fi
 sudo systemctl restart mysql.service
 
 installation_path=$(pwd)
@@ -77,7 +62,7 @@ sudo chown -R $USER:$USER "${installation_path}/WebAPP/html/"
 
 vh_conf_file="/etc/apache2/sites-available/BabelOnche.conf"
 sudo bash -c "cat > $vh_conf_file" <<EOF
-<VirtualHost 127.0.6.5:80>
+<VirtualHost *:80>
         DocumentRoot ${installation_path}/WebAPP/html/
         ServerName BabelOnche
         ServerAlias www.BabelOnche.com
@@ -88,7 +73,7 @@ sudo bash -c "cat > $vh_conf_file" <<EOF
          </Directory>
 </VirtualHost>
 EOF
-sudo a2ensite Onche.conf
+sudo a2ensite BabelOnche.conf
 sudo systemctl restart apache2
 
 # ======================================
@@ -144,3 +129,7 @@ CYCLIC_EXPORT = 86400
 BDD_EXPORT = GLOBAL_PATH + "BDD/export/"
 SAVE_SUJET = GLOBAL_PATH + "OncheSTUD/communautes/Sujet/"
 EOF
+
+# Run the python api
+source "${installation_path}/venv/bin/activate"
+nohup python "${installation_path}/WebAPP/API/main.py" &
