@@ -10,6 +10,7 @@ sudo apt install git -y
 # Install python3.11
 sudo apt-get install python3.11
 sudo apt update
+sudo apt install python3 python3-tk
 python3.11 -m pip install --upgrade pip
 python3.11 -m pip install virtualenv
 
@@ -18,6 +19,13 @@ source venv/bin/activate
 
 pip install -r requirements.txt
 pip install --upgrade mysql-connector-python
+
+# ========================================
+# APache
+sudo apt install apache2
+sudo ufw allow in "Apache"
+sudo apt install php libapache2-mod-php php-mysql
+php -v
 
 # ========================================
 # install mysql
@@ -60,12 +68,33 @@ else
 fi
 sudo systemctl restart mysql.service
 
+installation_path=$(pwd)
+
+# ======================================
+# Installer le domaine
+sudo chmod -R 755 "${installation_path}"
+sudo chown -R $USER:$USER "${installation_path}/WebAPP/html/"
+
+vh_conf_file="/etc/apache2/sites-available/BabelOnche.conf"
+sudo bash -c "cat > $vh_conf_file" <<EOF
+<VirtualHost 127.0.6.5:80>
+        DocumentRoot ${installation_path}/WebAPP/html/
+        ServerName BabelOnche
+        ServerAlias www.BabelOnche.com
+         <Directory ${installation_path}/WebAPP/html/>
+           Options Indexes FollowSymLinks
+           AllowOverride None
+           Require all granted
+         </Directory>
+</VirtualHost>
+EOF
+sudo a2ensite Onche.conf
+sudo systemctl restart apache2
+
 # ======================================
 # Export variable
 
-installation_path=$(pwd)
-
-sudo ./${installation_path}/BDD/export/git-lfs-3.4.1/install.sh
+#sudo .${installation_path}/BDD/export/git-lfs-3.4.1/install.sh
 
 cat << EOF > "config/Variables/variables.py"
 # CONFIG
