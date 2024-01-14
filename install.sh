@@ -54,6 +54,7 @@ sudo mysql < "$SQL_SCRIPT"
 sudo systemctl restart mysql.service
 
 installation_path=$(pwd)
+file=$(ls ${installation_path}/BDD/export/bdd_*.zip | head -n 1)
 
 # ======================================
 # Installer le domaine
@@ -128,6 +129,11 @@ ONHISATEUR_QUERIES = GLOBAL_PATH + "BDD/queries/onchois_analyseur/queries.json"
 CYCLIC_EXPORT = 86400
 BDD_EXPORT = GLOBAL_PATH + "BDD/export/"
 SAVE_SUJET = GLOBAL_PATH + "OncheSTUD/communautes/Sujet/"
+
+# INFO
+VERSION = "0.8.1"
+CREATEUR = ["Récitasse"]
+DDB = '${ddb}'
 EOF
 
 # Run the python api

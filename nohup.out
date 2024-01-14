@@ -10,3 +10,20 @@
  * Debug mode: on
 Address already in use
 Port 5000 is in use by another program. Either identify and stop that program, or start the server with a different port.
+ * Detected change in '/home/raphael/Bureau/Programmation/Python/Onche/WebAPP/API/main.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 626-793-910
+ * Detected change in '/home/raphael/Bureau/Programmation/Python/Onche/WebAPP/API/main.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 626-793-910
+ * Detected change in '/home/raphael/Bureau/Programmation/Python/Onche/WebAPP/API/main.py', reloading
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/raphael/Bureau/Programmation/Python/Onche/WebAPP/API/main.py", line 7, in <module>
+    from config.Variables.variables import *
+  File "/home/raphael/Bureau/Programmation/Python/Onche/config/Variables/variables.py", line 9, in <module>
+    MYSQL_BOT_BLABLA = BOT_blabla
+                       ^^^^^^^^^^
+NameError: name 'BOT_blabla' is not defined

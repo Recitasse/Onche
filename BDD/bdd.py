@@ -42,11 +42,12 @@ class BDD:
         
     def size(self):
         """Renvoie la taille de la base de donnée """
-        query = f"SELECT table_schema 'Database Name', SUM(data_length + index_length) / 1024 / 1024 'Database Size in MB' FROM information_schema.tables WHERE table_schema = '{MYSQL_DATABASE}';"
+        query = "SELECT SUM(data_length + index_length) / 1024 / 1024 'Database Size in MB' FROM information_schema.tables WHERE table_schema = %s;"
         try:
-            return self.get_results(query)
+            return self.get_results(query, params=(MYSQL_DATABASE,))
         except Exception as e:
             self._logger.error(f"Une erreur est survenue : {e}.")
+        return 0
 
     def change_bdd(self, database: str):
         """Change de base de donnée
