@@ -60,6 +60,7 @@ class BDD:
                                             password=self._mdp, database=database,
                                             auth_plugin="mysql_native_password")
             self._logger.info(f"Connexion à la base de donnée {database} réussie.")
+            self.database = database
         except Exception as e:
             self._logger.error(f"Echec de la connexion à la base de donnée {database} : {e}")
             raise Exception(f"Echec de la connexion à la base de donnée {database} : {e}")

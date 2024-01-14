@@ -42,7 +42,7 @@
                         <a href="#">Paramètres ⚙️</a>
                         <ul class="submenu">
                             <li><a href="connexion.php">Connexion 📶</a></li>
-                            <li><a href="#">Base de donnée 💾</a></li>
+                            <li><a href="base_de_donnee.php">Base de donnée 💾</a></li>
                             <li><a href="#">Informations ℹ️</a></li>
                             <li><a href="#">Aide ♿</a></li>
                         </ul>

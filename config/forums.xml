@@ -28,7 +28,7 @@
        <topic>ouin ouin pourquoi je suis ici</topic>
     </topics>
   </forum>
-  <forum name="forums des anciens" id="5">
+  <forum name="forum des anciens" id="5">
     <profile json_link="">True</profile>
     <topics type="array">
        <topic>a lire regles du forum des anciens</topic>

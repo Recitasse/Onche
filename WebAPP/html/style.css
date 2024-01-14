@@ -82,6 +82,11 @@ h1 {
     margin: 0;
 }
 
+.comment {
+    color: darkgreen;
+    font-size: 18px;
+}
+
 div.top_enca {
     background-color: white;
     text-align: center;
@@ -96,7 +101,7 @@ div.bot_enca {
     text-align: center;
     background-color: #a2efff;
     font-size: 20px;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
 }
@@ -167,11 +172,12 @@ div.main_titre img {
 }
 
 .page {
-    margin: 10px;
     padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     background-color: #fff7f2;
-    border: 2px solid #ff9940;
-    border-radius: 5px;
+    border-bottom: 2px solid#14d7ff;
+    border-top: 2px solid#14d7ff;
 }
 
 p {
@@ -214,4 +220,33 @@ p.terminal {
     padding: 5px;
     background-color: black;
     color: #CECECE;
+}
+
+.files {
+    font-family: 'Courier New', Courier, monospace;
+    padding: 5px;
+    background-color: rgb(245, 245, 245);
+    color: #000000;
+    height: 250px;
+}
+
+.submit {
+    background-color: #ff9940;
+    border: none;
+    color: #002347;
+    padding: 5px;
+    font-weight: bolder;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit:hover {
+    background-color: #ffaf69; 
 }
