@@ -1,12 +1,9 @@
 <?php
 
-$api_url = 'http://localhost:5000/api/babelonche/info';
+$api_url = 'http://localhost:5000/api/babelonche/general/info';
 $response = file_get_contents($api_url);
 $data = json_decode($response, true);
 
-if ($data === null) {
-    die('Erreur, la requête API a échoué');
-}
 ?>
 
 </body>

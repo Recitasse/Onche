@@ -118,6 +118,7 @@ class ScrapperOnche:
                 # Regarde sur toutes les pages non visitées
                 for i in range(START+1, STOP+1):
                     # Requête curl
+                    print(f"{i}/{STOP}")
                     go_to = f"{lien}/{i}"
                     Index = []
                     data = self._browser.req_html(go_to)
@@ -230,7 +231,7 @@ class ScrapperOnche:
                     bar_etape(STOP-START, it, f"Topic {sujet} sur le forum {self.forum['name']}")
                     self.add_data_to_bdd(sujet, liste_message, liste_cit)
                     it+=1
-                time.sleep(1)
+                time.sleep(0.5)
                 self._logger.info("Ajout des messages effectué.")
 
     def afficher(self):

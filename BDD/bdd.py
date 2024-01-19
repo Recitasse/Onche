@@ -1,14 +1,8 @@
 import os
-import sys
 import subprocess
 
 from datetime import datetime
-from pathlib import Path
-
 from mysql.connector import connect
-
-parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(parent_dir)
 
 from config.Variables.variables import *
 from utils.logger import logger

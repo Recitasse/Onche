@@ -4,7 +4,7 @@ include "function/style.php";
 ?>
 <div class="container">
     <div class="search-bar">
-        <input type="text" placeholder="🔍 Vous aussi, trouvez une communautés et bien d'autres choses encore !">
+        <input type="text" placeholder="🔍 Vous aussi, trouvez une communauté et bien d'autres choses encore !">
         <button id="search">Search</button>
     </div>
 </div>

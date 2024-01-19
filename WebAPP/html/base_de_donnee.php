@@ -5,23 +5,9 @@ $api_url = 'http://localhost:5000/api/babelonche/database/import';
 $response = file_get_contents($api_url);
 $data = json_decode($response, true);
 
-if ($data === null) {
-    die('Erreur, la requête API a échoué');
-}
 ?>
 
 <div class="page">
-    <?php
-    if (isset($_GET['result']) && !empty($_GET['result'])) {
-        $result = $_GET['result'];
-        if ($result == 1) {
-            echo "<p>✅ La base de donnée a été modifié.</p>";
-        }
-        else {
-            echo "<p>❌ <span class='bad'>ERREUR</span>, impossible de changer de base donnée";
-        }
-    }
-    ?>
     <div class="babel">
         <div class="babel_titre">
             <p class="terminal"><img src="images/icon/main.ico" alt="icone" style="height: 2.5em; vertical-align: middle;"> Terminal de la base de donnée</p>
@@ -50,3 +36,6 @@ if ($data === null) {
     ?>
     </form>
 </div>
+<?php
+include_once "footer.php";
+?>

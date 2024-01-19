@@ -23,6 +23,7 @@ pip install --upgrade mysql-connector-python
 # APache
 sudo apt install apache2
 sudo ufw allow in "Apache"
+sudo apt-get install php-curl
 sudo apt install php libapache2-mod-php php-mysql
 php -v
 
