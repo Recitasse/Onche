@@ -36,7 +36,7 @@ def get_mysql_database_info() -> dict:
 
 def get_mysql_available_database() -> dict:
     """Donne les databases dans le répertoire d'import"""
-    doc_list = os.listdir(f"{GLOBAL_PATH}BDD/import/")
+    doc_list = os.listdir(f"{GLOBAL_PATH}BDD/import/local/")
     if doc_list == []:
         doc_list = ["none"]
     return {key: item for key, item in enumerate(doc_list)}

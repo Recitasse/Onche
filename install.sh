@@ -27,35 +27,26 @@ sudo apt-get install php-curl
 sudo apt install php libapache2-mod-php php-mysql
 php -v
 
+sudo apt install sqlite
+
 # ========================================
 # install mysql
-USERS=("BOT_blabla", "BOT_sugg", "BOT_pron", "BOT_goulag", "BOT_anciens", "BOT_mode", "BOT_crypto", "BOT_jv", "BOT_auto")
-MYSQL_PASSWORD="OnchePass1#"
-MYSQL_DATABASE="Onche"
-SQL_SCRIPT="BDD/install/DDBONCHE.sql"
+if [ "$1" == "local" ]; then
+    echo "Base de donnée locale sélectionnée."
+elif [ "$1" == "server" ]; then
+    echo "Base de donnée server sélectionnée."
+    USERS=("BOT_blabla", "BOT_sugg", "BOT_pron", "BOT_goulag", "BOT_anciens", "BOT_mode", "BOT_crypto", "BOT_jv", "BOT_auto")
+    MYSQL_PASSWORD="OnchePass1#"
+    MYSQL_DATABASE="Onche"
+    SQL_SCRIPT="BDD/install/DDBONCHE.sql"
 
-#check_user_exists() {
-#    sudo mysql -sse "SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = '$MYSQL_USER')"
-#}
+    sudo apt install mysql-server
+    sudo mysql < "$SQL_SCRIPT"
+    sudo systemctl restart mysql.service
 
-#for MYSQL_USER in "${USERS[@]}"; do
-#    # Check if the user already exists
-#    if [ $(check_user_exists "$MYSQL_USER") -eq 0 ]; then
-#        sudo mysql -e "CREATE USER '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_PASSWORD';"
-#        sudo mysql -e "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'localhost';"
-#        sudo mysql -e "FLUSH PRIVILEGES;"
-#        echo "Bot $MYSQL_USER créé avec succès."
-#    else
-#        echo "Bot $MYSQL_USER existe déjà."
-#    fi
-#done
-
-sudo apt install mysql-server
-sudo mysql < "$SQL_SCRIPT"
-sudo systemctl restart mysql.service
-
-installation_path=$(pwd)
-file=$(ls ${installation_path}/BDD/export/bdd_*.zip | head -n 1)
+    installation_path=$(pwd)
+    file=$(ls ${installation_path}/BDD/export/bdd_*.zip | head -n 1)
+else
 
 # ======================================
 # Installer le domaine
@@ -132,9 +123,10 @@ BDD_EXPORT = GLOBAL_PATH + "BDD/export/"
 SAVE_SUJET = GLOBAL_PATH + "OncheSTUD/communautes/Sujet/"
 
 # INFO
-VERSION = "0.8.1"
+VERSION = "0.8.3"
 CREATEUR = ["Récitasse"]
 DDB = '${ddb}'
+TYPE = '${$1}'
 EOF
 
 # Run the python api

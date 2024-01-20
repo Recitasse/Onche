@@ -2,7 +2,8 @@ import os
 import subprocess
 
 from datetime import datetime
-from mysql.connector import connect
+from mysql.connector import connect as connect_server
+from sqlite3 import connect as connect_local
 
 from config.Variables.variables import *
 from utils.logger import logger
@@ -24,7 +25,7 @@ class BDD:
 
         # connexion
         try:
-            self.connexion = connect(user=self.user, host=self.host,
+            self.connexion = connect_server(user=self.user, host=self.host,
                                             password=self._mdp, database=self.database,
                                             auth_plugin="mysql_native_password")
             self._logger.info("Connexion à la base de donnée réussie.")
@@ -50,7 +51,7 @@ class BDD:
             database (str): Nouveau nom de la base de donnée
         """
         try:
-            self.connexion = connect(user=self.user, host=self.host,
+            self.connexion = connect_server(user=self.user, host=self.host,
                                             password=self._mdp, database=database,
                                             auth_plugin="mysql_native_password")
             self._logger.info(f"Connexion à la base de donnée {database} réussie.")
@@ -536,3 +537,22 @@ class BDD:
         except Exception as e:
             self._logger.error(f"Une erreur mysql est survenue : {e}.")
         return _ADD
+    
+class LocalBDD(BDD):
+    def __init__(self, database: str = MYSQL_DATABASE, verbose: bool = False) -> None:
+        super().__init__(database=database, verbose=verbose)
+        # public
+        self.database = database
+        self.badgeList = []
+
+        # private
+        self._verbose = verbose
+        self._logger = logger(PATH_BDD_LOG, "BDD", self._verbose)
+
+        # connexion
+        try:
+            self.connexion = connect_local(database=self.database)
+            self._logger.info("Connexion à la base de donnée réussie.")
+        except Exception as e:
+            self._logger.error(f"Echec de la connexion à la base de donnée : {e}")
+            raise Exception(f"Echec de la connexion à la base de donnée : {e}")
