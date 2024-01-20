@@ -1,11 +1,6 @@
-import os
-import sys
 import datetime
 
 import xml.etree.ElementTree as ET
-
-parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(parent_dir)
 
 from config.Variables.variables import *
 
@@ -88,3 +83,19 @@ def create_url(forum: dict, page: int) -> str:
     if page <= 0:
         raise ValueError("La page ne peut pas être inférieur ou égale à 0.")
     return f"https://onche.org/forum/{forum['id']}/{forum['name']}/{page}"
+
+def change_value_variables(variable: str, value: str) -> False:
+    """Change la valeur d'une variable globale"""
+    with open(f"{GLOBAL_PATH}config/Variables/variables.py", "r", encoding="utf-8") as verif:
+        text = verif.read().split("\n")
+    _ret = ""
+    for line in text:
+        if line.find(variable) > -1:
+            _ret = line
+            break
+    if _ret == "":
+        return False
+    
+    with open(f"{GLOBAL_PATH}config/Variables/variables.py", 'w') as file:
+        file.writelines('\n'.join(text).replace(line, f'MYSQL_DATABASE = "{value}"'))
+    return True

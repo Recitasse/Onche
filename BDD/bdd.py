@@ -1,14 +1,9 @@
 import os
-import sys
 import subprocess
 
 from datetime import datetime
-from pathlib import Path
-
-from mysql.connector import connect
-
-parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(parent_dir)
+from mysql.connector import connect as connect_server
+from sqlite3 import connect as connect_local
 
 from config.Variables.variables import *
 from utils.logger import logger
@@ -30,7 +25,7 @@ class BDD:
 
         # connexion
         try:
-            self.connexion = connect(user=self.user, host=self.host,
+            self.connexion = connect_server(user=self.user, host=self.host,
                                             password=self._mdp, database=self.database,
                                             auth_plugin="mysql_native_password")
             self._logger.info("Connexion à la base de donnée réussie.")
@@ -42,11 +37,12 @@ class BDD:
         
     def size(self):
         """Renvoie la taille de la base de donnée """
-        query = f"SELECT table_schema 'Database Name', SUM(data_length + index_length) / 1024 / 1024 'Database Size in MB' FROM information_schema.tables WHERE table_schema = '{MYSQL_DATABASE}';"
+        query = "SELECT SUM(data_length + index_length) / 1024 / 1024 'Database Size in MB' FROM information_schema.tables WHERE table_schema = %s;"
         try:
-            return self.get_results(query)
+            return self.get_results(query, params=(MYSQL_DATABASE,))
         except Exception as e:
             self._logger.error(f"Une erreur est survenue : {e}.")
+        return 0
 
     def change_bdd(self, database: str):
         """Change de base de donnée
@@ -55,10 +51,11 @@ class BDD:
             database (str): Nouveau nom de la base de donnée
         """
         try:
-            self.connexion = connect(user=self.user, host=self.host,
+            self.connexion = connect_server(user=self.user, host=self.host,
                                             password=self._mdp, database=database,
                                             auth_plugin="mysql_native_password")
             self._logger.info(f"Connexion à la base de donnée {database} réussie.")
+            self.database = database
         except Exception as e:
             self._logger.error(f"Echec de la connexion à la base de donnée {database} : {e}")
             raise Exception(f"Echec de la connexion à la base de donnée {database} : {e}")
@@ -540,3 +537,22 @@ class BDD:
         except Exception as e:
             self._logger.error(f"Une erreur mysql est survenue : {e}.")
         return _ADD
+    
+class LocalBDD(BDD):
+    def __init__(self, database: str = MYSQL_DATABASE, verbose: bool = False) -> None:
+        super().__init__(database=database, verbose=verbose)
+        # public
+        self.database = database
+        self.badgeList = []
+
+        # private
+        self._verbose = verbose
+        self._logger = logger(PATH_BDD_LOG, "BDD", self._verbose)
+
+        # connexion
+        try:
+            self.connexion = connect_local(database=self.database)
+            self._logger.info("Connexion à la base de donnée réussie.")
+        except Exception as e:
+            self._logger.error(f"Echec de la connexion à la base de donnée : {e}")
+            raise Exception(f"Echec de la connexion à la base de donnée : {e}")

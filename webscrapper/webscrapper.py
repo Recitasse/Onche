@@ -1,12 +1,6 @@
 import threading
-import os
-import sys
 
-
-parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(parent_dir)
-
-from webscrapper.onche_scrapper import ScrapperOnche
+from onche_scrapper import ScrapperOnche
 from config.Variables.variables import *
 
 # ----------------------------------------------
@@ -42,7 +36,7 @@ if __name__ == "__main__":
     ALL = {Inst_blabla, Inst_sugg, Inst_pron, Inst_goulag, Inst_crypto, Inst_jv, Inst_auto}
     ALL  = {Inst_blabla}
 
-    it = 1
+    it = 15000
     while True:
         threads = []
         for instance in ALL:
@@ -51,5 +45,5 @@ if __name__ == "__main__":
             thread.start()
         for thread in threads:
             thread.join()
-        it += 1
+        it += -1
         
