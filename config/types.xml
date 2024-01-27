@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OGGtypes>
+    <numerics>
+        <integers>
+            <types>
+                <type name="int" type="int"></type>
+                <type name="tinyint" type="int"></type>
+                <type name="bigint" type="int"></type>
+                <type name="smallint" type="int"></type>
+                <type name="mediumint" type="int"></type>
+            </types>
+        </integers>
+        <floats>
+            <types>
+                <type name="double" type="float"></type>
+                <type name="float" type="float"></type>
+                <type name="decimal" type="float"></type>
+            </types>
+        </floats>
+    </numerics>
+    <boolean>
+        <types>
+            <type name="tinyint(1)" type="bool"></type>
+        </types>
+    </boolean>
+    <texts>
+        <types>
+            <type name="text" type="str"></type>
+            <type name="longtext" type="str"></type>
+            <type name="blob" type="str"></type>
+            <type name="char" type="str"></type>
+            <type name="varchar" type="str"></type>
+            <type name="enum" type="tuple"></type>
+            <type name="set" type="tuple"></type>
+        </types>
+    </texts>
+    <dates>
+        <types>
+            <type name="date" type="datetime"></type>
+            <type name="time" type="datetime"></type>
+            <type name="datetime" type="datetime"></type>
+            <type name="timestamp" type="datetime"></type>
+        </types>
+    </dates>
+</OGGtypes>

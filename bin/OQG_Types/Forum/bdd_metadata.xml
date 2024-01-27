@@ -1,0 +1,71 @@
+<?xml version="1.0" ?>
+<database>
+  <version version="0.8.3">
+    <messages>2591867</messages>
+    <date dernier="2024-01-10 01:30:56" premier="2020-12-26 21:00:40"/>
+    <forums>
+      <forum>
+        <nom id="1">blabla-general</nom>
+        <messages dernier="2024-01-10 01:30:56" premier="2020-12-26 21:00:40">2578456</messages>
+      </forum>
+      <forum>
+        <nom id="2">suggestions-reclamations</nom>
+        <messages dernier="2024-01-07 18:49:43" premier="2023-03-15 20:56:20">329</messages>
+      </forum>
+      <forum>
+        <nom id="8">jeux-video</nom>
+        <messages dernier="2024-01-07 01:36:13" premier="2023-03-20 19:57:47">326</messages>
+      </forum>
+      <forum>
+        <nom id="7">finance-crypto</nom>
+        <messages dernier="2024-01-08 00:51:13" premier="2020-12-26 21:00:53">5243</messages>
+      </forum>
+      <forum>
+        <nom id="9">autonomie-lifehack</nom>
+        <messages dernier="2024-01-08 00:34:42" premier="2020-12-31 21:50:26">7513</messages>
+      </forum>
+    </forums>
+    <tables>
+      <table/>
+      <table name="badges">
+        <champ type="int" Null="NO" Key="PRI">badges_id</champ>
+        <champ type="str" Null="NO" Key="UNI">badges_nom</champ>
+      </table>
+      <table/>
+      <table name="messages">
+        <champ type="int" Null="NO" Key="PRI">id_message</champ>
+        <champ type="int" Null="NO" Key="MUL">message_user</champ>
+        <champ type="int" Null="NO" Key="MUL">message_topic</champ>
+        <champ type="int" Null="YES" Key="MUL">message_toUser</champ>
+        <champ type="str" Null="NO">message_message</champ>
+        <champ type="bool" Null="NO" Default="0">message_citation</champ>
+        <champ type="datetime" Null="NO">message_date</champ>
+      </table>
+      <table/>
+      <table name="onchois">
+        <champ type="int" Null="NO" Key="PRI">onchois_id</champ>
+        <champ type="str" Null="NO" Key="UNI">onchois_nom</champ>
+        <champ type="str" Null="NO">onchois_sexe</champ>
+        <champ type="int" Null="YES">onchis_age</champ>
+        <champ type="int" Null="YES">onchois_QI</champ>
+        <champ type="float" Null="NO" Default="5">onchois_qualite</champ>
+      </table>
+      <table/>
+      <table name="onchois_badges">
+        <champ type="int" Null="NO" Key="PRI">ob_id</champ>
+        <champ type="int" Null="NO" Key="MUL" Default="1">ob_userid</champ>
+        <champ type="int" Null="NO" Key="MUL" Default="1">ob_badgeid</champ>
+      </table>
+      <table/>
+      <table name="topic">
+        <champ type="int" Null="NO" Key="PRI">id_topic</champ>
+        <champ type="int" Null="NO" Key="MUL" Default="1">topic_user</champ>
+        <champ type="str" Null="NO" Default="Erreur">topic_nom</champ>
+        <champ type="datetime" Null="NO" Default="CURRENT_TIMESTAMP(2)">topic_date</champ>
+        <champ type="int" Null="NO" Default="0">topic_message</champ>
+        <champ type="str" Null="NO">topic_lien</champ>
+        <champ type="int" Null="NO">topic_forum</champ>
+      </table>
+    </tables>
+  </version>
+</database>

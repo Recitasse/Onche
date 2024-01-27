@@ -1,8 +1,8 @@
 import os
+
 from getpass import getpass
 
 from subprocess import run, PIPE
-
 from config.Variables.variables import *
 from BDD.bdd import BDD
 
@@ -36,7 +36,7 @@ def get_mysql_database_info() -> dict:
 
 def get_mysql_available_database() -> dict:
     """Donne les databases dans le répertoire d'import"""
-    doc_list = os.listdir(f"{GLOBAL_PATH}BDD/import/local/")
+    doc_list = os.listdir(f"{GLOBAL_PATH}BDD/import/server/")
     if doc_list == []:
         doc_list = ["none"]
     return {key: item for key, item in enumerate(doc_list)}

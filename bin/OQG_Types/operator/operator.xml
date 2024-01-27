@@ -1,0 +1,233 @@
+<?xml version="1.0" ?>
+<operations>
+    <operationlist name="DATE">
+        <operator name="ADD_TIME_TO_DATE" description="Ajoute une valeur de temps (interval) à une date" type="datetime">
+            <operation>
+                <parameters>
+                    <parameter type="datetime">date</parameter>
+                    <parameter type="int" container="INTERVAL">interval</parameter>
+                    <parameter type="UNIT_TIME" opt="1" linked="1">unit</parameter>
+                </parameters>
+                <function>ADDDATE</function>
+            </operation>
+        </operator>
+        <operator name="ADD_TIME" description="Aoute une date à une date" type="datetime">
+            <operation>
+                <parameters>
+                    <parameter type="datetime">date1</parameter>
+                    <parameter type="datetime">date2</parameter>
+                </parameters>
+                <function>ADDTIME</function>
+            </operation>
+        </operator>
+        <operator name="CONVERT_TIME_ZONE" description="Convertir une date dans zone temporelle à une autre" type="datetime">
+            <operation>
+                <parameters>
+                    <parameter type="datetime">date</parameter>
+                    <parameter type="str">original_timezone</parameter>
+                    <parameter type="str">final_timezone</parameter>
+                </parameters>
+                <function>CONVERT_TZ</function>
+            </operation>
+        </operator>
+        <operator name="CURRENT_DATE" description="Retourne la date actuelle (la date, pas l'horraire !)" type="datetime">
+            <operation>
+                <parameters>
+                    <parameter></parameter>
+                </parameters>
+                <function>CURDATE</function>
+            </operation>
+        </operator>
+        <operator name="CURRENT_TIME" description="Retourne l'horraire actuelle (l'horraire, pas la date !)" type="datetime">
+            <operation>
+                <parameters>
+                    <parameter></parameter>
+                </parameters>
+                <function>CURTIME</function>
+            </operation>
+        </operator>
+        <operator name="CURRENT_TIMESTAMP" description="Retourne l'heure actuelle" type="datetime">
+            <operation>
+                <parameters>
+                    <parameter></parameter>
+                </parameters>
+                <function>CURRENT_TIMESTAMP</function>
+            </operation>
+        </operator>
+        <operator name="SUBSTRACT_TIME" description="Soustrait un temps" type="datetime">
+            <operation>
+                <parameters>
+                    <parameter type="datetime">temps1</parameter>
+                    <parameter type="datetime">temps2</parameter>
+                </parameters>
+                <function>SUBTIME</function>
+            </operation>
+        </operator>
+        <operator name="SUBSTRACT_TIME" description="Soustrait une date à une autre" type="datetime">
+            <operation>
+                <parameters>
+                    <parameter type="datetime">date1</parameter>
+                    <parameter type="datetime">date2</parameter>
+                </parameters>
+                <function>DATEDIFF</function>
+            </operation>
+        </operator>
+        <operator name="SEC_TO_TIME" description="convertit les seconds en temps" type="datetime">
+            <operation>
+                <parameters>
+                    <parameter type="int">second</parameter>
+                </parameters>
+                <function>SEC_TO_TIME</function>
+            </operation>
+        </operator>
+        <operator name="SEC_TO_DATE" description="convertit un string en date" type="datetime">
+            <operation>
+                <parameters>
+                    <parameter type="str">date_string</parameter>
+                </parameters>
+                <function>SEC_TO_DATE</function>
+            </operation>
+        </operator>
+        <operator name="TO_DAYS" description="retourne le nombre de jour d'une date" type="int">
+            <operation>
+                <parameters>
+                    <parameter type="datetime">date_string</parameter>
+                </parameters>
+                <function>TO_DAYS</function>
+            </operation>
+        </operator>
+        <operator name="TO_SECONDS" description="retourne le nombre de secondes d'une date" type="int">
+            <operation>
+                <parameters>
+                    <parameter type="datetime">date_string</parameter>
+                </parameters>
+                <function>TO_SECONDS</function>
+            </operation>
+        </operator>
+        <operator name="GET_MINUTE" description="retourne la minute 'd'une date" type="int">
+            <operation>
+                <parameters>
+                    <parameter type="datetime">date_string</parameter>
+                </parameters>
+                <function>MINUTE</function>
+            </operation>
+        </operator>
+        <operator name="GET_HOUR" description="retourne l'heure 'd'une date" type="int">
+            <operation>
+                <parameters>
+                    <parameter type="datetime">date_string</parameter>
+                </parameters>
+                <function>HOUR</function>
+            </operation>
+        </operator>
+        <operator name="GET_DAY" description="retourne le jour d'une date" type="int">
+            <operation>
+                <parameters>
+                    <parameter type="datetime">date_string</parameter>
+                </parameters>
+                <function>DAY</function>
+            </operation>
+        </operator>
+        <operator name="GET_WEEK" description="retourne la semaine d'une date" type="int">
+            <operation>
+                <parameters>
+                    <parameter type="datetime">date_string</parameter>
+                </parameters>
+                <function>WEEK</function>
+            </operation>
+        </operator>
+        <operator name="GET_MONTH" description="retourne le mois d'une date" type="int">
+            <operation>
+                <parameters>
+                    <parameter type="datetime">date_string</parameter>
+                </parameters>
+                <function>MONTH</function>
+            </operation>
+        </operator>
+        <operator name="GET_QUARTER" description="retourne le semestre d'une date" type="int">
+            <operation>
+                <parameters>
+                    <parameter type="datetime">date_string</parameter>
+                </parameters>
+                <function>QUARTER</function>
+            </operation>
+        </operator>
+        <operator name="GET_YEAR" description="retourne l'année' d'une date" type="int">
+            <operation>
+                <parameters>
+                    <parameter type="datetime">date_string</parameter>
+                </parameters>
+                <function>YEAR</function>
+            </operation>
+        </operator>
+    </operationlist>
+    <operationlist name="STRING">
+        <operator name="LIKE" description="Indique si un string contient un patterne" type="bool">
+            <operation>
+                <parameters>
+                    <parameter type="str">text</parameter>
+                    <parameter type="str" linked="1" container="LIKE" sour='"'>paterne</parameter>
+                    <parameter type="LIKE_STR" linked="1" container="ESCAPE" opt="1" inline="1" sour='"'>escape</parameter>
+                </parameters>
+                <function>LIKE</function>
+            </operation>
+        </operator>
+        <operator name="NOT_LIKE" description="Indique si un string ne contient pas un patterne" type="bool">
+            <operation>
+                <parameters>
+                    <parameter type="str">text</parameter>
+                    <parameter type="str" linked="1" container="LIKE" sour='"'>paterne</parameter>
+                    <parameter type="LIKE_STR" linked="1" container="ESCAPE" opt="1" inline="1" sour='"'>escape</parameter>
+                </parameters>
+                <function>NOT LIKE</function>
+            </operation>
+        </operator>
+        <operator name="STRING_COMPARE" description="Compare 2 string et renvoie vrai si les 2 strings sont identiques" type="bool">
+            <operation>
+                <parameters>
+                    <parameter type="str">text1</parameter>
+                    <parameter type="str">text2</parameter>
+                </parameters>
+                <function>STRCMP</function>
+            </operation>
+        </operator>
+        <operator name="IN_REGEXP" description="Renvoie vraie si contient le paterne dans le regexp" type="bool">
+            <operation>
+                <parameters>
+                    <parameter type="str">text1</parameter>
+                    <parameter type="str" linked="1" container="REGEXP" inline="1">paterne</parameter>
+                </parameters>
+                <function>REGEXP</function>
+            </operation>
+        </operator>
+        <operator name="NOT_IN_REGEXP" description="Renvoie vraie si ne contient pas le paterne dans le regexp" type="bool">
+            <operation>
+                <parameters>
+                    <parameter type="str">text1</parameter>
+                    <parameter type="str" linked="1" container="NOT REGEXP" inline="1">paterne</parameter>
+                </parameters>
+                <function>NOT REGEXP</function>
+            </operation>
+        </operator>
+        <operator name="IN_REGEXP_INSTR" description="Renvoie vraie si ne contient pas le paterne dans le regexp_instr" type="bool">
+            <operation>
+                <parameters>
+                    <parameter type="str">text1</parameter>
+                    <parameter type="str">paterne</parameter>
+                    <parameter type="REGEXP_OCCURENCE" opt="1">occurence</parameter>
+                </parameters>
+                <function>REGEXP_INSTR</function>
+            </operation>
+        </operator>
+        <operator name="IN_REGEXP_LIKE" description="Renvoie vraie si contient le paterne dans le regexp_like" type="bool">
+            <operation>
+                <parameters>
+                    <parameter type="str">text1</parameter>
+                    <parameter type="str">paterne</parameter>
+                    <parameter type="REGEXP_LIKE_TYPE" opt="1">match_type</parameter>
+                </parameters>
+                <function>REGEXP_LIKE</function>
+            </operation>
+        </operator>
+    </operationlist>
+</operations>
