@@ -26,6 +26,15 @@ def get_config(name: str) -> dict:
 
             record_info['field'] = cases
             result.update(record_info)
+
+        else:
+            case = record_element.find('.//field')
+            result = {
+                'value': case.get('value'),
+                'type': case.get('type'),
+                'default': case.get('default')
+            }
+
     if result == {}:
         return None
     return result
@@ -45,10 +54,17 @@ def get_default(name: str):
             for case in record_element.findall('.//field'):
                 if case.get("default") == "1":
                     return case.get("value")
+        else:
+            case = record_element.find('.//field')
+            if case.get("default") == "1":
+                return case.get("value")
 
 
 def get_type_from_dict(dic: dict, value: str):
-    day_dict = next((field for field in dic['field'] if field['value'] == value), None)
-    if day_dict:
-        return day_dict['type']
+    if dic['type'] == "tuple":
+        day_dict = next((field for field in dic['field'] if field['value'] == value), None)
+        if day_dict:
+            return day_dict['type']
+    else:
+        return dic['type']
     return None

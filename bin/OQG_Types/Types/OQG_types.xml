@@ -11,4 +11,22 @@
         <field value="QUARTER" type="str"/>
         <field value="YEAR" type="str"/>
     </record>
+    <record name="LIKE_STR" type="str">
+        <field value='' type="str" default="1"/>
+    </record>
+    <record name="REGEXP_OCCURENCE" type="int">
+        <field value='1' type="int" default="1"/>
+    </record>
+    <record name="REGEXP_LIKE_TYPE" type="tuple">
+        <field value="c" type="str" default="1"/>
+        <field value="i" type="str"/>
+        <field value="m" type="str"/>
+        <field value="n" type="str"/>
+        <field value="u" type="str"/>
+    </record>
+    <record name="MYSQL_KEY" type="tuple">
+        <field value="PRI" type="str"/>
+        <field value="MU" type="str"/>
+        <field value="UNI" type="str"/>
+    </record>
 </types>

@@ -5,4 +5,5 @@ BDD/bdd.log
 config/Variables/variables.py
 BDD/import/
 __pycache__/
+config/Variables/__pycache__
 nohup.out
