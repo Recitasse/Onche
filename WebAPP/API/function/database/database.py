@@ -19,7 +19,7 @@ def change_database(database: str) -> bool:
 
 def get_database_import():
     """Donne les databases dans le répertoire d'import"""
-    doc_list = os.listdir(f"{GLOBAL_PATH}BDD/import/")
+    doc_list = os.listdir(f"{GLOBAL_PATH}BDD/import/server/")
     if doc_list == []:
         doc_list = ["none"]
     return {key: item for key, item in enumerate(doc_list)}

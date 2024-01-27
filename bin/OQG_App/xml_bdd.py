@@ -30,7 +30,6 @@ class XMLCreator:
                 f.write(xmlstr)
         else:
             tree.write(filename)
-        print(f"XML saved to {filename}")
 
 
 def xml_database(database: str = MYSQL_DATABASE):
@@ -72,10 +71,18 @@ def xml_database(database: str = MYSQL_DATABASE):
     for table in tables:
         xml_creator.add_element(tables_xml, "table", "")
         info_tables = bdd.get_results(f"DESCRIBE {table};", ind_="all")
-        t = xml_creator.add_element(tables_xml, "table", "")
+        t = xml_creator.add_element(tables_xml, "table", "", {"name": table})
         for info in info_tables:
-            xml_creator.add_element(t, "champ", info)
+            attribut = {"type": info[1], "Null": info[2]}
+            if info[3] == "PRI" or info[3] == "UNI" or info[3] == "MUL":
+                key = {"Key": info[3]}
+                attribut.update(key)
+            if str(info[4]) != "None":
+                default = {"Default": str(info[4])}
+                attribut.update(default)
+            xml_creator.add_element(t, "champ", info[0], attributes=attribut)
 
-    xml_creator.save_to_file("data.xml", indent=True)
+    xml_creator.save_to_file(f"{GLOBAL_PATH}bin/OQG_Types/Forum/bdd_metadata.xml", indent=True)
 
-xml_database()
+if __name__ == "__main__":
+    xml_database()

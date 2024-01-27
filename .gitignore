@@ -4,3 +4,5 @@ webscrapper/browser.log
 BDD/bdd.log
 config/Variables/variables.py
 BDD/import/
+__pycache__/
+nohup.out

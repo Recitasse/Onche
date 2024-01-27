@@ -1,57 +1,61 @@
 #!/bin/bash
 
-# ========================================
-# Install git
+if grep -q 'export ONCHE_PATH=' ~/.bashrc; then
+    echo "Le ONCHE_PATH existe déjà"
+else
+    ONCHE_PATH=$(pwd)
+    export PATH="$ONCHE_PATH:$PATH"
+fi
 
 sudo apt update -y
+echo -e "\n"
+# ========================================
+# Install git
+echo "===== GIT INSTALL ====="
 sudo apt install git -y
+echo -e "\n"
+
+echo "===== REPO GIT ====="
+#git clone https://github.com/Recitasse/Onche.git
+echo -e "\n"
 
 # ========================================
 # Install python3.11
+echo "===== INSTAL PYTHON ====="
 sudo apt-get install python3.11
+echo -e "     Python3.11 installé"
 sudo apt install python3 python3-tk
+echo -e "     Python3.11 installé"
 python3.11 -m pip install --upgrade pip
 python3.11 -m pip install virtualenv
-
 python3.11 -m venv venv
+echo -e "     Virtualenv installé"
 source venv/bin/activate
+echo -e "     Environnement activé"
+echo -e "\n"
 
+echo "===== DÉPENDENCES PYTHON ====="
 pip install -r requirements.txt
 pip install --upgrade mysql-connector-python
+echo "     Dépendences installées"
+echo -e "\n"
 
 # ========================================
 # APache
+echo "===== INSTALLATION WEB SERVER ====="
 sudo apt install apache2
 sudo ufw allow in "Apache"
 sudo apt-get install php-curl
 sudo apt install php libapache2-mod-php php-mysql
 php -v
-
-sudo apt install sqlite
-
-# ========================================
-# install mysql
-if [ "$1" == "local" ]; then
-    echo "Base de donnée locale sélectionnée."
-elif [ "$1" == "server" ]; then
-    echo "Base de donnée server sélectionnée."
-    USERS=("BOT_blabla", "BOT_sugg", "BOT_pron", "BOT_goulag", "BOT_anciens", "BOT_mode", "BOT_crypto", "BOT_jv", "BOT_auto")
-    MYSQL_PASSWORD="OnchePass1#"
-    MYSQL_DATABASE="Onche"
-    SQL_SCRIPT="BDD/install/DDBONCHE.sql"
-
-    sudo apt install mysql-server
-    sudo mysql < "$SQL_SCRIPT"
-    sudo systemctl restart mysql.service
-
-    installation_path=$(pwd)
-    file=$(ls ${installation_path}/BDD/export/bdd_*.zip | head -n 1)
-else
+echo -e "\n"
 
 # ======================================
 # Installer le domaine
+installation_path=$(pwd)
+echo "===== HTTP DOMAIN SERVER ====="
 sudo chmod -R 755 "${installation_path}"
-sudo chown -R $USER:$USER "${installation_path}/WebAPP/html/"
+sudo chown -R "$USER":"$USER" "${installation_path}/WebAPP/html/"
 
 vh_conf_file="/etc/apache2/sites-available/BabelOnche.conf"
 sudo bash -c "cat > $vh_conf_file" <<EOF
@@ -68,12 +72,37 @@ sudo bash -c "cat > $vh_conf_file" <<EOF
 EOF
 sudo a2ensite BabelOnche.conf
 sudo systemctl restart apache2
+echo -e "\n"
+
+# ========================================
+# install mysql
+installation_path=$(pwd)
+echo "===== INSTALLATION MYSQL ET SQLITE ====="
+if [ "$1" == "local" ]; then
+    echo "Base de donnée locale sélectionnée."
+elif [ "$1" == "server" ]; then
+    echo "Base de donnée server sélectionnée."
+    MYSQL_PASSWORD="OnchePass1#"
+    MYSQL_DATABASE="Onche"
+    SQL_SCRIPT="BDD/schema/DDBONCHE.sql"
+
+    sudo apt install mysql-server
+    echo "     Installation MySQL terminée"
+    sudo apt install sqlite
+    echo -e "     Installation SQLite terminée"
+    sudo mysql < "$SQL_SCRIPT"
+    sudo systemctl restart mysql.service
+    echo -e "     Configuration MySQL établie"
+
+    #file=$(find "${installation_path}"/BDD/export/bdd_*.zip | head -n 1)
+fi
+echo -e "\n"
 
 # ======================================
 # Export variable
-
 #sudo .${installation_path}/BDD/export/git-lfs-3.4.1/install.sh
 
+echo "===== GÉNÉRATION DU FICHIER DE CONFIGURATION ====="
 cat << EOF > "config/Variables/variables.py"
 # CONFIG
 GLOBAL_PATH = "${installation_path}/"
@@ -82,16 +111,15 @@ GLOBAL_PATH = "${installation_path}/"
 SAVE_FREQUENCY = 10
 MYSQL_USER = 'onche'
 # -- > BOT
-USERS=("BOT_blabla", "BOT_sugg", "BOT_pron", "BOT_goulag", "BOT_anciens", "BOT_mode", "BOT_crypto", "BOT_jv", "BOT_auto")
-MYSQL_BOT_BLABLA = BOT_blabla
-MYSQL_BOT_SUGG = BOT_sugg
-MYSQL_BOT_PRON = BOT_pron
-MYSQL_BOT_GOULAG = BOT_goulag
-MYSQL_BOT_ANCIENS = BOT_anciens
-MYSQL_BOT_MODE = BOT_mode
-MYSQL_BOT_CRYPTO = BOT_crypto
-MYSQL_BOT_JV = BOT_jv
-MYSQL_BOT_AUTO = BOT_auto
+MYSQL_BOT_BLABLA = "BOT_blabla"
+MYSQL_BOT_SUGG = "BOT_sugg"
+MYSQL_BOT_PRON = "BOT_pron"
+MYSQL_BOT_GOULAG = "BOT_goulag"
+MYSQL_BOT_ANCIENS = "BOT_anciens"
+MYSQL_BOT_MODE = "BOT_mode"
+MYSQL_BOT_CRYPTO = "BOT_crypto"
+MYSQL_BOT_JV = "BOT_jv"
+MYSQL_BOT_AUTO = "BOT_auto"
 # -- <
 MYSQL_PASSWORD = '${MYSQL_PASSWORD}'
 MYSQL_DATABASE = '${MYSQL_DATABASE}'
@@ -125,10 +153,13 @@ SAVE_SUJET = GLOBAL_PATH + "OncheSTUD/communautes/Sujet/"
 # INFO
 VERSION = "0.8.3"
 CREATEUR = ["Récitasse"]
-DDB = '${ddb}'
-TYPE = '${$1}'
+DDB = 'Onche'
+TYPE = '$1'
 EOF
+echo -e "     Fichier de configuration effectuée"
+echo -e "\n"
 
-# Run the python api
-source "${installation_path}/venv/bin/activate"
-nohup python "${installation_path}/WebAPP/API/main.py" &
+# install all types
+echo "===== GÉNÉRATION MÉTADONNÉES BDD ====="
+python "${installation_path}"/bin/fonctions/xml_bdd.py
+echo "      Génération terminée"

@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<types>
+    <record name="UNIT_TIME" type="tuple">
+        <field value="MICROSECOND" type="str"/>
+        <field value="SECOND" type="str"/>
+        <field value="MINUTE" type="str"/>
+        <field value="HOUR" type="str"/>
+        <field value="DAY" type="str" default="1"/>
+        <field value="WEEK" type="str"/>
+        <field value="MONTH" type="str"/>
+        <field value="QUARTER" type="str"/>
+        <field value="YEAR" type="str"/>
+    </record>
+</types>

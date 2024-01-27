@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<operations>
+    <operationlist name="DATE">
+        <operator name="ADD_TIME_TO_DATE" description="Ajoute une valeur de temps (interval) à une date" type="datetime">
+            <operation>
+                <parameters>
+                    <parameter type="datetime">date</parameter>
+                    <parameter type="int" container="INTERVAL">interval</parameter>
+                    <parameter type="UNIT_TIME" opt="1" linked="1">unit</parameter>
+                </parameters>
+                <function>ADDDATE</function>
+            </operation>
+        </operator>
+        <operator name="ADD_TIME" description="Aoute une date à une date" type="datetime">
+            <operation>
+                <parameters>
+                    <parameter type="datetime">date1</parameter>
+                    <parameter type="datetime">date2</parameter>
+                </parameters>
+                <function>ADDTIME</function>
+            </operation>
+        </operator>
+        <operator name="CONVERT_TIME_ZONE" description="Convertir une date dans zone temporelle à une autre" type="datetime">
+            <operation>
+                <parameters>
+                    <parameter type="datetime">date</parameter>
+                    <parameter type="str">original_timezone</parameter>
+                    <parameter type="str">final_timezone</parameter>
+                </parameters>
+                <function>CONVERT_TZ</function>
+            </operation>
+        </operator>
+        <operator name="CURRENT_DATE" description="Retourne la date actuelle (la date, pas l'horraire !)" type="datetime">
+            <operation>
+                <parameters>
+                    <parameter></parameter>
+                </parameters>
+                <function>CURDATE</function>
+            </operation>
+        </operator>
+        <operator name="CURRENT_TIME" description="Retourne l'horraire actuelle (l'horraire, pas la date !)" type="datetime">
+            <operation>
+                <parameters>
+                    <parameter></parameter>
+                </parameters>
+                <function>CURTIME</function>
+            </operation>
+        </operator>
+    </operationlist>
+</operations>

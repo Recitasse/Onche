@@ -1,5 +1,6 @@
 import os
 import subprocess
+import inspect
 
 from datetime import datetime
 from mysql.connector import connect as connect_server
@@ -7,6 +8,7 @@ from sqlite3 import connect as connect_local
 
 from config.Variables.variables import *
 from utils.logger import logger
+
 
 class BDD:
     def __init__(self, user: str = MYSQL_USER, host: str = MYSQL_HOST,
@@ -376,8 +378,18 @@ class BDD:
             cursor.close()
 
         if isinstance(ind_, str):
+            vals = []
             if ind_ == "all":
-                vals = [value[0] for value in resultats]
+                for value in resultats:
+                    tmp_ = []
+                    if len(value) > 1:
+                        if inspect.currentframe().f_back.f_code.co_name == "get_table_info":
+                            vals.append(list(value))
+                        else:
+                            tmp_ = [val for val in value]
+                            vals.append(tmp_)
+                    else:
+                        vals = [value[0] for value in resultats]
                 return vals
             else:
                 self._logger.warning("La l'indice demandé est erroné, indice 0 par défaut.")
@@ -416,6 +428,11 @@ class BDD:
         except Exception as e:
             self._logger.error(f"Une erreur est survenue : {e};")
         return data
+
+    def get_table_info(self, table: str) -> list:
+        """Renvoie les informations de la table, noms et types"""
+        query = f"DESCRIBE {table};"
+        return self.get_results(query, ind_="all")
 
     # WEB methods
 
