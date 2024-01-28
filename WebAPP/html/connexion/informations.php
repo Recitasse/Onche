@@ -1,6 +1,6 @@
 <?php
 include_once "header.php";
-include "function/style.php";
+include "../function/style.php";
 
 $forum_array = array(0 => "babla général", 1 => "suggestions et réclamations", 2 => "plus de 18 ans", 3 => "goulag", 4 => "forum des anciens", 5 => "modération", 6 => "finance & crypto", 7 => "jeux vidéo", 8 => "autonomie & lifehack");
 
@@ -33,7 +33,7 @@ $data3 = json_decode($response, true);
     ?>
     <div class="babel">
     <div class="babel_titre">
-        <p class="terminal"><img src="images/icon/main.ico" alt="icone" style="height: 2.5em; vertical-align: middle;"> Terminal de la base de donnée</p>
+        <p class="terminal"><img src="../images/icon/main.ico" alt="icone" style="height: 2.5em; vertical-align: middle;"> Terminal de la base de donnée</p>
     </div>
     <div class="linux">
         <?php
@@ -64,5 +64,5 @@ $data3 = json_decode($response, true);
 </div>
     </div>
     <?php
-include_once "footer.php";
+include_once "../footer.php";
 ?>

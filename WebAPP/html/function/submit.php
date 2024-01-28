@@ -13,15 +13,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $response = file_get_contents($api_url);
         $data = json_decode($response, true);
         if ($data == TRUE) {
-            header("location: ../connexion.php?result=1&reload=1");
+            header("location: ../connexion/connexion.php?result=1&reload=1");
             exit;
         }
-        header("location: ../connexion.php?result=0&reload=1");
+        header("location: ../connexion/connexion.php?result=0&reload=1");
         exit;
     }
     elseif (isset($_POST['connect_bdd']) && !empty($_POST['connect_bdd'])) {
         if (!isset($_POST['pass']) || empty($_POST['pass'])) {
-            header("location: ../connexion.php?errpass=1");
+            header("location: ../connexion/connexion.php?errpass=1");
         }
         $pass = $_POST['pass'];
         $api_url = 'http://localhost:5000/api/babelonche/mysql/start/'.$pass;
@@ -29,10 +29,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $data = json_decode($response, true);
         $_SESSION['mysql'] = TRUE;
         if ($data == TRUE) {
-            header("location: ../connexion.php?start=1&reload=1");
+            header("location: ../connexion/connexion.php?start=1&reload=1");
             exit;
         }
-        header("location: ../connexion.php?errsub=1");
+        header("location: ../connexion/connexion.php?errsub=1");
         exit;
     }
     elseif (isset($_POST['deconnect_bdd']) && !empty($_POST['deconnect_bdd'])) {
