@@ -5,7 +5,7 @@ from pathlib import Path
 import xml.etree.ElementTree as ET
 
 from config.Variables.variables import *
-from bin.OQG_Operator.xml_type_reader import get_config, get_default, get_type_from_dict
+from bin.fonctions.xml_type_reader import get_config, get_default, get_type_from_dict
 
 
 class PythonOperatorGenerator:

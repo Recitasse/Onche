@@ -450,3 +450,20 @@ Traceback (most recent call last):
   File "/home/raphael/Bureau/Programmation/Python/Onche/BDD/bdd.py", line 575, in __init__
     raise Exception(f"Echec de la connexion à la base de donnée : {e}")
 Exception: Echec de la connexion à la base de donnée : unable to open database file
+ * Serving Flask app 'main'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 279-331-283
+127.0.0.1 - - [29/Jan/2024 21:37:31] "[33mGET / HTTP/1.1[0m" 404 -
+127.0.0.1 - - [29/Jan/2024 21:37:31] "GET /api/babelonche/mysql/state HTTP/1.1" 200 -
+127.0.0.1 - - [29/Jan/2024 21:37:31] "GET /api/babelonche/mysql/info HTTP/1.1" 200 -
+127.0.0.1 - - [29/Jan/2024 21:37:33] "GET /api/babelonche/database/info HTTP/1.1" 200 -
+127.0.0.1 - - [29/Jan/2024 21:37:34] "[33mGET / HTTP/1.1[0m" 404 -
+127.0.0.1 - - [29/Jan/2024 21:37:34] "GET /api/babelonche/mysql/state HTTP/1.1" 200 -
+127.0.0.1 - - [29/Jan/2024 21:37:34] "GET /api/babelonche/mysql/info HTTP/1.1" 200 -
+127.0.0.1 - - [29/Jan/2024 21:37:35] "GET /api/babelonche/database/info HTTP/1.1" 200 -
+127.0.0.1 - - [29/Jan/2024 21:37:35] "GET /api/babelonche/general/info HTTP/1.1" 200 -
