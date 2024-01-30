@@ -6,14 +6,17 @@ from subprocess import run, PIPE
 from config.Variables.variables import *
 from BDD.bdd import BDD
 
-def get_mysql_status() -> list:
-    """Renvoie l'état sous forme de texte de la connexion mysql"""
-    try:
-        result = run(["systemctl", "status", "mysql"], stdout=PIPE, stderr=PIPE, text=True)
-        output = result.stdout
-    except Exception as e:
-        output = f"Erreur : {e}"
-    return output.split("\n")
+def get_mysql_status() -> dict:
+    """Renvoie l'état de la connexion mysql sous forme de texte"""
+    _RUN = False
+    result = run(["systemctl", "status", "mysql"], stdout=PIPE, stderr=PIPE, text=True)
+    output = result.stdout
+    if result.stderr != "":
+        raise Exception(result.stderr)
+    if ''.join(output).find("running") > 0:
+        _RUN = True
+    output = {"state": output, "running": _RUN}
+    return output
 
 def get_mysql_connexion() -> bool:
     """Renvoie le booléen de la connexion à la base de donnée"""

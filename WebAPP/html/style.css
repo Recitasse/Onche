@@ -173,11 +173,21 @@ div.main_titre img {
 
 .page {
     padding: 10px;
-    margin-top: 20px;
-    margin-bottom: 90px;
+    height: 100%;
     background-color: #fff7f2;
     border-bottom: 2px solid#14d7ff;
-    border-top: 2px solid#14d7ff;
+}
+
+img.erreur-icone {
+    height: 350px;
+    width: 350px;
+}
+
+.erreur-cont
+{
+    display: flex;
+    justify-content: center;
+    text-align: center;
 }
 
 p {

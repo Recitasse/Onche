@@ -23,9 +23,10 @@ def check_GPU():
 
 
 if __name__ == "__main__":
+    check_GPU()
     nom = "test"
-    sentences = Discours().take_discours_from_users(message_lim=10000)
-    sentences = random.sample(sentences, 5000)
+    sentences = Discours().take_discours_from_users(message_lim=15000)
+    sentences = random.sample(sentences, 15000)
 
     tokenizer = Tokenizer(filters='')
     tokenizer.fit_on_texts(sentences)
@@ -54,8 +55,8 @@ if __name__ == "__main__":
 
         # Créez un modèle LSTM simple
         model = Sequential()
-        model.add(Embedding(total_mots, 50, input_length=max_sequence_length-1))
-        model.add(LSTM(50, dropout=0.3, recurrent_dropout=0.2))
+        model.add(Embedding(total_mots, 15, input_length=max_sequence_length-1))
+        model.add(LSTM(256, dropout=0.1, recurrent_dropout=0.2))
         model.add(Dense(total_mots, activation='softmax'))
 
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])

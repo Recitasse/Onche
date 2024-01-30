@@ -85,16 +85,15 @@ class BDD:
             FileNotFoundError: Le fichier n'existe pas ou son path est invalide
             Exception: L'import côté sql a échoué
         """
-
         if not (path.endswith(".sql")) and not os.path.exists(path):
             self._logger.error(f"Le fichier {path} n'est pas valide ou n'existe pas.")
             raise FileNotFoundError(f"Le fichier {path} n'est pas valide ou n'existe pas.")
 
         try:
-            subprocess.run(f"mysql -u{MYSQL_USER} -p{MYSQL_PASSWORD} {self.database} < {path}.sql", shell=True)
+            subprocess.run(f"mysql -u{MYSQL_USER} -p{MYSQL_PASSWORD} {self.database} < {path}", shell=True)
             self._logger.info(f"Table importée : {path}")
         except subprocess.CalledProcessError as e:
-            self._logger.info(f"mysql -u{MYSQL_USER} -p{MYSQL_PASSWORD} {self.database} < {path}.sql")
+            self._logger.info(f"mysql -u{MYSQL_USER} -p{MYSQL_PASSWORD} {self.database} < {path}")
             self._logger.error(f"Impossible d'importer la base de donnée {path.split('/')[-1]} : {e}")
             raise Exception(f"Impossible d'importer la base de donnée {path.split('/')[-1]} : {e}")
 
@@ -573,3 +572,6 @@ class LocalBDD(BDD):
         except Exception as e:
             self._logger.error(f"Echec de la connexion à la base de donnée : {e}")
             raise Exception(f"Echec de la connexion à la base de donnée : {e}")
+        
+#d = BDD()
+#print(d.import_table("BDD/import/server/bdd_Onche.sql"))

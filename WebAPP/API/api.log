@@ -1,0 +1,104 @@
+api: 2024-02-01 23:02:16,779 - INFO - main.py - Line: 22 - Fonction debug
+api: 2024-02-01 23:02:59,716 - INFO - main.py - Line: 23 - Fonction debug
+api: 2024-02-01 23:04:02,729 - INFO - main.py - Line: 25 - Fonction debug
+api: 2024-02-01 23:08:07,328 - INFO - main.py - Line: 25 - Fonction debug
+api: 2024-02-01 23:08:25,938 - INFO - main.py - Line: 25 - Fonction debug
+api: 2024-02-01 23:08:26,531 - INFO - main.py - Line: 25 - Fonction debug
+api: 2024-02-01 23:09:35,894 - INFO - main.py - Line: 25 - Fonction debug
+api: 2024-02-01 23:10:17,475 - INFO - main.py - Line: 25 - Fonction debug
+api: 2024-02-01 23:12:31,745 - INFO - main.py - Line: 25 - Fonction debug
+api: 2024-02-01 23:12:41,546 - ERROR - main.py - Line: 27 - Erreur id 0: Unknown command verb statu.
+
+api: 2024-02-02 19:37:07,687 - ERROR - bdd.py - Line: 62 - Echec de la connexion à la base de donnée Onche2 : 1049 (42000): Unknown database 'Onche2'
+api: 2024-02-02 19:37:07,782 - ERROR - main.py - Line: 27 - Erreur id 0: Unknown command verb statu.
+
+api: 2024-02-02 19:37:27,039 - ERROR - bdd.py - Line: 62 - Echec de la connexion à la base de donnée Onche2 : 1049 (42000): Unknown database 'Onche2'
+api: 2024-02-02 19:46:02,767 - INFO - main.py - Line: 25 - Fonction debug
+api: 2024-02-02 19:51:25,559 - INFO - main.py - Line: 25 - Fonction debug
+api: 2024-02-02 19:51:25,571 - ERROR - main.py - Line: 27 - Erreur id 0: 'list' object is not callable
+api: 2024-02-02 19:51:25,584 - ERROR - main.py - Line: 27 - Erreur id 0: 'list' object is not callable
+api: 2024-02-02 19:51:25,596 - INFO - main.py - Line: 25 - Fonction debug
+api: 2024-02-02 19:52:20,236 - INFO - main.py - Line: 25 - Fonction debug
+api: 2024-02-02 19:52:20,248 - ERROR - main.py - Line: 27 - Erreur id 0: 'list' object is not callable
+api: 2024-02-02 19:52:20,259 - ERROR - main.py - Line: 27 - Erreur id 0: 'list' object is not callable
+api: 2024-02-02 19:52:20,270 - INFO - main.py - Line: 25 - Fonction debug
+api: 2024-02-02 19:54:24,174 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 19:54:24,186 - ERROR - main.py - Line: 28 - Erreur id 0: 'list' object is not callable
+api: 2024-02-02 19:54:24,197 - ERROR - main.py - Line: 28 - Erreur id 0: 'list' object is not callable
+api: 2024-02-02 19:54:24,210 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 19:58:10,278 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 19:58:10,305 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 19:59:20,624 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 19:59:20,649 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:00:04,296 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:00:04,307 - ERROR - main.py - Line: 28 - Erreur id 0: get_file_inside_folder() got an unexpected keyword argument 'type'
+api: 2024-02-02 20:00:04,320 - ERROR - main.py - Line: 28 - Erreur id 0: get_file_inside_folder() got an unexpected keyword argument 'type'
+api: 2024-02-02 20:00:04,334 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:00:20,822 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:00:20,833 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:00:20,844 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:00:20,855 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:00:26,916 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:01:05,406 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:03:24,036 - ERROR - bdd.py - Line: 62 - Echec de la connexion à la base de donnée bdd_Onche.sql : 1049 (42000): Unknown database 'bdd_Onche.sql'
+api: 2024-02-02 20:05:40,972 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:05:40,983 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:05:40,995 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:05:41,006 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:05:43,236 - ERROR - bdd.py - Line: 62 - Echec de la connexion à la base de donnée bdd_Onche.sql : 1049 (42000): Unknown database 'bdd_Onche.sql'
+api: 2024-02-02 20:06:28,319 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:06:28,330 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:06:28,341 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:06:28,353 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:06:31,258 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:08:30,523 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:08:30,534 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:08:30,545 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:08:30,556 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:08:33,297 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:08:33,308 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:08:33,321 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:08:33,335 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:08:50,078 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:09:46,304 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:12:02,530 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:12:02,541 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:12:02,552 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:12:02,565 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:13:30,128 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:13:30,139 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:13:30,152 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:13:30,166 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:14:54,942 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:14:54,953 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:14:54,965 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:14:54,976 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:15:27,231 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:15:27,242 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:15:27,253 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:15:27,264 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:15:30,287 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:16:57,333 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:17:15,560 - ERROR - bdd.py - Line: 62 - Echec de la connexion à la base de donnée Onche2 : 1049 (42000): Unknown database 'Onche2'
+api: 2024-02-02 20:19:24,035 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:19:24,046 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:19:24,057 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:19:24,069 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 20:19:26,965 - ERROR - bdd.py - Line: 375 - 1046 (3D000): No database selected
+api: 2024-02-02 20:19:26,965 - ERROR - main.py - Line: 28 - Erreur id 0: 1046 (3D000): No database selected
+api: 2024-02-02 21:51:09,798 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 21:51:09,809 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 21:51:09,821 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 21:51:09,832 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 21:51:13,285 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 21:52:10,985 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 21:56:01,318 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 21:56:01,330 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 21:56:01,342 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 21:56:01,354 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 22:02:39,055 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 22:02:39,067 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 22:02:39,080 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 22:02:39,093 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 22:03:25,123 - INFO - main.py - Line: 26 - Fonction debug
+api: 2024-02-02 22:33:57,704 - ERROR - bdd.py - Line: 62 - Echec de la connexion à la base de donnée Onchev2 : 1049 (42000): Unknown database 'Onchev2'

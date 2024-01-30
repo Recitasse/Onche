@@ -9,10 +9,13 @@ from BDD.bdd import BDD
 def change_database(database: str) -> bool:
     """Change la base de donnée"""
     _ret = False
+
     try:
-        BDD(database=MYSQL_DATABASE).change_bdd(database)
+        BDD().import_table(f"{GLOBAL_PATH}/BDD/import/server/bdd_{database}.sql")
+        BDD().change_bdd(database)
         _ret = change_value_variables("MYSQL_DATABASE", database)
     except Exception as e:
+        print(e)
         return _ret
     return _ret
 

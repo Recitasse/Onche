@@ -26,6 +26,7 @@ sudo apt-get install python3.11
 echo -e "     Python3.11 installé"
 sudo apt install python3 python3-tk
 echo -e "     Python3.11 installé"
+sudo apt install python3.11-venv
 python3.11 -m pip install --upgrade pip
 python3.11 -m pip install virtualenv
 python3.11 -m venv venv
@@ -39,6 +40,8 @@ pip install -r requirements.txt
 pip install --upgrade mysql-connector-python
 echo "     Dépendences installées"
 echo -e "\n"
+touch venv/lib/python3.11/site-packages/route.pth
+echo "$(pwd)" >> venv/lib/python3.11/site-packages/route.pth
 
 # ========================================
 # APache
@@ -54,12 +57,13 @@ echo -e "\n"
 # Installer le domaine
 installation_path=$(pwd)
 echo "===== HTTP DOMAIN SERVER ====="
-sudo chmod -R 755 "${installation_path}"
-sudo chown -R "$USER":"$USER" "${installation_path}/WebAPP/html/"
+sudo chmod +x /home/$USER/
+sudo chmod -R 755 "${installation_path}/WebAPP/html/"
+sudo chown -R "www-data":"www-data" "${installation_path}/WebAPP/html/"
 
 vh_conf_file="/etc/apache2/sites-available/BabelOnche.conf"
 sudo bash -c "cat > $vh_conf_file" <<EOF
-<VirtualHost *:80>
+<VirtualHost 127.0.6.5:80>
         DocumentRoot ${installation_path}/WebAPP/html/
         ServerName BabelOnche
         ServerAlias www.BabelOnche.com
@@ -82,6 +86,7 @@ if [ "$1" == "local" ]; then
     echo "Base de donnée locale sélectionnée."
 elif [ "$1" == "server" ]; then
     echo "Base de donnée server sélectionnée."
+    MYSQL_USER="onche"
     MYSQL_PASSWORD="OnchePass1#"
     MYSQL_DATABASE="Onche"
     SQL_SCRIPT="BDD/schema/DDBONCHE.sql"
@@ -89,6 +94,9 @@ elif [ "$1" == "server" ]; then
     sudo apt install mysql-server
     echo "     Installation MySQL terminée"
     sudo apt install sqlite
+    #mysql -u root -p -e "CREATE USER '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_PASSWORD';"
+    #mysql -u root -p -e "GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USER'@'localhost';"
+    #mysql -u root -p -e "FLUSH PRIVILEGES;"
     echo -e "     Installation SQLite terminée"
     sudo mysql < "$SQL_SCRIPT"
     sudo systemctl restart mysql.service
@@ -103,13 +111,15 @@ echo -e "\n"
 #sudo .${installation_path}/BDD/export/git-lfs-3.4.1/install.sh
 
 echo "===== GÉNÉRATION DU FICHIER DE CONFIGURATION ====="
+mkdir config/Variables
+touch config/Variables/variables.py
 cat << EOF > "config/Variables/variables.py"
 # CONFIG
 GLOBAL_PATH = "${installation_path}/"
 
 # Mysql
 SAVE_FREQUENCY = 10
-MYSQL_USER = 'onche'
+MYSQL_USER = '${MYSQL_USER}'
 # -- > BOT
 MYSQL_BOT_BLABLA = "BOT_blabla"
 MYSQL_BOT_SUGG = "BOT_sugg"
@@ -131,6 +141,7 @@ SALT = "1kd0S"
 
 # logger
 PATH_BDD_LOG = GLOBAL_PATH + "BDD/bdd.log"
+PATH_API_LOG = GLOBAL_PATH + "WebAPP/API/api.log"
 PATH_SCRAPPER_LOG = GLOBAL_PATH + "webscrapper/scrapper.log"
 PATH_WEB_BROWSER = GLOBAL_PATH + "webscrapper/browser.log"
 
