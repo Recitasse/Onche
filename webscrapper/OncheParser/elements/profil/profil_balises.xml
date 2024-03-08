@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<balises onche-version="3.8.4h">
+    <profil>
+        <join type="date">
+            <xpath>//div[@class='profile-blocs']/div[1]/div[2]/div[2]/text()</xpath>
+            <clean> (un an)</clean>
+        </join>
+        <last type="date">
+            <xpath>//div[@class='profile-blocs']/div[1]/div[3]/div[2]/text()</xpath>
+            <clean></clean>
+        </last>
+        <messages type="int">
+            <xpath>//div[@class='profile-blocs']/div[1]/div[4]/div[2]/text()</xpath>
+            <clean></clean>
+        </messages>
+        <badges type="tuple">
+            <xpath>//div[@class='profile-badges']/img/@title</xpath>
+            <clean></clean>
+        </badges>
+        <niveau type="int">
+            <xpath>//div[@class='profile-cover-badge']/text()</xpath>
+            <clean>Niveau </clean>
+        </niveau>
+    </profil>
+</balises>

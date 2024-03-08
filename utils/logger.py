@@ -1,6 +1,6 @@
 import logging
 
-def logger(output: str, name: str, verbose: bool):
+def logger(output: str, name: str, verbose: bool = False):
     """Créer la fonction logger pour tout les fichiers
 
     Args:

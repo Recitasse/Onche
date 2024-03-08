@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<balises onche-version="3.8.4h">
+    <html>
+        <balise>br</balise>
+        <balise>b</balise>
+        <balise>u</balise>
+        <balise>i</balise>
+        <balise>s</balise>
+        <balise>center</balise>
+        <balise>spoiler</balise>
+        <balise>niveau</balise>
+    </html>
+    <soup>
+        <division name="content" element="div" class="message-content"/>
+        <division name="signature" element="div" class="signature"/>
+        <division element="div" class="_format _center" value="text" decorator_left="[center]" decorator_right="[/center]"/>
+        <division element="div" class="sticker" value="data-name" decorator_left=":" decorator_right=":"/>
+        <division element="a" class="link" value="href"/>
+        <division element="a" class="link" value="href"/>
+        <division element="div" class="smiley"/>
+        <division element="a" class="_format _mention" value="text"/>
+    </soup>
+</balises>
