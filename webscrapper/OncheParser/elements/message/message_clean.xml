@@ -10,14 +10,13 @@
         <balise>spoiler</balise>
         <balise>niveau</balise>
     </html>
-    <soup>
-        <division name="content" element="div" class="message-content"/>
-        <division name="signature" element="div" class="signature"/>
-        <division element="div" class="_format _center" value="text" decorator_left="[center]" decorator_right="[/center]"/>
-        <division element="div" class="sticker" value="data-name" decorator_left=":" decorator_right=":"/>
-        <division element="a" class="link" value="href"/>
-        <division element="a" class="link" value="href"/>
-        <division element="div" class="smiley"/>
-        <division element="a" class="_format _mention" value="text"/>
+    <soup name="message">
+        <division name="content" element="div" class="message-content" decorator_left="" decorator_right=""/>
+        <division name="sticker" element="div" class="sticker" value="data-name" decorator_left=":" decorator_right=":"/>
+        <division element="div" class="_format _niveau" value="raw"/>
+        <division name="gif" element="img" value="src" decorator_left="[gif:" decorator_right="]">
+            <clean></clean>
+        </division>
+        <exclude element="div" class="signature"/>
     </soup>
 </balises>

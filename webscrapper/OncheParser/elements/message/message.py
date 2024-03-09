@@ -11,25 +11,15 @@ from config.Variables.variables import *
 
 class Message:
     def __init__(self, etree_element) -> None:
-        self.hard_cleaner = [{'hard': "/>", 'to_set': '>'}, 
-                             {'hard': "\n ", 'to_set': '\n'},
-                             {'hard': " \n", 'to_set': '\n'},
-                             {'hard': "\n<", 'to_set': '<'}, 
-                             {'hard': ">\n", 'to_set': '>'}]
-
         self.message_global = ""
         self.__define_global_message(etree_element)
-
-    def __hard_cleaner(self, text: str) -> str:
-        for hard_cleaner in self.hard_cleaner:
-            text = text.replace(hard_cleaner['hard'], hard_cleaner['to_set'])
-        return text
 
     def __define_global_message(self, etree_element) -> str:
         if etree_element is not None:
             self.message_load = [el for el in etree_element]
         for el in etree_element:
             self.message_global += html.tostring(el, encoding='unicode')
+        self.message_global = self.__clean_html_to_text(self.message_global)
 
     def __get_balises(self):
         balise_file = f"{GLOBAL_PATH}webscrapper/OncheParser/elements/message/message_clean.xml"
@@ -37,34 +27,37 @@ class Message:
             xml_content = xml_balises.read()
         self.balises = ET.fromstring(xml_content)
 
-    def clean_balises_html(self) -> str:
-        self.__get_balises()
-        if self.message_global is None:
-            return "" 
-        _message = self.__hard_cleaner(self.message_global)
-        html_soup = BeautifulSoup(_message, 'html.parser')
-        
-        for balise in self.balises.findall('.//soup/*'):
-            el = balise.get("element")
-            class_ = balise.get("class")
-            value = balise.get("value")
-            decorator_left = balise.get("decorator_left")
-            decorator_right = balise.get("decorator_right")
 
-            _soup_find_elements = html_soup.find_all(el, class_=class_)
-            for message in _soup_find_elements:
-                text_to_replace = self.__hard_cleaner(message.prettify().strip())
-                if message and value in message.attrs and message.prettify().strip().find(text_to_replace):
-                    if decorator_left and decorator_right:
-                        _message = _message.replace(text_to_replace, f"{decorator_left}{message[value]}{decorator_right}")
-                    else:
-                        _message = _message.replace(text_to_replace, message[value])
-                elif value == "text":
-                    _message = _message.replace(text_to_replace, message.prettify())
+
+    def clean_balises_html(self, name:str) -> str:
+        self.__get_balises()
+        _message = self.message_global
+        if name not in ["message", "signature"]:
+            raise ValueError(f'Le type doit soit être "message" soit "signature"')
+        for elements in self.balises.findall(f'.//soup[@name="{name}"]'):
+            for divisions in elements:
+                div_ = divisions.get("element")
+                class_ = divisions.get("class")
+                if divisions.tag == "exclude":
+                    text_to_delete = BeautifulSoup(_message, "html.parser").find(div_, class_=class_)
+                    if text_to_delete:
+                        text_to_delete = self.__clean_html_to_text(text_to_delete.prettify())
+                        _message = _message.replace(text_to_delete, "")
+                elif divisions.tag == "division":
+                    decorator_left = divisions.get("decorator_left")
+                    decorator_right = divisions.get("decorator_right")
+                    value = divisions.get("value")
+                    text_to_replace = BeautifulSoup(_message, "html.parser").find_all(div_, class_=class_)
+                    if text_to_replace != []:
+                        for element_to_replace in text_to_replace:
+                            if value in element_to_replace.attrs:
+                                text_to_replace_final = self.__clean_html_to_text(element_to_replace.prettify())
+                                _message = _message.replace(text_to_replace_final, f'{decorator_left}{element_to_replace[value]}{decorator_right}')
             print(_message)
-            
         return ""
-            
+
+
+
     def sgt_to_text(self, text: str) -> str:
         self.__get_balises()
         divs = self.balises.find(".//division[@name='signature']")
@@ -91,4 +84,10 @@ class Message:
 
         return text
 
-
+    @staticmethod
+    def __clean_html_to_text(text: str) -> str:
+        text = re.sub(r'>\s+<', '><', text)
+        text = re.sub(r'>\s+', '>', text)
+        text = re.sub(r'\s+<', '<', text)
+        text = re.sub(r'<img\s.*?/>', lambda m: m.group(0)[:-2] + '>', text)
+        return ''.join([element for element in list(text) if element != '\n'])

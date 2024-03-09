@@ -29,7 +29,6 @@ class topicPayload(Payload):
             print(f"message n°{i}")
 
             for child in topic_elements:
-                print(child.tag)
                 XPATH = child.find('xpath').text
                 fnd_elem = child.find("clean")
                 is_message = child.get("is_message")
@@ -47,7 +46,7 @@ class topicPayload(Payload):
 
                 if is_message == "1":
                     _tmp_message = Message(text)
-                    _tmp_message.clean_balises_html()
+                    _tmp_message.clean_balises_html(child.tag)
                     """if child.tag == "signature":
                         tmp_.update({"signature": _tmp_message.sgt_to_text(text)})
                         print(tmp_['signature'])
