@@ -1,22 +1,31 @@
 <?xml version="1.0" ?>
 <balises onche-version="3.8.4h">
-    <html>
-        <balise>br</balise>
-        <balise>b</balise>
-        <balise>u</balise>
-        <balise>i</balise>
-        <balise>s</balise>
-        <balise>center</balise>
-        <balise>spoiler</balise>
-        <balise>niveau</balise>
-    </html>
     <soup name="message">
-        <division name="content" element="div" class="message-content" decorator_left="" decorator_right=""/>
-        <division name="sticker" element="div" class="sticker" value="data-name" decorator_left=":" decorator_right=":"/>
-        <division element="div" class="_format _niveau" value="raw"/>
-        <division name="gif" element="img" value="src" decorator_left="[gif:" decorator_right="]">
-            <clean></clean>
-        </division>
-        <exclude element="div" class="signature"/>
+        <include>
+            <fields>
+                <division confname="GIF">
+                    <field element="div" class="_format _gif"></field>
+                    <field element="img" value="src">
+                        <attrs>
+                            <attr name="alt" value="GIF"/>
+                        </attrs>
+                    </field>
+                </division>
+                <division confname="sticker">
+                    <field element="div" class="sticker" value="data-name" decorator_left=":" decorator_right=":"></field>
+                </division>
+                <division>
+                    <field element="b" decorator_left="[b]" decorator_right="[/b]"></field>
+                </division>
+                <division>
+                    <field element=""></field>
+                </division>
+            </fields>
+        </include>
+        <exclude>
+            <fields>
+                <field element="div" class="signature"></field>
+            </fields>
+        </exclude>
     </soup>
 </balises>

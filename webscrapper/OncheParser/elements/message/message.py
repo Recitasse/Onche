@@ -38,22 +38,29 @@ class Message:
             for divisions in elements:
                 div_ = divisions.get("element")
                 class_ = divisions.get("class")
+                text_to_delete = BeautifulSoup(_message, "html.parser").find(div_, class_=class_)
+
                 if divisions.tag == "exclude":
-                    text_to_delete = BeautifulSoup(_message, "html.parser").find(div_, class_=class_)
                     if text_to_delete:
                         text_to_delete = self.__clean_html_to_text(text_to_delete.prettify())
                         _message = _message.replace(text_to_delete, "")
+
                 elif divisions.tag == "division":
                     decorator_left = divisions.get("decorator_left")
                     decorator_right = divisions.get("decorator_right")
                     value = divisions.get("value")
+
                     text_to_replace = BeautifulSoup(_message, "html.parser").find_all(div_, class_=class_)
+                    print(text_to_replace)
                     if text_to_replace != []:
                         for element_to_replace in text_to_replace:
+                            text_to_replace_final = self.__clean_html_to_text(element_to_replace.prettify())
                             if value in element_to_replace.attrs:
-                                text_to_replace_final = self.__clean_html_to_text(element_to_replace.prettify())
                                 _message = _message.replace(text_to_replace_final, f'{decorator_left}{element_to_replace[value]}{decorator_right}')
-            print(_message)
+                            if value == "raw":
+                                _message = _message.replace(text_to_replace_final, f'{decorator_left}{self.__clean_html_to_text(element_to_replace.prettify())}{decorator_right}')
+
+        #print("message : ", _message)
         return ""
 
 
