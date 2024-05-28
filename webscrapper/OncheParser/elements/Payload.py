@@ -46,6 +46,6 @@ class Payload:
             xml_content = xml_balises.read()
         return ET.fromstring(xml_content)
 
-    def __get_version(self) -> str:
-        """Renvoie la version de Onche"""
+    @property
+    def get_version(self):
         return self._root_profiles.attrib.get('onche-version')

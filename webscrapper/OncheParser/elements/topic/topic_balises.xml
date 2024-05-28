@@ -23,4 +23,8 @@
             <xpath>//div[@class='message']/div[@class='message answer']/@data-username</xpath>
         </response>
     </topic>
+    <table name="Onchois">
+        <division name="pseudonyme">
+        </division>
+    </table>
 </balises>
