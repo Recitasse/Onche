@@ -4,6 +4,17 @@
         <join type="date">
             <xpath>//div[@class='profile-blocs']/div[1]/div[2]/div[2]/text()</xpath>
             <clean> (un an)</clean>
+            <clean> (une heure)</clean>
+            <clean> (une minute)</clean>
+            <clean> (une seconde)</clean>
+            <clean> (un mois)</clean>
+            <clean> (un jour)</clean>
+            <clean re="\((\d+) ans\)"></clean>
+            <clean re="\((\d+) mois\)"></clean>
+            <clean re="\((\d+) heures\)"></clean>
+            <clean re="\((\d+) minutes\)"></clean>
+            <clean re="\((\d+) jours\)"></clean>
+            <clean re="\((\d+) secondes\)"></clean>
         </join>
         <last type="date">
             <xpath>//div[@class='profile-blocs']/div[1]/div[3]/div[2]/text()</xpath>

@@ -1,81 +1,68 @@
-import os
-import re
-import xml.etree.ElementTree as ET
 import requests
-
-from lxml import html, etree
-from bs4 import BeautifulSoup
-from datetime import datetime
-from utils.logger import logger
-from webscrapper.OncheParser.elements.Payload import Payload
-from webscrapper.OncheParser.elements.message.message import Message
+from html import unescape
+import re
 
 from config.Variables.variables import *
 
-class topicPayload(Payload):
-    def __init__(self) -> None:
-        super().__init__()
+from logging import Logger
+from utils.logger import logger
+from webscrapper.OncheParser.functions import *
 
-    def get_payload(self, link: str, page: int):
-        """Obtient le payload d'un board via son pseudo"""
-        DATA = {}
-        topic_elements = self._root_topics.find('.//topic')
-        msg_root = self._root_topics.find('topic').get("root")
-        messages = self.__load_topic(link, page).xpath(msg_root)
+from dataclasses import dataclass, field
+from typing import ClassVar
 
-        for i, message in enumerate(messages):
-            message_element = etree.ElementTree(message)
-            tmp_ = {}
-            print(f"message n°{i}")
+@dataclass
+class topicPayload:
+    link: str = field(init=True, default=str)
 
-            for child in topic_elements:
-                print(child.tag)
-                XPATH = child.find('xpath').text
-                fnd_elem = child.find("clean")
-                is_message = child.get("is_message")
+    balises_topics: ClassVar[str] = f"{GLOBAL_PATH}webscrapper/OncheParser/elements/topic/topic_balises.xml"
+    balises_messages: ClassVar[str] = f"{GLOBAL_PATH}webscrapper/OncheParser/elements/topic/message_balises.xml"
+    topics_elements: ClassVar[ET.Element] = None
+    messages_elements: ClassVar[ET.Element] = None
 
-                text = message_element.xpath(XPATH)[-1] if len(message_element.xpath(XPATH)) != 0 else ""
-                if fnd_elem.text:
-                    text = [el.replace(fnd_elem.text, "") for el in text]
-
-                if fnd_elem.get("re"):
-                    if fnd_elem.get("time"):
-                        _occ_date = re.findall(fnd_elem.get("re"), text)
-                        text = _occ_date[0] if len(_occ_date) != 0 else ""
-                    else:
-                        text = [re.search(fnd_elem.get("re"), el) for el in text]
-
-                if is_message == "1":
-                    _tmp_message = Message(text)
-                    _tmp_message.clean_balises_html()
-                    """if child.tag == "signature":
-                        tmp_.update({"signature": _tmp_message.sgt_to_text(text)})
-                        print(tmp_['signature'])
-                    if child.tag == "message":
-                        tmp_.update({"message": _tmp_message.msg_to_text(text)})
-                        print(tmp_['message'])"""
+    DATA: dict = field(init=False, default=None)
+    messages: list = field(init=False, default=None)
+    topic_logger: Logger = field(default=Logger, init=False)
     
-                if len(text) == 1:
-                    if child.get("type") == "date":
-                        tmp_.update({child.tag: datetime.strptime(text[0], "%d/%m/%Y %H:%M:%S")})
-                    elif child.get("type") == "int":
-                        tmp_.update({child.tag: int(text[0])})
-                    else:
-                        tmp_.update({child.tag: text[0]})
-                if len(text) > 1:
-                    tmp_.update({child.tag: tuple(text)})
-                else:
-                    self.logger.error(f"Impossible d'obtenir une liste vide")
-            DATA.update({i: tmp_})
-            print("\n\n")
-        self.payload = DATA
-        
+    def __post_init__(self):
+        topicPayload.topics_elements = ET.parse(topicPayload.balises_topics).getroot()
+        topicPayload.messages_elements = ET.parse(topicPayload.balises_messages).getroot()
+        self.topic_logger = logger(f"{PATH_LOG}/topic_scrapper.log", "TOPIC SCRAPPER", False)
+        self.DATA = {}
 
-    def __load_topic(self, link: str, page: int):
+
+    def get_message(self, message, page: int = 1):
+        message_elements = topicPayload.messages_elements.find(f".//message")
+        global_message = etree.tostring(message, pretty_print=True).decode("utf-8")
+        global_message = clean_signature(global_message)
+        global_message = sticker_message(message_elements, message, self.topic_logger, global_message)['message']
+        global_message = smiley_svg_message(message_elements, message, self.topic_logger, global_message)
+        global_message = gif_message(message_elements, message, self.topic_logger, global_message)
+        global_message = smiley_message(message_elements, message, self.topic_logger, global_message)
+        global_message = image_message(message_elements, message, self.topic_logger, global_message)
+        global_message = link_message(message_elements, message, self.topic_logger, global_message)
+        global_message = normal_message(global_message)
+        global_message = message_to_onche(message_elements, self.topic_logger, global_message)
+        return unescape(global_message)
+
+    def get_topic_payload(self, page: int = 1) -> dict:
+        GLOBAL = {}
+        topic_elements = topicPayload.topics_elements.find(f".//topic")
+        topic = self.__load_topic(page)
+        messages = list(non_message_cleaner(topic_elements, topic, self.topic_logger)['message'])
+        for i, message in enumerate(messages):
+            global_message = self.get_message(message, page)
+            DATA = non_message_cleaner(topic_elements, message, self.topic_logger)
+            print(f"message {i}")
+            print(global_message)
+            print(DATA['pseudo'][i])
+            print("\n============================\n")
+
+
+    def __load_topic(self, page: int):
         """Renvoie le text html etree d'un topic"""
-        return etree.HTML(str(BeautifulSoup(requests.get(f"{link}/{page}").content, "html.parser")))
+        return etree.HTML(str(BeautifulSoup(requests.get(f"{self.link}/{page}").content, "html.parser")))
 
 if __name__ == "__main__":
-    p = topicPayload()
-    p.get_payload("https://onche.org/topic/467663/dragon-ball-quand-meme", 1)
-    #print(p.payload)
+    p = topicPayload("https://onche.org/topic/267079/rando-la-breche-de-roland")
+    p.get_topic_payload(1)

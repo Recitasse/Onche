@@ -1,0 +1,52 @@
+<?xml version="1.0" ?>
+<balises onche-version="3.8.4h">
+    <message>
+        <root>
+            <clean re='&lt;div class="message-content"&gt;(.*?)&lt;\/div&gt;'></clean>
+        </root>
+        <sticker>
+            <xpath>//div[@class='sticker']</xpath>
+            <clean re='&lt;div.*?class="sticker".*?&gt;(.*?)&lt;/div&gt;'></clean>
+            <infos re='&lt;div class="sticker" data-collection="(\d+)" data-name="([^"]+)"' ></infos>
+        </sticker>
+        <gif>
+            <xpath>//div[@class='_format _gif']</xpath>
+            <clean re='src="([^"]+)"' left="[gif:" right="]"></clean>
+        </gif>
+        <smiley>
+            <xpath>//div[@class='smiley']</xpath>
+            <clean re='&lt;div class="smiley"&gt;\s*&lt;img [^&gt;]*title="([^"]+)'></clean>
+            <total re='&lt;div class="smiley"[^&gt;]*&gt;.*?&lt;/div&gt;'></total>
+        </smiley>
+        <smiley-svg>
+            <xpath>//div[contains(@class, 'smiley') and contains(@class, 'svg')]</xpath>
+            <clean re='&lt;div class="smiley svg"&gt;.*?&lt;img[^&gt;]+title="([^"]+)"'></clean>
+            <replace re='&lt;div class="smiley svg"&gt;.*?(&lt;img[^&gt;]+title="[^"]+"[^&gt;]*&gt;)'></replace>
+        </smiley-svg>
+        <image>
+            <xpath>//a[@class='_format _image']</xpath>
+            <clean re='data-image="([^"]+)"' left='[img:' right=']'></clean>
+        </image>
+        <link>
+            <xpath>//a[@class='link']</xpath>
+            <clean re='&lt;a class="link"[^&gt;]*href="([^"]*)"'></clean>
+            <replace re='&lt;a class="link"[^&gt;]*&gt;(.*?)&lt;/a&gt;'></replace>
+            <youtube re='&lt;a class="link"[^&gt;]*&gt;\s*&lt;div class="youtube"&gt;\s*&lt;iframe[^&gt;]+src="([^"]+)"'></youtube>
+        </link>
+        <html>
+            <balise replace="[b]">&lt;b&gt;</balise>
+            <balise replace="[/b]">&lt;/b&gt;</balise>
+            <balise replace="[/b]">&lt;/b&gt;</balise>
+            <balise replace="[i]">&lt;i&gt;</balise>
+            <balise replace="[/i]">&lt;/i&gt;</balise>
+            <balise replace="[u]">&lt;u&gt;</balise>
+            <balise replace="[/u]">&lt;/u&gt;</balise>
+            <balise replace="[s]">&lt;s&gt;</balise>
+            <balise replace="[/s]">&lt;/s&gt;</balise>
+            <balise replace="[u][/u]">&lt;u/&gt;</balise>
+            <balise replace="[i][/i]">&lt;i/&gt;</balise>
+            <balise replace="[b][/b]">&lt;b/&gt;</balise>
+            <balise replace="[s][/s]">&lt;s/&gt;</balise>
+        </html>
+    </message>
+</balises>

@@ -1,22 +1,26 @@
 <?xml version="1.0" ?>
 <balises onche-version="3.8.4h">
-    <topic root="//div[@class='message']">
-        <pseudo>
-            <xpath>//a[@class='message-username']/text()</xpath>
-            <clean></clean>
-        </pseudo>
-        <message is_message="1">
-            <xpath>//div[@class='message-content']</xpath>
-            <clean></clean>
-            <contain></contain>
+    <topic root="//div[@class='messages']">
+        <message>
+            <pseudo>
+                <xpath>//div[@class='message']/@data-username</xpath>
+                <clean></clean>
+            </pseudo>
+            <message-id>
+                <xpath>//div[@class='message']/@data-id</xpath>
+                <clean></clean>
+            </message-id>
+            <message-content>
+                <xpath>//div[@class='message']/text()</xpath>
+                <clean></clean>
+            </message-content>
+            <date type="date">>
+                <xpath>//div[@class='message']/div[@class='message-bottom']/div[@class='message-date']/@title</xpath>
+                <clean></clean>
+            </date>
         </message>
-        <signature is_message="1">
-            <xpath>//div[@class='signature']</xpath>
-            <clean></clean>
-        </signature>
-        <date type="date">
-            <xpath>//div[@class='message-date']/@title</xpath>
-            <clean re="^Publié le \d{2}/\d{2}/\d{4} à \d{2}:\d{2}:\d{2}$" time="1"></clean>
-        </date>
+        <response>
+            <xpath>//div[@class='message']/div[@class='message answer']/@data-username</xpath>
+        </response>
     </topic>
 </balises>

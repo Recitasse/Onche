@@ -61,7 +61,7 @@ class Message:
                         _message = _message.replace(text_to_replace, message[value])
                 elif value == "text":
                     _message = _message.replace(text_to_replace, message.prettify())
-            print(_message)
+        print(_message)
             
         return ""
             
