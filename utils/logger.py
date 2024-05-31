@@ -1,5 +1,5 @@
 import logging
-from logging.handlers import RotatingFileHandler
+from typing import Callable
 
 def logger(output: str, name: str, verbose: bool = False, max_bytes: int = 10240, backup_count: int = 5):
     """
@@ -25,11 +25,8 @@ def logger(output: str, name: str, verbose: bool = False, max_bytes: int = 10240
     else:
         logger.setLevel(logging.WARNING)
 
-    # Create rotating file handler
-    file_handler = RotatingFileHandler(output, maxBytes=max_bytes, backupCount=backup_count)
-    formatter = logging.Formatter(f'{name}: %(asctime)s - %(levelname)s - %(filename)s - Line: %(lineno)d -\n %(message)s')
-
-    # Set the formatter for the handler
+    file_handler = logging.FileHandler(output)
+    formatter = logging.Formatter(name+': %(asctime)s - %(levelname)s - %(filename)s - Line: %(lineno)d - %(message)s')
     file_handler.setFormatter(formatter)
 
     # Add handler to the logger

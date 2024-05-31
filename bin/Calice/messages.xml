@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+<profil onche-version="3.8.4h" table="messages">
+    <parameters>
+        <settings engine="InnoDB" encoding="utf8mb4" collation="utf8mb4_general_ci"/>
+        <comment>Tous les messages du forum</comment>
+    </parameters>
+    <rows>
+        <row name="id" type="INT" null="False" auto_increment="True"></row>
+        <row name="oid" type="INT" null="False"></row>
+        <row name="user" type="INT" null="False"></row>
+        <row name="topic" type="INT" null="False"></row>
+        <row name="message" type="LONGTEXT" null="False"></row>
+        <row name="touser" type="INT" null="True"></row>
+        <row name="date" type="DATETIME(0)" null="False"></row>
+    </rows>
+    <index>
+        <primary-key name="id"/>
+        <foreign-index>
+            <constraint name="posteur">
+                <foreign-key mode="ASC" visible="True">user</foreign-key>
+                <reference table="onchois">id</reference>
+                <on-delete>NO ACTION</on-delete>
+                <on-update>NO ACTION</on-update>
+            </constraint>
+            <constraint name="sujet">
+                <foreign-key mode="ASC" visible="True">topic</foreign-key>
+                <reference table="topic">id</reference>
+                <on-delete>NO ACTION</on-delete>
+                <on-update>NO ACTION</on-update>
+            </constraint>
+            <constraint name="reponseur">
+                <foreign-key mode="ASC" visible="True">touser</foreign-key>
+                <reference table="onchois">id</reference>
+                <on-delete>NO ACTION</on-delete>
+                <on-update>NO ACTION</on-update>
+            </constraint>
+        </foreign-index>
+    </index>
+</profil>

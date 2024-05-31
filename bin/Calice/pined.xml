@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<profil onche-version="3.8.4h" table="pined">
+    <parameters>
+        <settings engine="InnoDB" encoding="utf8mb4" collation="utf8mb4_general_ci"/>
+        <comment>Répertorie les onchois badgés</comment>
+    </parameters>
+    <rows>
+        <row name="id" type="INT" null="False" auto_increment="True"></row>
+        <row name="userid" type="INT" null="False"></row>
+        <row name="badgeid" type="INT" null="False"></row>
+    </rows>
+    <index>
+        <primary-key name="id"/>
+        <foreign-index>
+            <constraint name="pins">
+                <foreign-key mode="ASC" visible="True">badge</foreign-key>
+                <reference table="badges">badgeid</reference>
+                <on-delete>NO ACTION</on-delete>
+                <on-update>NO ACTION</on-update>
+            </constraint>
+            <constraint name="piners">
+                <foreign-key mode="ASC" visible="True">onchois</foreign-key>
+                <reference table="onchois">userid</reference>
+                <on-delete>NO ACTION</on-delete>
+                <on-update>NO ACTION</on-update>
+            </constraint>
+        </foreign-index>
+    </index>
+</profil>
