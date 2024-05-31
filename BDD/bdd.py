@@ -201,7 +201,7 @@ class BDD:
             finally:
                 cursor.close()
 
-    def add_topic(self, nom:str, user:str, nb:int, lien:str, forum: int) -> None:
+    def add_topic(self, nom: str, user: str, nb: int, lien: str, forum: int) -> None:
         """
         Ajoute un utilisateur dans la base de donnée
 
