@@ -1,4 +1,5 @@
 import logging
+from typing import Callable
 
 def logger(output: str, name: str, verbose: bool):
     """Créer la fonction logger pour tout les fichiers
@@ -13,11 +14,9 @@ def logger(output: str, name: str, verbose: bool):
     else:
         logger.setLevel(logging.ERROR)
 
-    # Create file handler for output to a file
     file_handler = logging.FileHandler(output)
     formatter = logging.Formatter(name+': %(asctime)s - %(levelname)s - %(filename)s - Line: %(lineno)d - %(message)s')
-    
-    # AJout du format
+
     file_handler.setFormatter(formatter)
     logger.addHandler(file_handler)
     return logger
