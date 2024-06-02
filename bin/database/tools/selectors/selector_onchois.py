@@ -2,7 +2,7 @@
    Python class OnchoisBdd générée par OQG BDD TOOLS GENERATOR
    Author: raphael
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-02 17:34:58.680819
+   Made by Recitasse 2024-06-02 17:36:31.472089
 =================================================="""
 
 import datetime
@@ -541,7 +541,7 @@ class OnchoisBdd(Link):
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
     def get_onchois_instr_eq_nom(self, text: str, occ: int) -> list[Onchois]:
-        query = f"SELECT * FROM onchois WHERE INSTR(onchois_nom, '{text}') == {occ};"
+        query = f"SELECT * FROM onchois WHERE INSTR(onchois_nom, '{text}') = {occ};"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
     def get_onchois_instr_ne_nom(self, text: str, occ: int) -> list[Onchois]:
@@ -585,7 +585,7 @@ class OnchoisBdd(Link):
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
     def get_onchois_instr_eq_sexe(self, text: str, occ: int) -> list[Onchois]:
-        query = f"SELECT * FROM onchois WHERE INSTR(onchois_sexe, '{text}') == {occ};"
+        query = f"SELECT * FROM onchois WHERE INSTR(onchois_sexe, '{text}') = {occ};"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
     def get_onchois_instr_ne_sexe(self, text: str, occ: int) -> list[Onchois]:

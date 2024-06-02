@@ -239,7 +239,7 @@ def GenerateStrFunctions(root: ET.Element, table: str) -> str:
                   {'op': 'LIKE', 'args': ['fin'], 'type': ['str'], 'name': 'like_end'},
                   {'op': 'LIKE', 'args': ['mil'], 'type': ['str'], 'name': 'like_mid'},
                   {'op': 'REGEXP', 'args': ['text'], 'type': ['str'], 'name': 'regexp'}]
-    for el in [('<', 'lt'), ('>', 'gt'), ('<=', 'le'), ('>=', 'ge'), ('==', 'eq'), ('<>', 'ne')]:
+    for el in [('<', 'lt'), ('>', 'gt'), ('<=', 'le'), ('>=', 'ge'), ('=', 'eq'), ('<>', 'ne')]:
         operations.append({'op': 'INSTR', 'args': ['text', 'occ'], 'type': ['str', 'int'], 'name': f'instr_{el[1]}', 'sym': el[0]})
 
     for info in infos:

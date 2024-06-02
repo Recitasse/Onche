@@ -2,7 +2,7 @@
    Python class TopicBdd générée par OQG BDD TOOLS GENERATOR
    Author: raphael
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-02 17:34:58.677496
+   Made by Recitasse 2024-06-02 17:36:31.469835
 =================================================="""
 
 import datetime
@@ -465,7 +465,7 @@ class TopicBdd(Link):
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
     def get_topic_instr_eq_nom(self, text: str, occ: int) -> list[Topic]:
-        query = f"SELECT * FROM topic WHERE INSTR(topic_nom, '{text}') == {occ};"
+        query = f"SELECT * FROM topic WHERE INSTR(topic_nom, '{text}') = {occ};"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
     def get_topic_instr_ne_nom(self, text: str, occ: int) -> list[Topic]:
@@ -509,7 +509,7 @@ class TopicBdd(Link):
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
     def get_topic_instr_eq_lien(self, text: str, occ: int) -> list[Topic]:
-        query = f"SELECT * FROM topic WHERE INSTR(topic_lien, '{text}') == {occ};"
+        query = f"SELECT * FROM topic WHERE INSTR(topic_lien, '{text}') = {occ};"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
     def get_topic_instr_ne_lien(self, text: str, occ: int) -> list[Topic]:

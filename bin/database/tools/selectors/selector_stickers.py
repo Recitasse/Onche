@@ -2,7 +2,7 @@
    Python class StickersBdd générée par OQG BDD TOOLS GENERATOR
    Author: raphael
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-02 17:34:58.674624
+   Made by Recitasse 2024-06-02 17:36:31.467000
 =================================================="""
 
 import datetime
@@ -235,7 +235,7 @@ class StickersBdd(Link):
         return [Stickers(*row) for row in self.get_results(query, params=(), ind_='all')]
 
     def get_stickers_instr_eq_nom(self, text: str, occ: int) -> list[Stickers]:
-        query = f"SELECT * FROM stickers WHERE INSTR(stickers_nom, '{text}') == {occ};"
+        query = f"SELECT * FROM stickers WHERE INSTR(stickers_nom, '{text}') = {occ};"
         return [Stickers(*row) for row in self.get_results(query, params=(), ind_='all')]
 
     def get_stickers_instr_ne_nom(self, text: str, occ: int) -> list[Stickers]:
