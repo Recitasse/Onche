@@ -134,7 +134,6 @@ if __name__ == "__main__":
         glb_str += GeneratePropertiesFunc(root, table_name)
         glb_str += "\n"
         glb_str += GenerateSettersFunctions(root, table_name)
-        glb_str += "\n"
 
         with open(f"{GLOBAL_PATH}bin/database/tools/entities/{name}.py", 'w', encoding="utf-8") as f:
             f.write(glb_str)
