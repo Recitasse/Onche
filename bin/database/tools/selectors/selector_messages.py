@@ -2,7 +2,7 @@
    Python class MessagesBdd générée par OQG BDD TOOLS GENERATOR
    Author: raphael
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-02 17:14:40.517378
+   Made by Recitasse 2024-06-02 17:36:31.473656
 =================================================="""
 
 import datetime
@@ -414,47 +414,47 @@ class MessagesBdd(Link):
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
 
-    def get_messages_like_start_message(self, deb: str) -> list:
+    def get_messages_like_start_message(self, deb: str) -> list[Messages]:
         query = f"SELECT * FROM messages WHERE messages_message LIKE '{deb}%';"
         return [Messages(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_messages_like_between_message(self, deb: str, fin: str) -> list:
+    def get_messages_like_between_message(self, deb: str, fin: str) -> list[Messages]:
         query = f"SELECT * FROM messages WHERE messages_message LIKE '{deb}%{fin}';"
         return [Messages(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_messages_like_end_message(self, fin: str) -> list:
+    def get_messages_like_end_message(self, fin: str) -> list[Messages]:
         query = f"SELECT * FROM messages WHERE messages_message LIKE '%{fin}';"
         return [Messages(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_messages_like_mid_message(self, mil: str) -> list:
+    def get_messages_like_mid_message(self, mil: str) -> list[Messages]:
         query = f"SELECT * FROM messages WHERE messages_message LIKE '%{mil}%';"
         return [Messages(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_messages_regexp_message(self, text: str) -> list:
+    def get_messages_regexp_message(self, text: str) -> list[Messages]:
         query = f"SELECT * FROM messages WHERE messages_message REGEXP '{text}';"
         return [Messages(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_messages_instr_lt_message(self, text: str, occ: int) -> list:
+    def get_messages_instr_lt_message(self, text: str, occ: int) -> list[Messages]:
         query = f"SELECT * FROM messages WHERE INSTR(messages_message, '{text}') < {occ};"
         return [Messages(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_messages_instr_gt_message(self, text: str, occ: int) -> list:
+    def get_messages_instr_gt_message(self, text: str, occ: int) -> list[Messages]:
         query = f"SELECT * FROM messages WHERE INSTR(messages_message, '{text}') > {occ};"
         return [Messages(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_messages_instr_le_message(self, text: str, occ: int) -> list:
+    def get_messages_instr_le_message(self, text: str, occ: int) -> list[Messages]:
         query = f"SELECT * FROM messages WHERE INSTR(messages_message, '{text}') <= {occ};"
         return [Messages(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_messages_instr_ge_message(self, text: str, occ: int) -> list:
+    def get_messages_instr_ge_message(self, text: str, occ: int) -> list[Messages]:
         query = f"SELECT * FROM messages WHERE INSTR(messages_message, '{text}') >= {occ};"
         return [Messages(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_messages_instr_eq_message(self, text: str, occ: int) -> list:
-        query = f"SELECT * FROM messages WHERE INSTR(messages_message, '{text}') == {occ};"
+    def get_messages_instr_eq_message(self, text: str, occ: int) -> list[Messages]:
+        query = f"SELECT * FROM messages WHERE INSTR(messages_message, '{text}') = {occ};"
         return [Messages(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_messages_instr_ne_message(self, text: str, occ: int) -> list:
+    def get_messages_instr_ne_message(self, text: str, occ: int) -> list[Messages]:
         query = f"SELECT * FROM messages WHERE INSTR(messages_message, '{text}') <> {occ};"
         return [Messages(*row) for row in self.get_results(query, params=(), ind_='all')]
 

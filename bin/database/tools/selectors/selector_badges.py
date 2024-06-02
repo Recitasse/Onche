@@ -2,7 +2,7 @@
    Python class BadgesBdd générée par OQG BDD TOOLS GENERATOR
    Author: raphael
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-02 17:14:40.515389
+   Made by Recitasse 2024-06-02 17:36:31.468706
 =================================================="""
 
 import datetime
@@ -144,47 +144,47 @@ class BadgesBdd(Link):
         return [Badges(*row) for row in self.get_results(query, params, ind_='all')]
 
 
-    def get_badges_like_start_nom(self, deb: str) -> list:
+    def get_badges_like_start_nom(self, deb: str) -> list[Badges]:
         query = f"SELECT * FROM badges WHERE badges_nom LIKE '{deb}%';"
         return [Badges(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_badges_like_between_nom(self, deb: str, fin: str) -> list:
+    def get_badges_like_between_nom(self, deb: str, fin: str) -> list[Badges]:
         query = f"SELECT * FROM badges WHERE badges_nom LIKE '{deb}%{fin}';"
         return [Badges(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_badges_like_end_nom(self, fin: str) -> list:
+    def get_badges_like_end_nom(self, fin: str) -> list[Badges]:
         query = f"SELECT * FROM badges WHERE badges_nom LIKE '%{fin}';"
         return [Badges(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_badges_like_mid_nom(self, mil: str) -> list:
+    def get_badges_like_mid_nom(self, mil: str) -> list[Badges]:
         query = f"SELECT * FROM badges WHERE badges_nom LIKE '%{mil}%';"
         return [Badges(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_badges_regexp_nom(self, text: str) -> list:
+    def get_badges_regexp_nom(self, text: str) -> list[Badges]:
         query = f"SELECT * FROM badges WHERE badges_nom REGEXP '{text}';"
         return [Badges(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_badges_instr_lt_nom(self, text: str, occ: int) -> list:
+    def get_badges_instr_lt_nom(self, text: str, occ: int) -> list[Badges]:
         query = f"SELECT * FROM badges WHERE INSTR(badges_nom, '{text}') < {occ};"
         return [Badges(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_badges_instr_gt_nom(self, text: str, occ: int) -> list:
+    def get_badges_instr_gt_nom(self, text: str, occ: int) -> list[Badges]:
         query = f"SELECT * FROM badges WHERE INSTR(badges_nom, '{text}') > {occ};"
         return [Badges(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_badges_instr_le_nom(self, text: str, occ: int) -> list:
+    def get_badges_instr_le_nom(self, text: str, occ: int) -> list[Badges]:
         query = f"SELECT * FROM badges WHERE INSTR(badges_nom, '{text}') <= {occ};"
         return [Badges(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_badges_instr_ge_nom(self, text: str, occ: int) -> list:
+    def get_badges_instr_ge_nom(self, text: str, occ: int) -> list[Badges]:
         query = f"SELECT * FROM badges WHERE INSTR(badges_nom, '{text}') >= {occ};"
         return [Badges(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_badges_instr_eq_nom(self, text: str, occ: int) -> list:
-        query = f"SELECT * FROM badges WHERE INSTR(badges_nom, '{text}') == {occ};"
+    def get_badges_instr_eq_nom(self, text: str, occ: int) -> list[Badges]:
+        query = f"SELECT * FROM badges WHERE INSTR(badges_nom, '{text}') = {occ};"
         return [Badges(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_badges_instr_ne_nom(self, text: str, occ: int) -> list:
+    def get_badges_instr_ne_nom(self, text: str, occ: int) -> list[Badges]:
         query = f"SELECT * FROM badges WHERE INSTR(badges_nom, '{text}') <> {occ};"
         return [Badges(*row) for row in self.get_results(query, params=(), ind_='all')]
 

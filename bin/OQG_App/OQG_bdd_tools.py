@@ -239,13 +239,13 @@ def GenerateStrFunctions(root: ET.Element, table: str) -> str:
                   {'op': 'LIKE', 'args': ['fin'], 'type': ['str'], 'name': 'like_end'},
                   {'op': 'LIKE', 'args': ['mil'], 'type': ['str'], 'name': 'like_mid'},
                   {'op': 'REGEXP', 'args': ['text'], 'type': ['str'], 'name': 'regexp'}]
-    for el in [('<', 'lt'), ('>', 'gt'), ('<=', 'le'), ('>=', 'ge'), ('==', 'eq'), ('<>', 'ne')]:
+    for el in [('<', 'lt'), ('>', 'gt'), ('<=', 'le'), ('>=', 'ge'), ('=', 'eq'), ('<>', 'ne')]:
         operations.append({'op': 'INSTR', 'args': ['text', 'occ'], 'type': ['str', 'int'], 'name': f'instr_{el[1]}', 'sym': el[0]})
 
     for info in infos:
         for op in operations:
             all_params = f"""{', '.join([f'{op["args"][i]}: {op["type"][i]}' for i in range(len(op['args']))])}"""
-            python_code += f"{tab}def get_{first_table}_{op['name']}_{info}(self, {all_params}) -> list:\n"
+            python_code += f"{tab}def get_{first_table}_{op['name']}_{info}(self, {all_params}) -> list[{table}]:\n"
             qu = ''
             if op['op'] == "LIKE":
                 if len(op['args']) == 1:

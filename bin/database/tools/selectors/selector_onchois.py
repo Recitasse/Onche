@@ -2,7 +2,7 @@
    Python class OnchoisBdd générée par OQG BDD TOOLS GENERATOR
    Author: raphael
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-02 17:14:40.516632
+   Made by Recitasse 2024-06-02 17:36:31.472089
 =================================================="""
 
 import datetime
@@ -504,91 +504,91 @@ class OnchoisBdd(Link):
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
 
-    def get_onchois_like_start_nom(self, deb: str) -> list:
+    def get_onchois_like_start_nom(self, deb: str) -> list[Onchois]:
         query = f"SELECT * FROM onchois WHERE onchois_nom LIKE '{deb}%';"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_onchois_like_between_nom(self, deb: str, fin: str) -> list:
+    def get_onchois_like_between_nom(self, deb: str, fin: str) -> list[Onchois]:
         query = f"SELECT * FROM onchois WHERE onchois_nom LIKE '{deb}%{fin}';"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_onchois_like_end_nom(self, fin: str) -> list:
+    def get_onchois_like_end_nom(self, fin: str) -> list[Onchois]:
         query = f"SELECT * FROM onchois WHERE onchois_nom LIKE '%{fin}';"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_onchois_like_mid_nom(self, mil: str) -> list:
+    def get_onchois_like_mid_nom(self, mil: str) -> list[Onchois]:
         query = f"SELECT * FROM onchois WHERE onchois_nom LIKE '%{mil}%';"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_onchois_regexp_nom(self, text: str) -> list:
+    def get_onchois_regexp_nom(self, text: str) -> list[Onchois]:
         query = f"SELECT * FROM onchois WHERE onchois_nom REGEXP '{text}';"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_onchois_instr_lt_nom(self, text: str, occ: int) -> list:
+    def get_onchois_instr_lt_nom(self, text: str, occ: int) -> list[Onchois]:
         query = f"SELECT * FROM onchois WHERE INSTR(onchois_nom, '{text}') < {occ};"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_onchois_instr_gt_nom(self, text: str, occ: int) -> list:
+    def get_onchois_instr_gt_nom(self, text: str, occ: int) -> list[Onchois]:
         query = f"SELECT * FROM onchois WHERE INSTR(onchois_nom, '{text}') > {occ};"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_onchois_instr_le_nom(self, text: str, occ: int) -> list:
+    def get_onchois_instr_le_nom(self, text: str, occ: int) -> list[Onchois]:
         query = f"SELECT * FROM onchois WHERE INSTR(onchois_nom, '{text}') <= {occ};"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_onchois_instr_ge_nom(self, text: str, occ: int) -> list:
+    def get_onchois_instr_ge_nom(self, text: str, occ: int) -> list[Onchois]:
         query = f"SELECT * FROM onchois WHERE INSTR(onchois_nom, '{text}') >= {occ};"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_onchois_instr_eq_nom(self, text: str, occ: int) -> list:
-        query = f"SELECT * FROM onchois WHERE INSTR(onchois_nom, '{text}') == {occ};"
+    def get_onchois_instr_eq_nom(self, text: str, occ: int) -> list[Onchois]:
+        query = f"SELECT * FROM onchois WHERE INSTR(onchois_nom, '{text}') = {occ};"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_onchois_instr_ne_nom(self, text: str, occ: int) -> list:
+    def get_onchois_instr_ne_nom(self, text: str, occ: int) -> list[Onchois]:
         query = f"SELECT * FROM onchois WHERE INSTR(onchois_nom, '{text}') <> {occ};"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_onchois_like_start_sexe(self, deb: str) -> list:
+    def get_onchois_like_start_sexe(self, deb: str) -> list[Onchois]:
         query = f"SELECT * FROM onchois WHERE onchois_sexe LIKE '{deb}%';"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_onchois_like_between_sexe(self, deb: str, fin: str) -> list:
+    def get_onchois_like_between_sexe(self, deb: str, fin: str) -> list[Onchois]:
         query = f"SELECT * FROM onchois WHERE onchois_sexe LIKE '{deb}%{fin}';"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_onchois_like_end_sexe(self, fin: str) -> list:
+    def get_onchois_like_end_sexe(self, fin: str) -> list[Onchois]:
         query = f"SELECT * FROM onchois WHERE onchois_sexe LIKE '%{fin}';"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_onchois_like_mid_sexe(self, mil: str) -> list:
+    def get_onchois_like_mid_sexe(self, mil: str) -> list[Onchois]:
         query = f"SELECT * FROM onchois WHERE onchois_sexe LIKE '%{mil}%';"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_onchois_regexp_sexe(self, text: str) -> list:
+    def get_onchois_regexp_sexe(self, text: str) -> list[Onchois]:
         query = f"SELECT * FROM onchois WHERE onchois_sexe REGEXP '{text}';"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_onchois_instr_lt_sexe(self, text: str, occ: int) -> list:
+    def get_onchois_instr_lt_sexe(self, text: str, occ: int) -> list[Onchois]:
         query = f"SELECT * FROM onchois WHERE INSTR(onchois_sexe, '{text}') < {occ};"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_onchois_instr_gt_sexe(self, text: str, occ: int) -> list:
+    def get_onchois_instr_gt_sexe(self, text: str, occ: int) -> list[Onchois]:
         query = f"SELECT * FROM onchois WHERE INSTR(onchois_sexe, '{text}') > {occ};"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_onchois_instr_le_sexe(self, text: str, occ: int) -> list:
+    def get_onchois_instr_le_sexe(self, text: str, occ: int) -> list[Onchois]:
         query = f"SELECT * FROM onchois WHERE INSTR(onchois_sexe, '{text}') <= {occ};"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_onchois_instr_ge_sexe(self, text: str, occ: int) -> list:
+    def get_onchois_instr_ge_sexe(self, text: str, occ: int) -> list[Onchois]:
         query = f"SELECT * FROM onchois WHERE INSTR(onchois_sexe, '{text}') >= {occ};"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_onchois_instr_eq_sexe(self, text: str, occ: int) -> list:
-        query = f"SELECT * FROM onchois WHERE INSTR(onchois_sexe, '{text}') == {occ};"
+    def get_onchois_instr_eq_sexe(self, text: str, occ: int) -> list[Onchois]:
+        query = f"SELECT * FROM onchois WHERE INSTR(onchois_sexe, '{text}') = {occ};"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_onchois_instr_ne_sexe(self, text: str, occ: int) -> list:
+    def get_onchois_instr_ne_sexe(self, text: str, occ: int) -> list[Onchois]:
         query = f"SELECT * FROM onchois WHERE INSTR(onchois_sexe, '{text}') <> {occ};"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
 

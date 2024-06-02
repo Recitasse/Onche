@@ -2,7 +2,7 @@
    Python class StickersBdd générée par OQG BDD TOOLS GENERATOR
    Author: raphael
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-02 17:14:40.514795
+   Made by Recitasse 2024-06-02 17:36:31.467000
 =================================================="""
 
 import datetime
@@ -198,47 +198,47 @@ class StickersBdd(Link):
         return [Stickers(*row) for row in self.get_results(query, params, ind_='all')]
 
 
-    def get_stickers_like_start_nom(self, deb: str) -> list:
+    def get_stickers_like_start_nom(self, deb: str) -> list[Stickers]:
         query = f"SELECT * FROM stickers WHERE stickers_nom LIKE '{deb}%';"
         return [Stickers(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_stickers_like_between_nom(self, deb: str, fin: str) -> list:
+    def get_stickers_like_between_nom(self, deb: str, fin: str) -> list[Stickers]:
         query = f"SELECT * FROM stickers WHERE stickers_nom LIKE '{deb}%{fin}';"
         return [Stickers(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_stickers_like_end_nom(self, fin: str) -> list:
+    def get_stickers_like_end_nom(self, fin: str) -> list[Stickers]:
         query = f"SELECT * FROM stickers WHERE stickers_nom LIKE '%{fin}';"
         return [Stickers(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_stickers_like_mid_nom(self, mil: str) -> list:
+    def get_stickers_like_mid_nom(self, mil: str) -> list[Stickers]:
         query = f"SELECT * FROM stickers WHERE stickers_nom LIKE '%{mil}%';"
         return [Stickers(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_stickers_regexp_nom(self, text: str) -> list:
+    def get_stickers_regexp_nom(self, text: str) -> list[Stickers]:
         query = f"SELECT * FROM stickers WHERE stickers_nom REGEXP '{text}';"
         return [Stickers(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_stickers_instr_lt_nom(self, text: str, occ: int) -> list:
+    def get_stickers_instr_lt_nom(self, text: str, occ: int) -> list[Stickers]:
         query = f"SELECT * FROM stickers WHERE INSTR(stickers_nom, '{text}') < {occ};"
         return [Stickers(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_stickers_instr_gt_nom(self, text: str, occ: int) -> list:
+    def get_stickers_instr_gt_nom(self, text: str, occ: int) -> list[Stickers]:
         query = f"SELECT * FROM stickers WHERE INSTR(stickers_nom, '{text}') > {occ};"
         return [Stickers(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_stickers_instr_le_nom(self, text: str, occ: int) -> list:
+    def get_stickers_instr_le_nom(self, text: str, occ: int) -> list[Stickers]:
         query = f"SELECT * FROM stickers WHERE INSTR(stickers_nom, '{text}') <= {occ};"
         return [Stickers(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_stickers_instr_ge_nom(self, text: str, occ: int) -> list:
+    def get_stickers_instr_ge_nom(self, text: str, occ: int) -> list[Stickers]:
         query = f"SELECT * FROM stickers WHERE INSTR(stickers_nom, '{text}') >= {occ};"
         return [Stickers(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_stickers_instr_eq_nom(self, text: str, occ: int) -> list:
-        query = f"SELECT * FROM stickers WHERE INSTR(stickers_nom, '{text}') == {occ};"
+    def get_stickers_instr_eq_nom(self, text: str, occ: int) -> list[Stickers]:
+        query = f"SELECT * FROM stickers WHERE INSTR(stickers_nom, '{text}') = {occ};"
         return [Stickers(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_stickers_instr_ne_nom(self, text: str, occ: int) -> list:
+    def get_stickers_instr_ne_nom(self, text: str, occ: int) -> list[Stickers]:
         query = f"SELECT * FROM stickers WHERE INSTR(stickers_nom, '{text}') <> {occ};"
         return [Stickers(*row) for row in self.get_results(query, params=(), ind_='all')]
 
