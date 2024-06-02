@@ -2,14 +2,12 @@
    Python class Stickers générée par OQG BDD ENTITIES GENERATOR
    Author: raphael
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-02 15:25:10.042924
+   Made by Recitasse 2024-06-02 22:14:25.497415
 =================================================="""
 
 import datetime
 
 from dataclasses import dataclass, field
-
-from bin.database.tools.selectors.selector_stickers import StickersBdd
 
 
 @dataclass(slots=True)
@@ -19,9 +17,10 @@ class Stickers:
     collection_: int = field(default=None)
 
 
-    intern_link: StickersBdd = field(default_factory=StickersBdd, init=False)
+    intern_link: 'StickersBdd' = field(init=False, default=None)
 
     def __post_init__(self):
+        from bin.database.tools.selectors.selector_stickers import StickersBdd
         self.intern_link = StickersBdd()
 
 

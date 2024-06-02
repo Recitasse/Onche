@@ -17,7 +17,7 @@ def GenerateImportFunctions(table: str) -> str:
     python_code += f"   Model: Onche\t Version: {VERSION}\n"
     python_code += f"   Made by Recitasse {datetime.now()}\n"
     python_code += '=================================================="""\n\n'
-    python_code += f"import datetime\n\nfrom dataclasses import dataclass, field\n\nfrom bin.database.tools.selectors.selector_{first_table} import {table}Bdd\n\n\n"
+    python_code += f"import datetime\n\nfrom dataclasses import dataclass, field\n\n\n"
     python_code += f"@dataclass(slots=True)\nclass {table}:"
     return python_code
 
@@ -66,8 +66,9 @@ def GenerateValuesFunctions(root: ET.Element, table: str) -> str:
         python_code += f"{tab}{info[0]}_: {info[1]} = field(init=False, default={l_}{def_}{r_})\n"
 
     python_code += "\n"
-    python_code += f"{tab}intern_link: {table}Bdd = field(default_factory={table}Bdd, init=False)\n\n"
+    python_code += f"{tab}intern_link: '{table}Bdd' = field(init=False, default=None)\n\n"
     python_code += f"{tab}def __post_init__(self):\n"
+    python_code += f"{tab*2}from bin.database.tools.selectors.selector_{first_table} import {table}Bdd\n"
     python_code += f"{tab*2}self.intern_link = {table}Bdd()\n\n"
 
     return python_code
@@ -133,7 +134,6 @@ if __name__ == "__main__":
         glb_str += GeneratePropertiesFunc(root, table_name)
         glb_str += "\n"
         glb_str += GenerateSettersFunctions(root, table_name)
-        glb_str += "\n"
 
         with open(f"{GLOBAL_PATH}bin/database/tools/entities/{name}.py", 'w', encoding="utf-8") as f:
             f.write(glb_str)

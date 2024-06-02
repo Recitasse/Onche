@@ -2,14 +2,12 @@
    Python class Onchois générée par OQG BDD ENTITIES GENERATOR
    Author: raphael
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-02 15:25:10.043776
+   Made by Recitasse 2024-06-02 22:14:25.498371
 =================================================="""
 
 import datetime
 
 from dataclasses import dataclass, field
-
-from bin.database.tools.selectors.selector_onchois import OnchoisBdd
 
 
 @dataclass(slots=True)
@@ -25,9 +23,10 @@ class Onchois:
     age_: int = field(init=False, default=None)
     qualite_: int = field(init=False, default=5)
 
-    intern_link: OnchoisBdd = field(default_factory=OnchoisBdd, init=False)
+    intern_link: 'OnchoisBdd' = field(init=False, default=None)
 
     def __post_init__(self):
+        from bin.database.tools.selectors.selector_onchois import OnchoisBdd
         self.intern_link = OnchoisBdd()
 
 

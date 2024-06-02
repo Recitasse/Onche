@@ -591,4 +591,3 @@ class OnchoisBdd(Link):
     def get_onchois_instr_ne_sexe(self, text: str, occ: int) -> list[Onchois]:
         query = f"SELECT * FROM onchois WHERE INSTR(onchois_sexe, '{text}') <> {occ};"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
-
