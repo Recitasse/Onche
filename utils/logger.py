@@ -1,6 +1,10 @@
 import logging
 from typing import Callable
 
+import functools
+import logging
+
+
 def logger(output: str, name: str, verbose: bool = False, max_bytes: int = 10240, backup_count: int = 5):
     """
     Creates a logger for logging to a file with rotation.

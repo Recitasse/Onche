@@ -5,18 +5,18 @@
         <comment>Tables des onchois</comment>
     </parameters>
     <rows>
-        <row name="id" type="INT" null="False" auto_increment="True"></row>
-        <row name="oid" type="INT" null="False"></row>
-        <row name="operateur" type="INT" null="False"></row>
-        <row name="nom" type="VARCHAR(3000)" null="False"></row>
-        <row name="date" type="TIMESTAMP(2)" null="False" default="CURRENT_TIMESTAMP(2)"></row>
-        <row name="message" type="INT" null="False"></row>
-        <row name="lien" type="VARCHAR(1000)" null="False"></row>
-        <row name="forum" type="TINYINT(15)" null="False"></row>
+        <row name="id" sql-type="INT" null="False" auto_increment="True" type="int"></row>
+        <row name="oid" sql-type="INT" null="False" type="int"></row>
+        <row name="operateur" sql-type="INT" null="False" type="int"></row>
+        <row name="nom" sql-type="VARCHAR(3000)" null="False" type="str"></row>
+        <row name="date" sql-type="TIMESTAMP(2)" null="False" default="CURRENT_TIMESTAMP(2)" type="datetime"></row>
+        <row name="message" sql-type="INT" null="False" type="int"></row>
+        <row name="lien" sql-type="VARCHAR(1000)" null="False" type="str"></row>
+        <row name="forum" sql-type="TINYINT(15)" null="False" type="int"></row>
     </rows>
     <index>
         <unic-index>
-            <name mode="ASC" visible="True">oid</name>
+            <name mode="ASC" visible="True" type="int">oid</name>
         </unic-index>
         <primary-key name="id"/>
         <foreign-index>

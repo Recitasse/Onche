@@ -5,12 +5,12 @@
         <comment>Répertorie les onchois badgés</comment>
     </parameters>
     <rows>
-        <row name="id" type="INT" null="False" auto_increment="True"></row>
-        <row name="userid" type="INT" null="False"></row>
-        <row name="badgeid" type="INT" null="False"></row>
+        <row name="id" sql-type="INT" null="False" auto_increment="True" type="int"></row>
+        <row name="userid" sql-type="INT" null="False" type="int"></row>
+        <row name="badgeid" sql-type="INT" null="False" type="int"></row>
     </rows>
     <index>
-        <primary-key name="id"/>
+        <primary-key name="id" type="int"/>
         <foreign-index>
             <constraint name="pins">
                 <foreign-key mode="ASC" visible="True">badge</foreign-key>

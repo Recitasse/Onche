@@ -3,20 +3,50 @@
     <parameters>
         <settings engine="InnoDB" encoding="utf8mb4" collation="utf8mb4_general_ci"/>
         <comment>Tables des onchois</comment>
+        <check via="nom"/>
     </parameters>
     <rows>
-        <row name="id" type="INT" null="False" auto_increment="True"></row>
-        <row name="oid" type="INT" null="False"></row>
-        <row name="nom" type="VARCHAR(100)" null="False"></row>
-        <row name="sexe" type="VARCHAR(30)" null="False"></row>
-        <row name="age" type="INT" null="True"></row>
-        <row name="qualite" type="INT" null="False" default="5"></row>
+        <row name="id" sql-type="INT" null="False" auto_increment="True" type="int"></row>
+        <row name="oid" sql-type="INT" null="False" type="int"></row>
+        <row name="niveau" sql-type="INT" null="False" type="int" default="1">
+            <parse sql-type="int" for="profil">
+                <xpath>//div[@class='profile-cover-badge']/text()</xpath>
+                <clean>Niveau </clean>
+            </parse>
+        </row>
+        <row name="nom" sql-type="VARCHAR(100)" null="False" type="str"></row>
+        <row name="sexe" sql-type="VARCHAR(30)" null="True" type="str"></row>
+        <row name="age" sql-type="INT" null="True" type="int"></row>
+        <row name="qualite" sql-type="INT" null="True" default="5" type="int"></row>
+        <row name="message" sql-type="INT" null="False" type="int" default="0">
+            <parse sql-type="int" for="profil">
+                <xpath>//div[@class='profile-blocs']/div[1]/div[4]/div[2]/text()</xpath>
+                <clean></clean>
+            </parse>
+        </row>
+        <row name="date" sql-type="DATETIME(0)" type="datetime" null="False">
+            <parse sql-type="date" for="profil">
+                <xpath>//div[@class='profile-blocs']/div[1]/div[2]/div[2]/text()</xpath>
+                <clean> (un an)</clean>
+                <clean> (une heure)</clean>
+                <clean> (une minute)</clean>
+                <clean> (une seconde)</clean>
+                <clean> (un mois)</clean>
+                <clean> (un jour)</clean>
+                <clean re="\((\d+) ans\)"></clean>
+                <clean re="\((\d+) mois\)"></clean>
+                <clean re="\((\d+) heures\)"></clean>
+                <clean re="\((\d+) minutes\)"></clean>
+                <clean re="\((\d+) jours\)"></clean>
+                <clean re="\((\d+) secondes\)"></clean>
+            </parse>
+        </row>
     </rows>
     <index>
-        <primary-key name="id"/>
+        <primary-key name="id" sql-type="int" type="int"/>
         <unic-index>
-            <name mode="ASC" visible="True">nom</name>
-            <name mode="ASC" visible="True">oid</name>
+            <name mode="ASC" visible="True" type="str">nom</name>
+            <name mode="ASC" visible="True" type="int">oid</name>
         </unic-index>
     </index>
 </profil>

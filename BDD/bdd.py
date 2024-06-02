@@ -178,7 +178,7 @@ class BDD:
 
     # Add methods
         
-    def add_user(self, nom:str) -> None:
+    def add_user(self, nom: str) -> None:
         """
         Ajoute un Onchois à la base de donnée
 
@@ -380,7 +380,6 @@ class BDD:
             vals = []
             if ind_ == "all":
                 for value in resultats:
-                    tmp_ = []
                     if len(value) > 1:
                         if inspect.currentframe().f_back.f_code.co_name == "get_table_info":
                             vals.append(list(value))
@@ -572,6 +571,7 @@ class LocalBDD(BDD):
         except Exception as e:
             self._logger.error(f"Echec de la connexion à la base de donnée : {e}")
             raise Exception(f"Echec de la connexion à la base de donnée : {e}")
-        
-#d = BDD()
-#print(d.import_table("BDD/import/server/bdd_Onche.sql"))
+
+d = BDD()
+v = d.get_results("SELECT * FROM onchois WHERE onchois_id IN (%s, %s);", (10, 20), ind_='all')
+print(v)

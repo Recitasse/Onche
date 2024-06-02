@@ -12,9 +12,8 @@ from config.Variables.variables import *
 def metadata() -> str:
     sql_code = "-- MySQL Script généré par OQG BDD GENERATOR\n"
     sql_code += f"-- Author: {getuser()}\n"
-    sql_code += f"-- {datetime.now()}\n"
     sql_code += f"-- Model: Onche\t Version: {VERSION}\n"
-    sql_code += f"-- Made by Recitasse 31/05/2024\n\n"
+    sql_code += f"-- Made by Recitasse {datetime.now()}\n\n"
 
     sql_code += f"SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;\n"
     sql_code += f"SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;\n"
@@ -40,7 +39,7 @@ def get_all_xml_files() -> list:
 
 
 def generate_sql_code_from_xml(file: str) -> str:
-    sql_code = f"-- -----------------------------------------------------\n"
+    sql_code = f"\n-- -----------------------------------------------------\n"
 
     with open(f"{CALICE}{file}", 'r', encoding="utf-8") as conf:
         root: ET.Element = ET.fromstring(conf.read())
@@ -62,7 +61,7 @@ def generate_sql_code_from_xml(file: str) -> str:
             if 'null' in row.attrib:
                 null = f"{'NULL' if literal_eval(row.attrib['null']) else 'NOT NULL'}"
             sql_code += (f"{tab_}{table_name}_{row.attrib['name']} "
-                         f"{row.attrib['type']} "
+                         f"{row.attrib['sql-type']} "
                          f"{null}"
                          f"{aut_int}"
                          f"{default_val},\n")
@@ -118,12 +117,18 @@ def generate_sql_code_from_xml(file: str) -> str:
                 sql_code += f"DEFAULT CHARACTER SET = {settings.attrib['encoding']}\n"
                 sql_code += f"COLLATE = {settings.attrib['collation']}\n"
             if settings.tag == 'comment':
-                sql_code += f"COMMENT = '{settings.text}';\n"
+                sql_code += f"COMMENT = '{settings.text}';\n\n"
     return sql_code
 
 
-files = get_all_xml_files()
-print(metadata())
-for file_ in files:
-    print(generate_sql_code_from_xml(file_))
-print(setting())
+if __name__ == "__main__":
+    files = get_all_xml_files()
+    if 'schema.sql' in os.listdir(f'{GLOBAL_PATH}/bin/database'):
+        os.remove(f'{GLOBAL_PATH}/bin/database/schema.sql')
+    with open(f'{GLOBAL_PATH}/bin/database/schema.sql', 'a', encoding="utf-8") as f:
+        f.write(metadata())
+    with open(f'{GLOBAL_PATH}/bin/database/schema.sql', 'a', encoding="utf-8") as f:
+        for file_ in files:
+            f.write(generate_sql_code_from_xml(file_))
+    with open(f'{GLOBAL_PATH}/bin/database/schema.sql', 'a', encoding="utf-8") as f:
+        f.write(setting())
