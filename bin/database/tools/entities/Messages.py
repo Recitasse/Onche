@@ -2,14 +2,12 @@
    Python class Messages générée par OQG BDD ENTITIES GENERATOR
    Author: raphael
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-02 15:25:10.043952
+   Made by Recitasse 2024-06-02 22:14:25.498582
 =================================================="""
 
 import datetime
 
 from dataclasses import dataclass, field
-
-from bin.database.tools.selectors.selector_messages import MessagesBdd
 
 
 @dataclass(slots=True)
@@ -23,9 +21,10 @@ class Messages:
 
     touser_: int = field(init=False, default=None)
 
-    intern_link: MessagesBdd = field(default_factory=MessagesBdd, init=False)
+    intern_link: 'MessagesBdd' = field(init=False, default=None)
 
     def __post_init__(self):
+        from bin.database.tools.selectors.selector_messages import MessagesBdd
         self.intern_link = MessagesBdd()
 
 

@@ -2,14 +2,12 @@
    Python class Badges générée par OQG BDD ENTITIES GENERATOR
    Author: raphael
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-02 15:25:10.043296
+   Made by Recitasse 2024-06-02 22:14:25.497866
 =================================================="""
 
 import datetime
 
 from dataclasses import dataclass, field
-
-from bin.database.tools.selectors.selector_badges import BadgesBdd
 
 
 @dataclass(slots=True)
@@ -18,9 +16,10 @@ class Badges:
     nom_: str = field(default="None")
 
 
-    intern_link: BadgesBdd = field(default_factory=BadgesBdd, init=False)
+    intern_link: 'BadgesBdd' = field(init=False, default=None)
 
     def __post_init__(self):
+        from bin.database.tools.selectors.selector_badges import BadgesBdd
         self.intern_link = BadgesBdd()
 
 

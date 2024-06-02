@@ -2,14 +2,12 @@
    Python class Pined générée par OQG BDD ENTITIES GENERATOR
    Author: raphael
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-02 15:25:10.043620
+   Made by Recitasse 2024-06-02 22:14:25.498202
 =================================================="""
 
 import datetime
 
 from dataclasses import dataclass, field
-
-from bin.database.tools.selectors.selector_pined import PinedBdd
 
 
 @dataclass(slots=True)
@@ -19,9 +17,10 @@ class Pined:
     badgeid_: int = field(default=None)
 
 
-    intern_link: PinedBdd = field(default_factory=PinedBdd, init=False)
+    intern_link: 'PinedBdd' = field(init=False, default=None)
 
     def __post_init__(self):
+        from bin.database.tools.selectors.selector_pined import PinedBdd
         self.intern_link = PinedBdd()
 
 
