@@ -2,7 +2,7 @@
    Python class PinedBdd générée par OQG BDD TOOLS GENERATOR
    Author: raphael
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-02 17:14:40.516303
+   Made by Recitasse 2024-06-02 17:34:58.679503
 =================================================="""
 
 import datetime

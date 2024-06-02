@@ -2,7 +2,7 @@
    Python class TopicBdd générée par OQG BDD TOOLS GENERATOR
    Author: raphael
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-02 17:14:40.515718
+   Made by Recitasse 2024-06-02 17:34:58.677496
 =================================================="""
 
 import datetime
@@ -428,91 +428,91 @@ class TopicBdd(Link):
         return [Topic(*row) for row in self.get_results(query, params, ind_='all')]
 
 
-    def get_topic_like_start_nom(self, deb: str) -> list:
+    def get_topic_like_start_nom(self, deb: str) -> list[Topic]:
         query = f"SELECT * FROM topic WHERE topic_nom LIKE '{deb}%';"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_topic_like_between_nom(self, deb: str, fin: str) -> list:
+    def get_topic_like_between_nom(self, deb: str, fin: str) -> list[Topic]:
         query = f"SELECT * FROM topic WHERE topic_nom LIKE '{deb}%{fin}';"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_topic_like_end_nom(self, fin: str) -> list:
+    def get_topic_like_end_nom(self, fin: str) -> list[Topic]:
         query = f"SELECT * FROM topic WHERE topic_nom LIKE '%{fin}';"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_topic_like_mid_nom(self, mil: str) -> list:
+    def get_topic_like_mid_nom(self, mil: str) -> list[Topic]:
         query = f"SELECT * FROM topic WHERE topic_nom LIKE '%{mil}%';"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_topic_regexp_nom(self, text: str) -> list:
+    def get_topic_regexp_nom(self, text: str) -> list[Topic]:
         query = f"SELECT * FROM topic WHERE topic_nom REGEXP '{text}';"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_topic_instr_lt_nom(self, text: str, occ: int) -> list:
+    def get_topic_instr_lt_nom(self, text: str, occ: int) -> list[Topic]:
         query = f"SELECT * FROM topic WHERE INSTR(topic_nom, '{text}') < {occ};"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_topic_instr_gt_nom(self, text: str, occ: int) -> list:
+    def get_topic_instr_gt_nom(self, text: str, occ: int) -> list[Topic]:
         query = f"SELECT * FROM topic WHERE INSTR(topic_nom, '{text}') > {occ};"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_topic_instr_le_nom(self, text: str, occ: int) -> list:
+    def get_topic_instr_le_nom(self, text: str, occ: int) -> list[Topic]:
         query = f"SELECT * FROM topic WHERE INSTR(topic_nom, '{text}') <= {occ};"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_topic_instr_ge_nom(self, text: str, occ: int) -> list:
+    def get_topic_instr_ge_nom(self, text: str, occ: int) -> list[Topic]:
         query = f"SELECT * FROM topic WHERE INSTR(topic_nom, '{text}') >= {occ};"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_topic_instr_eq_nom(self, text: str, occ: int) -> list:
+    def get_topic_instr_eq_nom(self, text: str, occ: int) -> list[Topic]:
         query = f"SELECT * FROM topic WHERE INSTR(topic_nom, '{text}') == {occ};"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_topic_instr_ne_nom(self, text: str, occ: int) -> list:
+    def get_topic_instr_ne_nom(self, text: str, occ: int) -> list[Topic]:
         query = f"SELECT * FROM topic WHERE INSTR(topic_nom, '{text}') <> {occ};"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_topic_like_start_lien(self, deb: str) -> list:
+    def get_topic_like_start_lien(self, deb: str) -> list[Topic]:
         query = f"SELECT * FROM topic WHERE topic_lien LIKE '{deb}%';"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_topic_like_between_lien(self, deb: str, fin: str) -> list:
+    def get_topic_like_between_lien(self, deb: str, fin: str) -> list[Topic]:
         query = f"SELECT * FROM topic WHERE topic_lien LIKE '{deb}%{fin}';"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_topic_like_end_lien(self, fin: str) -> list:
+    def get_topic_like_end_lien(self, fin: str) -> list[Topic]:
         query = f"SELECT * FROM topic WHERE topic_lien LIKE '%{fin}';"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_topic_like_mid_lien(self, mil: str) -> list:
+    def get_topic_like_mid_lien(self, mil: str) -> list[Topic]:
         query = f"SELECT * FROM topic WHERE topic_lien LIKE '%{mil}%';"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_topic_regexp_lien(self, text: str) -> list:
+    def get_topic_regexp_lien(self, text: str) -> list[Topic]:
         query = f"SELECT * FROM topic WHERE topic_lien REGEXP '{text}';"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_topic_instr_lt_lien(self, text: str, occ: int) -> list:
+    def get_topic_instr_lt_lien(self, text: str, occ: int) -> list[Topic]:
         query = f"SELECT * FROM topic WHERE INSTR(topic_lien, '{text}') < {occ};"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_topic_instr_gt_lien(self, text: str, occ: int) -> list:
+    def get_topic_instr_gt_lien(self, text: str, occ: int) -> list[Topic]:
         query = f"SELECT * FROM topic WHERE INSTR(topic_lien, '{text}') > {occ};"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_topic_instr_le_lien(self, text: str, occ: int) -> list:
+    def get_topic_instr_le_lien(self, text: str, occ: int) -> list[Topic]:
         query = f"SELECT * FROM topic WHERE INSTR(topic_lien, '{text}') <= {occ};"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_topic_instr_ge_lien(self, text: str, occ: int) -> list:
+    def get_topic_instr_ge_lien(self, text: str, occ: int) -> list[Topic]:
         query = f"SELECT * FROM topic WHERE INSTR(topic_lien, '{text}') >= {occ};"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_topic_instr_eq_lien(self, text: str, occ: int) -> list:
+    def get_topic_instr_eq_lien(self, text: str, occ: int) -> list[Topic]:
         query = f"SELECT * FROM topic WHERE INSTR(topic_lien, '{text}') == {occ};"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 
-    def get_topic_instr_ne_lien(self, text: str, occ: int) -> list:
+    def get_topic_instr_ne_lien(self, text: str, occ: int) -> list[Topic]:
         query = f"SELECT * FROM topic WHERE INSTR(topic_lien, '{text}') <> {occ};"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
 

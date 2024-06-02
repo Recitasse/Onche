@@ -245,7 +245,7 @@ def GenerateStrFunctions(root: ET.Element, table: str) -> str:
     for info in infos:
         for op in operations:
             all_params = f"""{', '.join([f'{op["args"][i]}: {op["type"][i]}' for i in range(len(op['args']))])}"""
-            python_code += f"{tab}def get_{first_table}_{op['name']}_{info}(self, {all_params}) -> list:\n"
+            python_code += f"{tab}def get_{first_table}_{op['name']}_{info}(self, {all_params}) -> list[{table}]:\n"
             qu = ''
             if op['op'] == "LIKE":
                 if len(op['args']) == 1:
