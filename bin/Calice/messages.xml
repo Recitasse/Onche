@@ -5,16 +5,19 @@
         <comment>Tous les messages du forum</comment>
     </parameters>
     <rows>
-        <row name="id" type="INT" null="False" auto_increment="True"></row>
-        <row name="oid" type="INT" null="False"></row>
-        <row name="user" type="INT" null="False"></row>
-        <row name="topic" type="INT" null="False"></row>
-        <row name="message" type="LONGTEXT" null="False"></row>
-        <row name="touser" type="INT" null="True"></row>
-        <row name="date" type="DATETIME(0)" null="False"></row>
+        <row name="id" sql-type="INT" null="False" auto_increment="True" type="int"></row>
+        <row name="oid" sql-type="INT" null="False" type="int"></row>
+        <row name="user" sql-type="INT" null="False" type="int"></row>
+        <row name="topic" sql-type="INT" null="False" type="int"></row>
+        <row name="message" sql-type="LONGTEXT" null="False" type="str"></row>
+        <row name="touser" sql-type="INT" null="True" type="int"></row>
+        <row name="date" sql-type="DATETIME(0)" null="False" type="datetime"></row>
     </rows>
     <index>
-        <primary-key name="id"/>
+        <primary-key name="id" type="int"/>
+        <unic-index>
+            <name mode="ASC" visible="True" type="int">oid</name>
+        </unic-index>
         <foreign-index>
             <constraint name="posteur">
                 <foreign-key mode="ASC" visible="True">user</foreign-key>

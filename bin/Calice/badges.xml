@@ -5,13 +5,18 @@
         <comment>Tables des badges</comment>
     </parameters>
     <rows>
-        <row name="id" type="INT" null="False" auto_increment="True"></row>
-        <row name="nom" type="VARCHAR(100)" null="False"></row>
+        <row name="id" sql-type="INT" null="False" auto_increment="True" type="int"></row>
+        <row name="nom" sql-type="VARCHAR(100)" null="False" type="str">
+            <parser sql-type="tuple" for="badges">
+                <xpath>//div[@class='profile-badges']/img/@title</xpath>
+                <clean></clean>
+            </parser>
+        </row>
     </rows>
     <index>
-        <primary-key name="id"/>
+        <primary-key name="id" type="int"/>
         <unic-index>
-            <name mode="ASC" visible="True">nom</name>
+            <name mode="ASC" visible="True" type="str">nom</name>
         </unic-index>
     </index>
 </profil>

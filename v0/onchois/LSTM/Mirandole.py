@@ -21,12 +21,17 @@ def check_GPU():
     else:
         print("Aucun GPU trouvé, utilisation du CPU.")
 
+def get_name(user: list) -> str:
+    if len(user) >= 2:
+        return '_'.join(user)
+    if len(user) == 1:
+        return user[0]
 
 if __name__ == "__main__":
     check_GPU()
-    nom = "test"
-    sentences = Discours().take_discours_from_users(message_lim=15000)
-    sentences = random.sample(sentences, 15000)
+    nom = ["Orteils"]
+    sentences = Discours().take_discours_from_users(users=nom, message_lim=10000)
+    sentences = random.sample(sentences, 10000)
 
     tokenizer = Tokenizer(filters='')
     tokenizer.fit_on_texts(sentences)
@@ -55,18 +60,18 @@ if __name__ == "__main__":
 
         # Créez un modèle LSTM simple
         model = Sequential()
-        model.add(Embedding(total_mots, 15, input_length=max_sequence_length-1))
-        model.add(LSTM(256, dropout=0.1, recurrent_dropout=0.2))
+        model.add(Embedding(total_mots, 18, input_length=max_sequence_length-1))
+        model.add(LSTM(256, dropout=0.2, recurrent_dropout=0.2))
         model.add(Dense(total_mots, activation='softmax'))
 
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-        model.fit(X, y, epochs=100, verbose=1, validation_split=0.2)
+        model.fit(X, y, epochs=10, verbose=1, validation_split=0.2)
         model.summary()
         # Sauvegarde du model
-        model.save(f"PICS/pik_{nom}.h5")
+        model.save(f"PICS/pik_{get_name(nom)}.h5")
     else:
-        model = load_model(f"PICS/pik_{nom}.h5")
+        model = load_model(f"PICS/pik_{get_name(nom)}.h5")
 
     # Fonction pour générer du texte
     def generate_text(seed_text, next_words, model, max_sequence_length, tokenizer):

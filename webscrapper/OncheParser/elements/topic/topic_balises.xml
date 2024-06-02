@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<balises onche-version="3.8.4h">
+    <topic root="//div[@class='messages']">
+        <message>
+            <pseudo>
+                <xpath>//div[@class='message']/@data-username</xpath>
+                <clean></clean>
+            </pseudo>
+            <message-id>
+                <xpath>//div[@class='message']/@data-id</xpath>
+                <clean></clean>
+            </message-id>
+            <message-content>
+                <xpath>//div[@class='message']/text()</xpath>
+                <clean></clean>
+            </message-content>
+            <date type="date">>
+                <xpath>//div[@class='message']/div[@class='message-bottom']/div[@class='message-date']/@title</xpath>
+                <clean></clean>
+            </date>
+        </message>
+        <response>
+            <xpath>//div[@class='message']/div[@class='message answer']/@data-username</xpath>
+        </response>
+    </topic>
+    <table name="Onchois">
+        <division name="pseudonyme">
+        </division>
+    </table>
+</balises>

@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<balises onche-version="3.8.4h">
+    <board>
+        <titre>
+            <xpath>//div[@class='topic compact' or @class='topic']/a[2]/span[1]/text()</xpath>
+            <clean></clean>
+        </titre>
+        <messages type="int">
+            <xpath>//div[@class='topic compact' or @class='topic']/a[2]/span[2]/text()</xpath>
+            <clean></clean>
+        </messages>
+        <operator>
+            <xpath>//div[@class='topic compact' or @class='topic']/a[2]/div/text()</xpath>
+            <clean></clean>
+        </operator>
+        <link>
+            <xpath>//div[@class='topic compact' or @class='topic']/a[2]/@href</xpath>
+            <clean></clean>
+        </link>
+    </board>
+</balises>

@@ -1,10 +1,12 @@
 import os
 
-from config.Variables.variables import *
 from requests import Response, request
 from requests.auth import HTTPBasicAuth
+
+from config.Variables.variables import *
 from utils.cryptage.encryption import Encrypteur
 from utils.logger import logger
+
 
 class BrowserRequests:
     def __init__(self, user: str, password: str, salt: str = None, profile: str = None, verbose: bool = False):
@@ -42,3 +44,6 @@ class BrowserRequests:
         if reponse.status_code // 200 > 0 and reponse.status_code < 300:
             return reponse.text
         return ""
+    
+    def __verify_authentication(self) -> bool:
+        """Vérifier si l'utilisateur est bien authentifié"""
