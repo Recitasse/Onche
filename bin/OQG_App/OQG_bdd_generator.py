@@ -119,16 +119,3 @@ def generate_sql_code_from_xml(file: str) -> str:
             if settings.tag == 'comment':
                 sql_code += f"COMMENT = '{settings.text}';\n\n"
     return sql_code
-
-
-if __name__ == "__main__":
-    files = get_all_xml_files()
-    if 'schema.sql' in os.listdir(f'{GLOBAL_PATH}/bin/database'):
-        os.remove(f'{GLOBAL_PATH}/bin/database/schema.sql')
-    with open(f'{GLOBAL_PATH}/bin/database/schema.sql', 'a', encoding="utf-8") as f:
-        f.write(metadata())
-    with open(f'{GLOBAL_PATH}/bin/database/schema.sql', 'a', encoding="utf-8") as f:
-        for file_ in files:
-            f.write(generate_sql_code_from_xml(file_))
-    with open(f'{GLOBAL_PATH}/bin/database/schema.sql', 'a', encoding="utf-8") as f:
-        f.write(setting())

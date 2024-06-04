@@ -1,10 +1,7 @@
-import os
-from pathlib import Path
 from getpass import getuser
 from datetime import datetime
 import xml.etree.ElementTree as ET
 
-from OQG_bdd_generator import get_all_xml_files
 from config.Variables.variables import *
 
 
@@ -28,7 +25,7 @@ def GenerateImportQueries(table: str) -> str:
     python_code += f"   Made by Recitasse {datetime.now()}\n"
     python_code += '=================================================="""\n\n'
     python_code += f"import datetime\n\nfrom dataclasses import dataclass\n\nfrom bin.database.tools.entities.{table} import {table}\n\nfrom bin.database.bbd import Link\n\n\n"
-    python_code += f"@dataclass(init=False)\nclass {table}Bdd(Link):"
+    python_code += f"@dataclass(init=False)\nclass {table}Bdd(Link):\n"
     return python_code
 
 def format_und(text: str) -> str:
@@ -66,7 +63,7 @@ def GenerateIsFunctions(root: ET.Element, table: str) -> str:
         python_code += f"{tab*3}self._logger.error(f'Une erreur MySQL est survenue : {{e}}')\n"
         python_code += f"""{tab*2}self._logger.info(f"{table} {{{el['name']}}} n'est pas dans la base de donnée.")\n"""
         python_code += f"{tab*2}return False\n\n"
-    return python_code
+    return python_code + "\n"
 
 def GenerateAddFunctions(root: ET.Element, table: str):
     rows = root.findall(".//row[@null='False']")
@@ -91,7 +88,7 @@ def GenerateAddFunctions(root: ET.Element, table: str):
     python_code += f"{tab*3}except Exception as e:\n"
     python_code += f"{tab*4}self._logger.error(f'Une erreur MySQL est survenue : {{e}}')\n"
     python_code += f"{tab*3}finally:\n{tab*4}cursor.close()\n\n"
-    return python_code
+    return python_code + "\n"
 
 
 def GenerateUpdateFunctions(root: ET.Element, table: str) -> str:
@@ -115,7 +112,7 @@ def GenerateUpdateFunctions(root: ET.Element, table: str) -> str:
             python_code += f"{tab*3}except Exception as e:\n"
             python_code += f"{tab*4}self._logger.error(f'Une erreur MySQL est survenue : {{e}}')\n"
             python_code += f"{tab*3}finally:\n{tab*4}cursor.close()\n\n"
-    return python_code
+    return python_code + "\n"
 
 
 def GenerateDeleteFunction(root: ET.Element, table: str) -> str:
@@ -134,7 +131,7 @@ def GenerateDeleteFunction(root: ET.Element, table: str) -> str:
     python_code += f"{tab*3}except Exception as e:\n"
     python_code += f"{tab*4}self._logger.error(f'Une erreur MySQL est survenue : {{e}}')\n"
     python_code += f"{tab*3}finally:\n{tab*4}cursor.close()\n\n"
-    return python_code
+    return python_code + "\n"
 
 def Generate2Functions(root: ET.Element, table: str) -> str:
     first_table = table
@@ -157,7 +154,7 @@ def Generate2Functions(root: ET.Element, table: str) -> str:
                 python_code += f"{tab*2}params = ({unformat_und(el['name'])},)\n"
                 python_code += f"{tab*2}return self.get_results(query, params)\n\n"
 
-        return python_code
+        return python_code + "\n"
 
 def GenerateGetFunctions(root: ET.Element, table: str) -> str:
     first_table = table
@@ -179,7 +176,7 @@ def GenerateGetFunctions(root: ET.Element, table: str) -> str:
         python_code += f"{tab*2}params = ({unformat_und(el['name'])},)\n"
         python_code += f"{tab*2}return {table}(*self.get_results(query, params, ind_='all'))\n\n"
 
-    return python_code
+    return python_code + "\n"
 
 def GenerateFromFunctions(root: ET.Element, table: str) -> str:
     first_table = table
@@ -220,7 +217,7 @@ def GenerateFromFunctions(root: ET.Element, table: str) -> str:
             python_code += f"{tab * 2}query = f'SELECT * FROM {first_table} WHERE {first_table}_{format_und(info[0])} {qu}'\n"
             python_code += f"{tab * 2}params = {params}\n"
             python_code += f"{tab*2}return [{table}(*row) for row in self.get_results(query, params, ind_='all')]\n\n"
-    return python_code
+    return python_code + "\n"
 
 
 def GenerateStrFunctions(root: ET.Element, table: str) -> str:
@@ -264,37 +261,4 @@ def GenerateStrFunctions(root: ET.Element, table: str) -> str:
                 python_code += f"""{tab * 2}query = f"SELECT * FROM {first_table} WHERE {op['op']}({first_table}_{info}, '{{{op['args'][0]}}}') {op['sym']} {{{op['args'][1]}}};"\n"""
             python_code += f"{tab * 2}return [{table}(*row) for row in self.get_results(query, params=(), ind_='all')]\n\n"
 
-    return python_code
-
-
-if __name__ == "__main__":
-    files = get_all_xml_files()
-    for file in files:
-        glb_str = ""
-        with open(f"{CALICE}{file}", 'r', encoding="utf-8") as conf:
-            root: ET.Element = ET.fromstring(conf.read())
-        table_name = root.attrib['table']
-
-        if os.path.exists(f"{GLOBAL_PATH}bin/database/selectors/selector_{table_name}.py"):
-            os.remove(f"{GLOBAL_PATH}bin/database/selectors/selector_{table_name}.py")
-
-        glb_str += GenerateImportQueries(table_name)
-        glb_str += "\n"
-        glb_str += GenerateIsFunctions(root, table_name)
-        glb_str += "\n"
-        glb_str += GenerateAddFunctions(root, table_name)
-        glb_str += "\n"
-        glb_str += GenerateUpdateFunctions(root, table_name)
-        glb_str += "\n"
-        glb_str += GenerateDeleteFunction(root, table_name)
-        glb_str += "\n"
-        glb_str += Generate2Functions(root, table_name)
-        glb_str += "\n"
-        glb_str += GenerateGetFunctions(root, table_name)
-        glb_str += "\n"
-        glb_str += GenerateFromFunctions(root, table_name)
-        glb_str += "\n"
-        glb_str += GenerateStrFunctions(root, table_name)
-
-        with open(f"{GLOBAL_PATH}bin/database/tools/selectors/selector_{table_name}.py", 'w', encoding="utf-8") as f:
-            f.write(glb_str)
+    return python_code + "\n"

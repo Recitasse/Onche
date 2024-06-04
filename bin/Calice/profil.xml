@@ -7,7 +7,12 @@
     </parameters>
     <rows>
         <row name="id" sql-type="INT" null="False" auto_increment="True" type="int"></row>
-        <row name="oid" sql-type="INT" null="False" type="int"></row>
+        <row name="ban" sql-type="TINYINT(1)" null="False" type="int" default="0">
+            <parse sql-type="int" for="profil">
+                <xpath>//div[@class='profile-cover']/div[1]/@title</xpath>
+                <clean></clean>
+            </parse>
+        </row>
         <row name="niveau" sql-type="INT" null="False" type="int" default="1">
             <parse sql-type="int" for="profil">
                 <xpath>//div[@class='profile-cover-badge']/text()</xpath>
@@ -18,6 +23,9 @@
         <row name="sexe" sql-type="VARCHAR(30)" null="True" type="str"></row>
         <row name="age" sql-type="INT" null="True" type="int"></row>
         <row name="qualite" sql-type="INT" null="True" default="5" type="int"></row>
+        <row name="pos" sql-type="FLOAT" null="True" type="int"></row>
+        <row name="neg" sql-type="FLOAT" null="True" type="int"></row>
+        <row name="neu" sql-type="FLOAT" null="True" type="int"></row>
         <row name="message" sql-type="INT" null="False" type="int" default="0">
             <parse sql-type="int" for="profil">
                 <xpath>//div[@class='profile-blocs']/div[1]/div[4]/div[2]/text()</xpath>

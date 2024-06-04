@@ -1,8 +1,8 @@
 """==================================================
    Python class TopicBdd générée par OQG BDD TOOLS GENERATOR
-   Author: raphael
+   Author: recitasse
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-02 17:36:31.469835
+   Made by Recitasse 2024-06-04 18:36:52.141631
 =================================================="""
 
 import datetime
@@ -515,4 +515,5 @@ class TopicBdd(Link):
     def get_topic_instr_ne_lien(self, text: str, occ: int) -> list[Topic]:
         query = f"SELECT * FROM topic WHERE INSTR(topic_lien, '{text}') <> {occ};"
         return [Topic(*row) for row in self.get_results(query, params=(), ind_='all')]
+
 

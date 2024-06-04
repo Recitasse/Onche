@@ -1,8 +1,8 @@
 """==================================================
    Python class OnchoisBdd générée par OQG BDD TOOLS GENERATOR
-   Author: raphael
+   Author: recitasse
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-02 17:36:31.472089
+   Made by Recitasse 2024-06-04 18:36:52.140162
 =================================================="""
 
 import datetime
@@ -53,30 +53,30 @@ class OnchoisBdd(Link):
         return False
 
 
-    def add_onchois(self, oid: int, niveau: int, nom: str, message: int, date: datetime) -> None:
-        query = 'INSERT INTO onchois (onchois_oid, onchois_niveau, onchois_nom, onchois_message, onchois_date);'
-        params = (oid, niveau, nom, message, date,)
-        if not self.is_in_oid(oid):
+    def add_onchois(self, ban: int, niveau: int, nom: str, message: int, date: datetime) -> None:
+        query = 'INSERT INTO onchois (onchois_ban, onchois_niveau, onchois_nom, onchois_message, onchois_date);'
+        params = (ban, niveau, nom, message, date,)
+        if not self.is_in_ban(ban):
             cursor = self.connexion.cursor()
             try:
                 cursor.execute(query, params)
                 self.connexion.commit()
-                self._logger.info(f'onchois {oid} existe')
+                self._logger.info(f'onchois {ban} existe')
             except Exception as e:
                 self._logger.error(f'Une erreur MySQL est survenue : {e}')
             finally:
                 cursor.close()
 
 
-    def update_onchois_oid(self, id_: int, oid: int) -> None:
-        query = "UPDATE onchois SET onchois_oid = %s WHERE onchois_id = %s;"
-        params = (id_, oid)
+    def update_onchois_ban(self, id_: int, ban: int) -> None:
+        query = "UPDATE onchois SET onchois_ban = %s WHERE onchois_id = %s;"
+        params = (id_, ban)
         if not self.is_in_id(id_):
             cursor = self.connexion.cursor()
             try:
                 cursor.execute(query, params)
                 self.connexion.commit()
-                self._logger.info(f'Modification de oid de onchois effectué par {oid}')
+                self._logger.info(f'Modification de ban de onchois effectué par {ban}')
             except Exception as e:
                 self._logger.error(f'Une erreur MySQL est survenue : {e}')
             finally:
@@ -147,6 +147,48 @@ class OnchoisBdd(Link):
                 cursor.execute(query, params)
                 self.connexion.commit()
                 self._logger.info(f'Modification de qualite de onchois effectué par {qualite}')
+            except Exception as e:
+                self._logger.error(f'Une erreur MySQL est survenue : {e}')
+            finally:
+                cursor.close()
+
+    def update_onchois_pos(self, id_: int, pos: int) -> None:
+        query = "UPDATE onchois SET onchois_pos = %s WHERE onchois_id = %s;"
+        params = (id_, pos)
+        if not self.is_in_id(id_):
+            cursor = self.connexion.cursor()
+            try:
+                cursor.execute(query, params)
+                self.connexion.commit()
+                self._logger.info(f'Modification de pos de onchois effectué par {pos}')
+            except Exception as e:
+                self._logger.error(f'Une erreur MySQL est survenue : {e}')
+            finally:
+                cursor.close()
+
+    def update_onchois_neg(self, id_: int, neg: int) -> None:
+        query = "UPDATE onchois SET onchois_neg = %s WHERE onchois_id = %s;"
+        params = (id_, neg)
+        if not self.is_in_id(id_):
+            cursor = self.connexion.cursor()
+            try:
+                cursor.execute(query, params)
+                self.connexion.commit()
+                self._logger.info(f'Modification de neg de onchois effectué par {neg}')
+            except Exception as e:
+                self._logger.error(f'Une erreur MySQL est survenue : {e}')
+            finally:
+                cursor.close()
+
+    def update_onchois_neu(self, id_: int, neu: int) -> None:
+        query = "UPDATE onchois SET onchois_neu = %s WHERE onchois_id = %s;"
+        params = (id_, neu)
+        if not self.is_in_id(id_):
+            cursor = self.connexion.cursor()
+            try:
+                cursor.execute(query, params)
+                self.connexion.commit()
+                self._logger.info(f'Modification de neu de onchois effectué par {neu}')
             except Exception as e:
                 self._logger.error(f'Une erreur MySQL est survenue : {e}')
             finally:
@@ -228,8 +270,8 @@ class OnchoisBdd(Link):
         params = (from_, to_,)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_onchois_from_oid(self, from_: list | tuple, to_: list | tuple) -> list[Onchois]:
-        query = f'SELECT * FROM onchois WHERE onchois_oid BETWEEN % AND %;'
+    def get_onchois_from_ban(self, from_: list | tuple, to_: list | tuple) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_ban BETWEEN % AND %;'
         params = (from_, to_,)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
@@ -248,6 +290,21 @@ class OnchoisBdd(Link):
         params = (from_, to_,)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
+    def get_onchois_from_pos(self, from_: list | tuple, to_: list | tuple) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_pos BETWEEN % AND %;'
+        params = (from_, to_,)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_onchois_from_neg(self, from_: list | tuple, to_: list | tuple) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_neg BETWEEN % AND %;'
+        params = (from_, to_,)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_onchois_from_neu(self, from_: list | tuple, to_: list | tuple) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_neu BETWEEN % AND %;'
+        params = (from_, to_,)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
     def get_onchois_from_message(self, from_: list | tuple, to_: list | tuple) -> list[Onchois]:
         query = f'SELECT * FROM onchois WHERE onchois_message BETWEEN % AND %;'
         params = (from_, to_,)
@@ -263,8 +320,8 @@ class OnchoisBdd(Link):
         params = (to_,)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_onchois_ge_oid(self, to_: int) -> list[Onchois]:
-        query = f'SELECT * FROM onchois WHERE onchois_oid >= %s;'
+    def get_onchois_ge_ban(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_ban >= %s;'
         params = (to_,)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
@@ -283,6 +340,21 @@ class OnchoisBdd(Link):
         params = (to_,)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
+    def get_onchois_ge_pos(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_pos >= %s;'
+        params = (to_,)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_onchois_ge_neg(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_neg >= %s;'
+        params = (to_,)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_onchois_ge_neu(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_neu >= %s;'
+        params = (to_,)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
     def get_onchois_ge_message(self, to_: int) -> list[Onchois]:
         query = f'SELECT * FROM onchois WHERE onchois_message >= %s;'
         params = (to_,)
@@ -298,8 +370,8 @@ class OnchoisBdd(Link):
         params = (to_,)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_onchois_eq_oid(self, to_: int) -> list[Onchois]:
-        query = f'SELECT * FROM onchois WHERE onchois_oid == %s;'
+    def get_onchois_eq_ban(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_ban == %s;'
         params = (to_,)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
@@ -318,6 +390,21 @@ class OnchoisBdd(Link):
         params = (to_,)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
+    def get_onchois_eq_pos(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_pos == %s;'
+        params = (to_,)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_onchois_eq_neg(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_neg == %s;'
+        params = (to_,)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_onchois_eq_neu(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_neu == %s;'
+        params = (to_,)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
     def get_onchois_eq_message(self, to_: int) -> list[Onchois]:
         query = f'SELECT * FROM onchois WHERE onchois_message == %s;'
         params = (to_,)
@@ -333,8 +420,8 @@ class OnchoisBdd(Link):
         params = (to_,)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_onchois_ne_oid(self, to_: int) -> list[Onchois]:
-        query = f'SELECT * FROM onchois WHERE onchois_oid <> %s;'
+    def get_onchois_ne_ban(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_ban <> %s;'
         params = (to_,)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
@@ -353,6 +440,21 @@ class OnchoisBdd(Link):
         params = (to_,)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
+    def get_onchois_ne_pos(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_pos <> %s;'
+        params = (to_,)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_onchois_ne_neg(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_neg <> %s;'
+        params = (to_,)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_onchois_ne_neu(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_neu <> %s;'
+        params = (to_,)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
     def get_onchois_ne_message(self, to_: int) -> list[Onchois]:
         query = f'SELECT * FROM onchois WHERE onchois_message <> %s;'
         params = (to_,)
@@ -368,8 +470,8 @@ class OnchoisBdd(Link):
         params = (to_,)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_onchois_gt_oid(self, to_: int) -> list[Onchois]:
-        query = f'SELECT * FROM onchois WHERE onchois_oid > %s;'
+    def get_onchois_gt_ban(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_ban > %s;'
         params = (to_,)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
@@ -388,6 +490,21 @@ class OnchoisBdd(Link):
         params = (to_,)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
+    def get_onchois_gt_pos(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_pos > %s;'
+        params = (to_,)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_onchois_gt_neg(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_neg > %s;'
+        params = (to_,)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_onchois_gt_neu(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_neu > %s;'
+        params = (to_,)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
     def get_onchois_gt_message(self, to_: int) -> list[Onchois]:
         query = f'SELECT * FROM onchois WHERE onchois_message > %s;'
         params = (to_,)
@@ -403,8 +520,8 @@ class OnchoisBdd(Link):
         params = (to_,)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_onchois_le_oid(self, to_: int) -> list[Onchois]:
-        query = f'SELECT * FROM onchois WHERE onchois_oid =< %s;'
+    def get_onchois_le_ban(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_ban =< %s;'
         params = (to_,)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
@@ -423,6 +540,21 @@ class OnchoisBdd(Link):
         params = (to_,)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
+    def get_onchois_le_pos(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_pos =< %s;'
+        params = (to_,)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_onchois_le_neg(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_neg =< %s;'
+        params = (to_,)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_onchois_le_neu(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_neu =< %s;'
+        params = (to_,)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
     def get_onchois_le_message(self, to_: int) -> list[Onchois]:
         query = f'SELECT * FROM onchois WHERE onchois_message =< %s;'
         params = (to_,)
@@ -438,8 +570,8 @@ class OnchoisBdd(Link):
         params = (to_,)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_onchois_lt_oid(self, to_: int) -> list[Onchois]:
-        query = f'SELECT * FROM onchois WHERE onchois_oid < %s;'
+    def get_onchois_lt_ban(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_ban < %s;'
         params = (to_,)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
@@ -458,6 +590,21 @@ class OnchoisBdd(Link):
         params = (to_,)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
+    def get_onchois_lt_pos(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_pos < %s;'
+        params = (to_,)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_onchois_lt_neg(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_neg < %s;'
+        params = (to_,)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_onchois_lt_neu(self, to_: int) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_neu < %s;'
+        params = (to_,)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
     def get_onchois_lt_message(self, to_: int) -> list[Onchois]:
         query = f'SELECT * FROM onchois WHERE onchois_message < %s;'
         params = (to_,)
@@ -473,8 +620,8 @@ class OnchoisBdd(Link):
         params = tuple(list_)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_onchois_in_oid(self, list_: list | tuple) -> list[Onchois]:
-        query = f'SELECT * FROM onchois WHERE onchois_oid IN ({",".join(["%s"] * len(list_))});'
+    def get_onchois_in_ban(self, list_: list | tuple) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_ban IN ({",".join(["%s"] * len(list_))});'
         params = tuple(list_)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
@@ -490,6 +637,21 @@ class OnchoisBdd(Link):
 
     def get_onchois_in_qualite(self, list_: list | tuple) -> list[Onchois]:
         query = f'SELECT * FROM onchois WHERE onchois_qualite IN ({",".join(["%s"] * len(list_))});'
+        params = tuple(list_)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_onchois_in_pos(self, list_: list | tuple) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_pos IN ({",".join(["%s"] * len(list_))});'
+        params = tuple(list_)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_onchois_in_neg(self, list_: list | tuple) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_neg IN ({",".join(["%s"] * len(list_))});'
+        params = tuple(list_)
+        return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_onchois_in_neu(self, list_: list | tuple) -> list[Onchois]:
+        query = f'SELECT * FROM onchois WHERE onchois_neu IN ({",".join(["%s"] * len(list_))});'
         params = tuple(list_)
         return [Onchois(*row) for row in self.get_results(query, params, ind_='all')]
 
@@ -591,3 +753,5 @@ class OnchoisBdd(Link):
     def get_onchois_instr_ne_sexe(self, text: str, occ: int) -> list[Onchois]:
         query = f"SELECT * FROM onchois WHERE INSTR(onchois_sexe, '{text}') <> {occ};"
         return [Onchois(*row) for row in self.get_results(query, params=(), ind_='all')]
+
+
