@@ -1,8 +1,8 @@
 """==================================================
    Python class StickersBdd générée par OQG BDD TOOLS GENERATOR
-   Author: raphael
+   Author: recitasse
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-02 17:36:31.467000
+   Made by Recitasse 2024-06-04 18:36:52.140948
 =================================================="""
 
 import datetime
@@ -241,4 +241,5 @@ class StickersBdd(Link):
     def get_stickers_instr_ne_nom(self, text: str, occ: int) -> list[Stickers]:
         query = f"SELECT * FROM stickers WHERE INSTR(stickers_nom, '{text}') <> {occ};"
         return [Stickers(*row) for row in self.get_results(query, params=(), ind_='all')]
+
 

@@ -1,8 +1,8 @@
 """==================================================
    Python class Onchois générée par OQG BDD ENTITIES GENERATOR
-   Author: raphael
+   Author: recitasse
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-02 22:14:25.498371
+   Made by Recitasse 2024-06-04 18:36:52.142941
 =================================================="""
 
 import datetime
@@ -11,9 +11,8 @@ from dataclasses import dataclass, field
 
 
 @dataclass(slots=True)
-class Onchois:
-    id__: int = field(default=None)
-    oid_: int = field(default=None)
+class Onchois:    id__: int = field(default=None)
+    ban_: int = field(default=0)
     niveau_: int = field(default=1)
     nom_: str = field(default="None")
     message_: int = field(default=0)
@@ -22,6 +21,9 @@ class Onchois:
     sexe_: str = field(init=False, default="None")
     age_: int = field(init=False, default=None)
     qualite_: int = field(init=False, default=5)
+    pos_: int = field(init=False, default=None)
+    neg_: int = field(init=False, default=None)
+    neu_: int = field(init=False, default=None)
 
     intern_link: 'OnchoisBdd' = field(init=False, default=None)
 
@@ -35,8 +37,8 @@ class Onchois:
         return self.id__
 
     @property
-    def oid(self) -> int:
-        return self.oid_
+    def ban(self) -> int:
+        return self.ban_
 
     @property
     def niveau(self) -> int:
@@ -59,6 +61,18 @@ class Onchois:
         return self.qualite_
 
     @property
+    def pos(self) -> int:
+        return self.pos_
+
+    @property
+    def neg(self) -> int:
+        return self.neg_
+
+    @property
+    def neu(self) -> int:
+        return self.neu_
+
+    @property
     def message(self) -> int:
         return self.message_
 
@@ -67,10 +81,10 @@ class Onchois:
         return self.date_
 
 
-    @oid.setter
-    def oid(self, val: int) -> None:
-        self.intern_link.update_onchois_oid(self.id_, val)
-        self.oid = val
+    @ban.setter
+    def ban(self, val: int) -> None:
+        self.intern_link.update_onchois_ban(self.id_, val)
+        self.ban = val
 
     @niveau.setter
     def niveau(self, val: int) -> None:
@@ -96,6 +110,21 @@ class Onchois:
     def qualite(self, val: int) -> None:
         self.intern_link.update_onchois_qualite(self.id_, val)
         self.qualite = val
+
+    @pos.setter
+    def pos(self, val: int) -> None:
+        self.intern_link.update_onchois_pos(self.id_, val)
+        self.pos = val
+
+    @neg.setter
+    def neg(self, val: int) -> None:
+        self.intern_link.update_onchois_neg(self.id_, val)
+        self.neg = val
+
+    @neu.setter
+    def neu(self, val: int) -> None:
+        self.intern_link.update_onchois_neu(self.id_, val)
+        self.neu = val
 
     @message.setter
     def message(self, val: int) -> None:

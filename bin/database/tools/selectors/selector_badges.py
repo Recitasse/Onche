@@ -1,8 +1,8 @@
 """==================================================
    Python class BadgesBdd générée par OQG BDD TOOLS GENERATOR
-   Author: raphael
+   Author: recitasse
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-02 17:36:31.468706
+   Made by Recitasse 2024-06-04 18:36:52.139724
 =================================================="""
 
 import datetime
@@ -187,4 +187,5 @@ class BadgesBdd(Link):
     def get_badges_instr_ne_nom(self, text: str, occ: int) -> list[Badges]:
         query = f"SELECT * FROM badges WHERE INSTR(badges_nom, '{text}') <> {occ};"
         return [Badges(*row) for row in self.get_results(query, params=(), ind_='all')]
+
 

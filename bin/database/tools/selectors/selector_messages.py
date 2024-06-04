@@ -1,8 +1,8 @@
 """==================================================
    Python class MessagesBdd générée par OQG BDD TOOLS GENERATOR
-   Author: raphael
+   Author: recitasse
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-02 17:36:31.473656
+   Made by Recitasse 2024-06-04 18:36:52.142261
 =================================================="""
 
 import datetime
@@ -457,4 +457,5 @@ class MessagesBdd(Link):
     def get_messages_instr_ne_message(self, text: str, occ: int) -> list[Messages]:
         query = f"SELECT * FROM messages WHERE INSTR(messages_message, '{text}') <> {occ};"
         return [Messages(*row) for row in self.get_results(query, params=(), ind_='all')]
+
 

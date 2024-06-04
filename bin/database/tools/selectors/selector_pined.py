@@ -1,8 +1,8 @@
 """==================================================
    Python class PinedBdd générée par OQG BDD TOOLS GENERATOR
-   Author: raphael
+   Author: recitasse
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-02 17:36:31.471216
+   Made by Recitasse 2024-06-04 18:36:52.141324
 =================================================="""
 
 import datetime
@@ -214,5 +214,6 @@ class PinedBdd(Link):
         query = f'SELECT * FROM pined WHERE pined_badgeid IN ({",".join(["%s"] * len(list_))});'
         params = tuple(list_)
         return [Pined(*row) for row in self.get_results(query, params, ind_='all')]
+
 
 

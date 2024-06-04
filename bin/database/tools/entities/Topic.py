@@ -1,8 +1,8 @@
 """==================================================
    Python class Topic générée par OQG BDD ENTITIES GENERATOR
-   Author: raphael
+   Author: recitasse
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-02 22:14:25.498041
+   Made by Recitasse 2024-06-04 18:36:52.149963
 =================================================="""
 
 import datetime
@@ -11,8 +11,7 @@ from dataclasses import dataclass, field
 
 
 @dataclass(slots=True)
-class Topic:
-    id__: int = field(default=None)
+class Topic:    id__: int = field(default=None)
     oid_: int = field(default=None)
     operateur_: int = field(default=None)
     nom_: str = field(default="None")
