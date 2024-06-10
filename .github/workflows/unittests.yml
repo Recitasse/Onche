@@ -14,13 +14,17 @@ jobs:
     - uses: actions/checkout@v2
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
 
+      # Use the Python version you need for your project
     - name: Set up Python 3.12
       uses: actions/setup-python@v2
       with:
         python-version: '3.12'
-        # Use the Python version you need for your project
 
-    - name: Install dependencies
+    - name: Upgrade setuptools
+      run: |
+        python -m pip install --upgrade pip setuptools wheel
+
+    - name: Install dependencies from requirements.txt
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
