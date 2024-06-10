@@ -14,7 +14,7 @@ def GenerateImportFunctions(table: str) -> str:
     python_code += f"   Made by Recitasse {datetime.now()}\n"
     python_code += '=================================================="""\n\n'
     python_code += f"import datetime\n\nfrom dataclasses import dataclass, field\n\n\n"
-    python_code += f"@dataclass(slots=True)\nclass {table}:"
+    python_code += f"@dataclass(slots=True)\nclass {table}:\n"
     return python_code
 
 def GenerateValuesFunctions(root: ET.Element, table: str) -> str:

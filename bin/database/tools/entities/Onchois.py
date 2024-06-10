@@ -2,7 +2,7 @@
    Python class Onchois générée par OQG BDD ENTITIES GENERATOR
    Author: recitasse
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-04 18:36:52.142941
+   Made by Recitasse 2024-06-05 18:11:12.350439
 =================================================="""
 
 import datetime
@@ -11,7 +11,8 @@ from dataclasses import dataclass, field
 
 
 @dataclass(slots=True)
-class Onchois:    id__: int = field(default=None)
+class Onchois:
+    id__: int = field(default=None)
     ban_: int = field(default=0)
     niveau_: int = field(default=1)
     nom_: str = field(default="None")

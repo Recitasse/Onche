@@ -9,17 +9,14 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.backends import default_backend
 
-parent_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-sys.path.append(parent_dir)
-
 from config.Variables.variables import *
 
+from dataclasses import dataclass
 
+
+@dataclass(init=False)
 class Encrypteur:
-    def __init__(self) -> None:
-        pass
-
-    def _generate_key(self, password: str, salt: str) -> str:
+    def _generate_key(self, password: str, salt: str) -> bytes:
         """Génère la clef"""
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
@@ -33,6 +30,7 @@ class Encrypteur:
     
     def encrypt_file(self, path_in: str, salt: str, password: str) -> None:
         """Encrypte le fichier d'entré"""
+        encryted_data = None
         key = self._generate_key(password, salt)
         cipher_suite = Fernet(key)
         if path_in.endswith(".json"):
@@ -44,7 +42,7 @@ class Encrypteur:
         with open(path_in, "wb") as enc_fo:
             enc_fo.write(encryted_data[:pos]+salt.encode()+encryted_data[pos:])
 
-    def decrypte_file(self, path_in: str, salt: str, password: str) -> None:
+    def decrypte_file(self, path_in: str, salt: str, password: str) -> dict:
         with open(path_in, "rb") as enc_fi:
             data = enc_fi.read()
             enc = ''.join(data.decode().split(salt)).encode()
@@ -55,3 +53,4 @@ class Encrypteur:
 
         if path_in.endswith(".json"):
             return json.loads(dec.decode())
+        return {}

@@ -2,7 +2,7 @@
    Python class Stickers générée par OQG BDD ENTITIES GENERATOR
    Author: recitasse
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-04 18:36:52.149655
+   Made by Recitasse 2024-06-05 18:11:12.350659
 =================================================="""
 
 import datetime
@@ -11,7 +11,8 @@ from dataclasses import dataclass, field
 
 
 @dataclass(slots=True)
-class Stickers:    id__: int = field(default=None)
+class Stickers:
+    id__: int = field(default=None)
     nom_: str = field(default="None")
     collection_: int = field(default=None)
 

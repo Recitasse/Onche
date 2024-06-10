@@ -1,6 +1,7 @@
 from OQG_bdd_entities import *
 from OQG_bdd_tools import *
 from OQG_bdd_generator import *
+from OQG_parser_generator import *
 
 
 if __name__ == "__main__":
@@ -59,4 +60,10 @@ if __name__ == "__main__":
         with open(f"{GLOBAL_PATH}bin/database/tools/entities/{name}.py", 'w', encoding="utf-8") as f:
             f.write(glb_str)
     print(f"Entities generation complete")
+
+    generate_badge_getter(files)
+    print(f"Parser generation complete")
+
     print(f"Overall generation is finished")
+
+

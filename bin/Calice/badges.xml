@@ -5,9 +5,11 @@
         <comment>Tables des badges</comment>
     </parameters>
     <rows>
-        <row name="id" sql-type="INT" null="False" auto_increment="True" type="int"></row>
+        <row name="id" sql-type="INT" null="False" auto_increment="True" type="int">
+            <parser prev="user-created"/>
+        </row>
         <row name="nom" sql-type="VARCHAR(100)" null="False" type="str">
-            <parser sql-type="tuple" for="badges">
+            <parser sql-type="tuple" table="badges" name="nom" where="profil">
                 <xpath>//div[@class='profile-badges']/img/@title</xpath>
                 <clean></clean>
             </parser>
