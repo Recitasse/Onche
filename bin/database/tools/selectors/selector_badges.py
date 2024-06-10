@@ -2,7 +2,7 @@
    Python class BadgesBdd générée par OQG BDD TOOLS GENERATOR
    Author: recitasse
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-04 18:36:52.139724
+   Made by Recitasse 2024-06-05 18:11:12.347214
 =================================================="""
 
 import datetime

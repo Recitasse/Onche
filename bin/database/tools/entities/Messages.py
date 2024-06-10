@@ -2,7 +2,7 @@
    Python class Messages générée par OQG BDD ENTITIES GENERATOR
    Author: recitasse
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-04 18:36:52.150131
+   Made by Recitasse 2024-06-05 18:11:12.351090
 =================================================="""
 
 import datetime
@@ -11,7 +11,8 @@ from dataclasses import dataclass, field
 
 
 @dataclass(slots=True)
-class Messages:    id__: int = field(default=None)
+class Messages:
+    id__: int = field(default=None)
     oid_: int = field(default=None)
     user_: int = field(default=None)
     topic_: int = field(default=None)

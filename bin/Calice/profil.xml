@@ -6,35 +6,60 @@
         <check via="nom"/>
     </parameters>
     <rows>
-        <row name="id" sql-type="INT" null="False" auto_increment="True" type="int"></row>
-        <row name="ban" sql-type="TINYINT(1)" null="False" type="int" default="0">
-            <parse sql-type="int" for="profil">
+        <row name="id" sql-type="INT" null="False" auto_increment="True" type="int">
+            <parser prev="user-created"/>
+        </row>
+        <row name="oid" sql-type="INT" null="False" type="int" default="-1">
+            <parser sql-type="int" table="profil" name="oid" where="message">
                 <xpath>//div[@class='profile-cover']/div[1]/@title</xpath>
                 <clean></clean>
-            </parse>
+            </parser>
+        </row>
+        <row name="ban" sql-type="TINYINT(1)" null="False" type="int" default="0">
+            <parser sql-type="int" table="profil" name="ban" where="profil">
+                <xpath>//div[@class='profile-cover-badge bg-color dark']/text()</xpath>
+                <clean></clean>
+            </parser>
         </row>
         <row name="niveau" sql-type="INT" null="False" type="int" default="1">
-            <parse sql-type="int" for="profil">
+            <parser sql-type="int" for="profil" name="niveau" where="profil">
                 <xpath>//div[@class='profile-cover-badge']/text()</xpath>
                 <clean>Niveau </clean>
-            </parse>
+            </parser>
         </row>
-        <row name="nom" sql-type="VARCHAR(100)" null="False" type="str"></row>
-        <row name="sexe" sql-type="VARCHAR(30)" null="True" type="str"></row>
-        <row name="age" sql-type="INT" null="True" type="int"></row>
-        <row name="qualite" sql-type="INT" null="True" default="5" type="int"></row>
-        <row name="pos" sql-type="FLOAT" null="True" type="int"></row>
-        <row name="neg" sql-type="FLOAT" null="True" type="int"></row>
-        <row name="neu" sql-type="FLOAT" null="True" type="int"></row>
-        <row name="message" sql-type="INT" null="False" type="int" default="0">
-            <parse sql-type="int" for="profil">
-                <xpath>//div[@class='profile-blocs']/div[1]/div[4]/div[2]/text()</xpath>
+        <row name="nom" sql-type="VARCHAR(100)" null="False" type="str" where="message">
+            <parser sql-type="str" table="profil" name="nom" where="message">
+                <xpath>//div[@class='message']/@data-username</xpath>
                 <clean></clean>
-            </parse>
+            </parser>
+        </row>
+        <row name="sexe" sql-type="VARCHAR(30)" null="True" type="str">
+            <parser prev="user-created"/>
+        </row>
+        <row name="age" sql-type="INT" null="True" type="int">
+            <parser prev="user-created"/>
+        </row>
+        <row name="qualite" sql-type="INT" null="True" default="5" type="int">
+            <parser prev="user-created"/>
+        </row>
+        <row name="pos" sql-type="FLOAT" null="True" type="int">
+            <parser prev="user-created"/>
+        </row>
+        <row name="neg" sql-type="FLOAT" null="True" type="int">
+            <parser prev="user-created"/>
+        </row>
+        <row name="neu" sql-type="FLOAT" null="True" type="int">
+            <parser prev="user-created"/>
+        </row>
+        <row name="message" sql-type="INT" null="False" type="int" default="0">
+            <parser sql-type="int" table="profil" name="message" where="profil">
+                <xpath>//div[@class='profile-bloc']/div[4]/div[@class='item-value']/text()</xpath>
+                <clean></clean>
+            </parser>
         </row>
         <row name="date" sql-type="DATETIME(0)" type="datetime" null="False">
-            <parse sql-type="date" for="profil">
-                <xpath>//div[@class='profile-blocs']/div[1]/div[2]/div[2]/text()</xpath>
+            <parser sql-type="date" table="profil" name="date" where="profil">
+                <xpath>//div[@class='profile-bloc']/div[2]/div[@class='item-value']/text()</xpath>
                 <clean> (un an)</clean>
                 <clean> (une heure)</clean>
                 <clean> (une minute)</clean>
@@ -47,7 +72,7 @@
                 <clean re="\((\d+) minutes\)"></clean>
                 <clean re="\((\d+) jours\)"></clean>
                 <clean re="\((\d+) secondes\)"></clean>
-            </parse>
+            </parser>
         </row>
     </rows>
     <index>

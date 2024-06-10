@@ -1,5 +1,3 @@
-import sys
-import os
 import datetime
 import time
 
@@ -14,9 +12,12 @@ from utils.graphics import bar_etape
 from config.Variables.variables import *
 from BDD.bdd import BDD
 
+
 class ScrapperOnche:
-    def __init__(self, nom: str | int, BOT_agent: str = MYSQL_USER, pseudo: str = "Agent-PCO-001", pwd: str = "DwpNU4cs5Uaugwj", salt: str = "1kd0S", profil: str = DEFAULT_PROFILE, verbose: bool = False) -> None:
-        
+    def __init__(self, nom: str | int, BOT_agent: str = MYSQL_USER, pseudo: str = "Agent-PCO-001",
+                 pwd: str = "DwpNU4cs5Uaugwj", salt: str = "1kd0S", profil: str = DEFAULT_PROFILE,
+                 verbose: bool = False) -> None:
+
         # public
         self.forum = forum_xml(nom)
         self.url = f"https://onche.org/forum/{self.forum['id']}/{self.forum['name']}"
@@ -28,14 +29,13 @@ class ScrapperOnche:
         self._logger = logger(PATH_SCRAPPER_LOG, "SCRAPPER", self._verbose)
         self._browser = BrowserRequests(pseudo, pwd, salt, profil)
         self._local_BDD = BDD(database=MYSQL_DATABASE, user=BOT_agent)
-        
 
-    def get_front_page_info(self, page_it:int=1) -> dict:
+    def get_front_page_info(self, page_it: int = 1) -> dict:
         """
         Renvoie le dict {'nom' : [], 'sujet' : [], 'nb' : [], 'lien' : []}
         """
         go_to = f"{self.url}/{page_it}"
-        self.DATA = {'nom' : [], 'sujet' : [], 'nb' : [], 'lien' : []}
+        self.DATA = {'nom': [], 'sujet': [], 'nb': [], 'lien': []}
         html_text = self._browser.req_html(go_to)
         self.html_parser = BeautifulSoup(html_text, "html.parser")
 
@@ -59,10 +59,10 @@ class ScrapperOnche:
         # Cas particulier pour le titre <a> -> <span>
         for i, spanElement in enumerate(titreTopic):
             spanText = list(spanElement.get_text(strip=True))
-            
+
             # Suppression du chiffre et pseudo (via len)
-            taille = len(list(self.DATA['nom'][i]))+len(list(self.DATA['nb'][i]))
-            spanText = ''.join(spanText[:-taille]).replace("\'","'")
+            taille = len(list(self.DATA['nom'][i])) + len(list(self.DATA['nb'][i]))
+            spanText = ''.join(spanText[:-taille]).replace("\'", "'")
             # Correction sur les caractères spéciaux
             self.DATA['sujet'].append(spanText)
             del taille
@@ -80,7 +80,7 @@ class ScrapperOnche:
         Return:
             list -> DATA_MESS = [[{'user' :  [], 'msg' :  [],'touser' : [], 'date' : [], 'page': 1}],[],[],...,[{... 'page':n}]]
 
-        Note, on peut vérifier la page, où : DATA_MESS[0] = DATA_MESS[0]['page'] 
+        Note, on peut vérifier la page, où : DATA_MESS[0] = DATA_MESS[0]['page']
         """
         # Récupération des infos de la page
         topics = self.get_front_page_info(page)
@@ -113,10 +113,10 @@ class ScrapperOnche:
                 else:
                     START, STOP = self._local_BDD.nb_mess_start_stop(sujet)
                     self._logger.info(f"Scrappe de {sujet} de {START} à {STOP}.")
-                it = 0             
+                it = 0
 
                 # Regarde sur toutes les pages non visitées
-                for i in range(START+1, STOP+1):
+                for i in range(START + 1, STOP + 1):
                     # Requête curl
                     print(f"{i}/{STOP}")
                     go_to = f"{lien}/{i}"
@@ -124,9 +124,10 @@ class ScrapperOnche:
                     data = self._browser.req_html(go_to)
                     self.html_parser = BeautifulSoup(data, "html.parser")
 
-                    liste_message = {'user' :  [], 'msg' :  [],'touser' : [], 'date' : [], 'badguser' : [], 'cite_state':[], 'page': i-1}
-                    liste_cit = {'user' :  [], 'msg' :  [],'cite' : [], 'date' : [], 'page': i-1}
-                
+                    liste_message = {'user': [], 'msg': [], 'touser': [], 'date': [], 'badguser': [], 'cite_state': [],
+                                     'page': i - 1}
+                    liste_cit = {'user': [], 'msg': [], 'cite': [], 'date': [], 'page': i - 1}
+
                     # Obtention de la liste des messages
                     old_username = ""
                     MESS = self.html_parser.find_all("div", class_="message")
@@ -149,7 +150,7 @@ class ScrapperOnche:
                             sign = mes.find("div", class_="signature")
                             msg = msg.get_text(strip=True)
                             if sign:
-                                msg = msg.replace(sign.get_text(),"")
+                                msg = msg.replace(sign.get_text(), "")
 
                         # On récupère les user et les touser
                         if user == old_username:
@@ -158,13 +159,13 @@ class ScrapperOnche:
                             liste_message["user"].append(user)
                             liste_message["touser"].append(username)
                         old_username = username
-                            
+
                     for answer_div in self.html_parser.find_all("div", class_="message answer"):
                         answer_div.extract()
 
                     mess_user = self.html_parser.find_all("div", class_="message")
                     k = 0
-                    
+
                     for mes in mess_user:
                         # On récupère le message
                         msg = mes.find("div", class_="message-content")
@@ -174,18 +175,21 @@ class ScrapperOnche:
                             img_title = img_tag.get('title')
                             img_tag.replace_with(f'({img_title})')
                         sign = mes.find("div", class_="signature")
-                        msg = msg.get_text(strip=True).replace("(:",' :').replace(':)',": ")
+                        msg = msg.get_text(strip=True).replace("(:", ' :').replace(':)', ": ")
 
                         if sign != None:
                             sign = sign.get_text(strip=True)
                         else:
                             sign = ""
-                        msg = msg.replace(sign,"")
+                        msg = msg.replace(sign, "")
 
-                        # On récupère la date 
+                        # On récupère la date
                         try:
                             datemsg = mes.find("div", class_="message-date")
-                            datemsg = datemsg.get('title').replace("Publié le ","").replace(" et modifié le ",",").replace(" à ", " ").split(",")
+                            datemsg = datemsg.get('title').replace("Publié le ", "").replace(" et modifié le ",
+                                                                                             ",").replace(" à ",
+                                                                                                          " ").split(
+                                ",")
                             date_t = datemsg[0]
 
                             date_format = "%d/%m/%Y %H:%M:%S"
@@ -193,13 +197,13 @@ class ScrapperOnche:
 
                             date_object = datetime.datetime.strptime(date_t, date_format)
                             date_t = date_object.strftime(new_date_format)
-                            liste_message["date"].append(date_t) 
+                            liste_message["date"].append(date_t)
                         except AttributeError as e:
                             self._logger.error(f"x Erreur : {e}. La date est indisponible.")
                             return
 
                         liste_message["msg"].append(msg)
-                        
+
                         # On récupère les badges des onchois
                         badges_loc = mes.find("div", class_="message-badges")
                         badges = badges_loc.find_all("img", class_="icon")
@@ -211,26 +215,26 @@ class ScrapperOnche:
                             liste_cits.extract()
 
                         cits = mes.find_all("a", class_="_format _mention")
-                        # Indexation : 
+                        # Indexation :
                         Index.append(len(cits))
                         for cit in cits:
-                            userCite = cit.get_text(strip=True).replace('@','')
+                            userCite = cit.get_text(strip=True).replace('@', '')
                             # On ajoute l'user au cas où il ne serait pas référencé
                             liste_cit['user'].append(liste_message["user"][k])
                             liste_cit['cite'].append(userCite)
                             liste_cit['msg'].append(liste_message["msg"][k])
                             liste_cit['date'].append(liste_message["date"][k])
                         # =======================================================
-                        k+=1
+                        k += 1
 
                     for tsr in range(len(liste_message['touser'])):
                         if liste_message['touser'][tsr]:
                             liste_message['cite_state'].append(1)
                         else:
                             liste_message['cite_state'].append(0)
-                    bar_etape(STOP-START, it, f"Topic {sujet} sur le forum {self.forum['name']}")
+                    bar_etape(STOP - START, it, f"Topic {sujet} sur le forum {self.forum['name']}")
                     self.add_data_to_bdd(sujet, liste_message, liste_cit)
-                    it+=1
+                    it += 1
                 time.sleep(0.5)
                 self._logger.info("Ajout des messages effectué.")
 
@@ -247,7 +251,7 @@ class ScrapperOnche:
         self._logger.info(table)
         self._logger.info("\n")
 
-    def get_badges(self, nom:str) -> list:
+    def get_badges(self, nom: str) -> list:
         """
         Obtention des badges de l'utilisateurs
 
@@ -259,7 +263,7 @@ class ScrapperOnche:
         data = self._browser.req_html(url_badge)
         self.html_parser = BeautifulSoup(data, "html.parser")
 
-        # Class intéressantes 
+        # Class intéressantes
         badges = self.html_parser.find_all("img", class_="icon")
 
         # Récupération des noms
@@ -267,12 +271,12 @@ class ScrapperOnche:
         for badge in badges:
             badgeListUser.append(badge.get('alt'))
         return badgeListUser
-    
+
     def add_data_to_bdd(self, topic: str, liste_message: dict, liste_cit: dict) -> None:
         """
         Ajoute à la base de donnée, les citations et les messages
         """
-        
+
         for k in range(len(liste_message['user'])):
             # Ajout de l'user (nécessaire à l'intégrité de la bdd)
             self._local_BDD.add_user(liste_message['user'][k])
@@ -283,12 +287,14 @@ class ScrapperOnche:
                     self._local_BDD.add_badges_users(badge, liste_message['user'][k])
             except IndexError as e:
                 self._logger.warning(f"ATTENTION : {e}")
-            
+
             # Ajout des messages
-            self._local_BDD.add_message(user=liste_message['user'][k], topic=topic, msg=liste_message['msg'][k], toUser=liste_message['touser'][k], date=liste_message['date'][k], citation=liste_message['cite_state'][k])
+            self._local_BDD.add_message(user=liste_message['user'][k], topic=topic, msg=liste_message['msg'][k],
+                                        toUser=liste_message['touser'][k], date=liste_message['date'][k],
+                                        citation=liste_message['cite_state'][k])
 
         for k in range(len(liste_cit['user'])):
             # Ajout de l'user (nécessaire à l'intégrité de la bdd)
             self._local_BDD.add_user(liste_cit['user'][k])
 
-            #self._local_BDD.add_message(user=liste_cit['user'][k], topic=topic, msg=liste_cit['msg'][k], toUser=liste_cit['touser'][k], date=liste_cit['date'][k], citation=0)
+            # self._local_BDD.add_message(user=liste_cit['user'][k], topic=topic, msg=liste_cit['msg'][k], toUser=liste_cit['touser'][k], date=liste_cit['date'][k], citation=0)

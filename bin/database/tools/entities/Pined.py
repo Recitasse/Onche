@@ -2,7 +2,7 @@
    Python class Pined générée par OQG BDD ENTITIES GENERATOR
    Author: recitasse
    Model: Onche	 Version: 0.8.3
-   Made by Recitasse 2024-06-04 18:36:52.149815
+   Made by Recitasse 2024-06-05 18:11:12.350798
 =================================================="""
 
 import datetime
@@ -11,7 +11,8 @@ from dataclasses import dataclass, field
 
 
 @dataclass(slots=True)
-class Pined:    id__: int = field(default=None)
+class Pined:
+    id__: int = field(default=None)
     userid_: int = field(default=None)
     badgeid_: int = field(default=None)
 
