@@ -1,8 +1,8 @@
 venv/
-webscrapper/scrapper.log
-webscrapper/browser.log
+tools/webscrapper/scrapper.log
+tools/webscrapper/browser.log
 BDD/bdd.log
-config/Variables/variables.py
+config/variables.py
 BDD/import/
 __pycache__/
 config/Variables/__pycache__

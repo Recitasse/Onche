@@ -2,7 +2,7 @@ import datetime
 
 import xml.etree.ElementTree as ET
 
-from config.Variables.variables import *
+from config.variables import *
 
 def conversion(el:str) -> int:
     """
