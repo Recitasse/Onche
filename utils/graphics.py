@@ -1,6 +1,7 @@
+import math
 import time
 import sys
-import numpy as np
+from math import floor
 
 def update_prog_bar(titre, prog, total, points=50):
     prog_percent = prog / total
@@ -37,7 +38,7 @@ def bar_etape(nbe:int, et:int, titre:str='page'):
         nbe (int) : nombre étape (total)
         et (int) : l'étape actuelle
     """
-    sys.stdout.write(f'\r{titre} {et+1}/{nbe} : \033[1m{np.round((et+1)/nbe*100,2)}%\033[0m.')
+    sys.stdout.write(f'\r{titre} {et+1}/{nbe} : \033[1m{floor((et+1)/nbe*100,2)}%\033[0m.')
     sys.stdout.flush()
     if et == nbe-1 and titre != "page":
         sys.stdout.write(f'\rpage {nbe}/{nbe} : \033[1m100%\033[0m.')
