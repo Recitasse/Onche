@@ -31,7 +31,7 @@ jobs:
 
     - name: Run pytest
       run: pytest --junitxml=reports/junit.xml
-      # Adjust pytest command as needed
+      # Adjust pytest process as needed
 
     - name: Upload Test Results
       uses: actions/upload-artifact@v2
