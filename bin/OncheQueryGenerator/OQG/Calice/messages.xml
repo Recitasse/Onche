@@ -48,11 +48,11 @@
             </parser>
         </row>
         <row name="date" sql-type="DATETIME(0)" null="False" type="datetime">
-            <parser sql-type="date" table="message" name="date" where="message" name-equal="True">
+            <parser sql-type="datetime" table="message" name="date" where="message" name-equal="True">
                 <css-selector selector="title">div.message-date</css-selector>
                 <clean equal="False">Publié le </clean>
                 <clean equal="False">à </clean>
-                <clean cut=" et"/>
+                <clean cut="et "></clean>
             </parser>
         </row>
     </rows>

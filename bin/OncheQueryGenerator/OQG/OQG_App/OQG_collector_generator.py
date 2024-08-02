@@ -110,7 +110,7 @@ def generate_parser(name_file: str, JSON: dict):
                 glb += f"{3*tab}info.update({{'{name}': tmp_}})\n"
                 glb += f"{2*tab}else:\n"
                 glb += f"{3*tab}info.update({{'{name}': soup.select('{path_}')[0].{selector}}})\n"
-            if el['cleans'] != [('', '', '')]:
+            if el['cleans'] != [('', '', '', '')]:
                 glb += f"{2*tab}cleans = {el['cleans']}\n"
                 glb += f"{2*tab}for clean in cleans:\n"
 
@@ -122,6 +122,8 @@ def generate_parser(name_file: str, JSON: dict):
                 glb += f"{6*tab}if match:\n"
                 glb += f"{7*tab}rep = ' ' + match[0]\n"
                 glb += f"{7*tab}info['{name}'][i] = info['{name}'][i].replace(rep, '') if clean[2] == 'False' else rep\n"
+                glb += f"{5*tab}if clean[3] != '':\n"
+                glb += f"{6*tab}info['{name}'][i] = info['{name}'][i].split(clean[3])[0]\n"
 
                 glb += f"{3*tab}else:\n"
                 glb += f"{4*tab}info['{name}'] = info['{name}'].replace(clean[0], '')\n"
@@ -130,12 +132,18 @@ def generate_parser(name_file: str, JSON: dict):
                 glb += f"{5*tab}if match:\n"
                 glb += f"{6*tab}rep = ' ' + match[0]\n"
                 glb += f"{6*tab}info['{name}'] = info['{name}'].replace(rep, '') if clean[2] == 'False' else rep\n"
+                glb += f"{4*tab}if clean[3] != '':\n"
+                glb += f"{5*tab}info['{name}'] = info['{name}'].split(clean[3])[0]\n"
+
 
             if el["type"] == "datetime":
                 glb += f"{2*tab}if not isinstance(info['{name}'], list):\n"
-                glb += f"{3*tab}info['{name}'] = datetime.strptime(info['{name}'], '%d/%m/%Y')\n"
+                glb += f"{3*tab}info['{name}'] = info['{name}'][:-1] if info['{name}'][-1] == ' ' else info['{name}']\n"
+                glb += f"{3*tab}info['{name}'] = datetime.strptime(info['{name}'], '%d/%m/%Y %H:%M:%S')\n"
                 glb += f"{2*tab}else:\n"
-                glb += f"{3*tab}info['{name}'] = [datetime.strptime(el_, '%d/%m/%Y') for el_ in info['{name}']]\n"
+                glb += f"{3*tab}for i in range(info['{name}'].__len__()):\n"
+                glb += f"{4*tab}info['{name}'][i] = info['{name}'][i][:-1] if info['{name}'][i][-1] == ' ' else info['{name}'][i]\n"
+                glb += f"{3*tab}info['{name}'] = [datetime.strptime(el_, '%d/%m/%Y %H:%M:%S') for el_ in info['{name}']]\n"
             elif el['type'] == "int":
                 glb += f"{2*tab}if not isinstance(info['{name}'], list):\n"
                 glb += f"{3*tab}info['{name}'] = int(info['{name}'])\n"
