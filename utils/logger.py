@@ -1,11 +1,9 @@
-import logging
-from typing import Callable
-
-import functools
+from os import path
+from config.variables import LOG_PATH
 import logging
 
 
-def logger(output: str, name: str, verbose: bool = False, max_bytes: int = 10240, backup_count: int = 5):
+def logger(name: str, verbose: bool = False, max_bytes: int = 10240, backup_count: int = 5):
     """
     Creates a logger for logging to a file with rotation.
 
@@ -19,24 +17,19 @@ def logger(output: str, name: str, verbose: bool = False, max_bytes: int = 10240
     Returns:
         logging.Logger: Configured logger with rotation and custom formatting.
     """
-    # Get or create a logger
-    logger = logging.getLogger(name)
-    logger.propagate = False
+    logger_ = logging.getLogger(name)
+    logger_.propagate = False
 
-    # Set the logging level based on the verbose flag
     if verbose:
-        logger.setLevel(logging.DEBUG)
+        logger_.setLevel(logging.DEBUG)
     else:
-        logger.setLevel(logging.WARNING)
+        logger_.setLevel(logging.WARNING)
 
-    file_handler = logging.FileHandler(output)
+    file_handler = logging.FileHandler(path.join(LOG_PATH, name))
     formatter = logging.Formatter(name+': %(asctime)s - %(levelname)s - %(filename)s - Line: %(lineno)d - %(message)s')
     file_handler.setFormatter(formatter)
 
-    # Add handler to the logger
-    logger.addHandler(file_handler)
+    logger_.addHandler(file_handler)
+    logger_.debug(f" === Logger {name} initialized and ready for use === ")
 
-    # Optional: Log a custom phrase every time logger is updated (useful for debugging)
-    logger.debug("Logger initialized and ready for use.")
-
-    return logger
+    return logger_

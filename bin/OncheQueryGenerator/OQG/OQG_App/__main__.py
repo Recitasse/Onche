@@ -2,7 +2,7 @@ import os
 from OQG_bdd_entities import *
 from OQG_bdd_tools import *
 from OQG_bdd_generator import *
-from OQG_parser_generator import *
+from OQG_integrator_generator import *
 
 
 if __name__ == "__main__":

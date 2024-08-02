@@ -113,9 +113,10 @@ echo -e "\n"
 echo "===== GÉNÉRATION DU FICHIER DE CONFIGURATION ====="
 mkdir config/Variables
 touch config/Variables/variables.py
-cat << EOF > "config/Variables/variables.py"
+cat << EOF > "config/variables.py"
 # CONFIG
 GLOBAL_PATH = "${installation_path}/"
+CALICE = GLOBAL_PATH + "bin/OncheQueryGenerator/OQG/Calice"
 
 # Mysql
 SAVE_FREQUENCY = 10

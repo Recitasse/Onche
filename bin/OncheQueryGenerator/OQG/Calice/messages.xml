@@ -1,17 +1,60 @@
 <?xml version="1.0" ?>
-<profil onche-version="3.8.4h" table="messages">
+<message onche-version="3.8.4h" table="messages" >
+    <url base="https://onche.org/topic/">
+        <params>
+            <param type="int" name="id" mode="path"/>
+            <param type="str" name="titre" mode="path" _spec="title"/>
+            <param type="int" name="page" mode="path"/>
+        </params>
+    </url>
     <parameters>
         <settings engine="InnoDB" encoding="utf8mb4" collation="utf8mb4_general_ci"/>
         <comment>Tous les messages du forum</comment>
     </parameters>
     <rows>
-        <row name="id" sql-type="INT" null="False" auto_increment="True" type="int"></row>
-        <row name="oid" sql-type="INT" null="False" type="int"></row>
-        <row name="user" sql-type="INT" null="False" type="int"></row>
-        <row name="topic" sql-type="INT" null="False" type="int"></row>
-        <row name="message" sql-type="LONGTEXT" null="False" type="str"></row>
-        <row name="touser" sql-type="INT" null="True" type="int"></row>
-        <row name="date" sql-type="DATETIME(0)" null="False" type="datetime"></row>
+        <row name="id" sql-type="INT" null="False" auto_increment="True" type="int">
+            <parser prev="user-created"/>
+        </row>
+        <row name="oid" sql-type="INT" null="False" type="int">
+            <parser sql-type="int" table="message" name="oid" where="message" name-equal="True">
+                <css-selector selector="data-id">.messages > div.message:nth-of-type(2n)</css-selector>
+                <clean></clean>
+            </parser>
+        </row>
+        <row name="user" sql-type="INT" null="False" type="int">
+            <parser sql-type="str" table="message" name="user" where="message" name-equal="True">
+                <css-selector selector="alt">.messages > div:nth-child(2n) > div:nth-child(1) > a:nth-child(1) > img:nth-child(1)</css-selector>
+                <clean></clean>
+            </parser>
+        </row>
+        <row name="message" sql-type="LONGTEXT" null="False" type="str">
+            <parser sql-type="str" table="message" name="message" where="message" name-equal="True">
+                <css-selector bs4="True">.messages > div > div:nth-last-child(2)</css-selector>
+                <clean></clean>
+            </parser>
+        </row>
+        <row name="touser" sql-type="INT" null="True" type="int">
+            <parser sql-type="str" table="message" name="user" where="message" name-equal="True">
+                <css-selector selector="data-username">div.answer</css-selector>
+                <clean></clean>
+            </parser>
+        </row>
+        <row name="pemt" sql-type="INT" null="True" type="int">
+            <parser prev="user-created"/>
+        </row>
+        <row name="answeroid" sql-type="INT" null="True" type="int">
+            <parser sql-type="int" table="message" name="answeroid" where="message" name-equal="True">
+                <css-selector selector="data-id">div.answer</css-selector>
+            </parser>
+        </row>
+        <row name="date" sql-type="DATETIME(0)" null="False" type="datetime">
+            <parser sql-type="date" table="message" name="date" where="message" name-equal="True">
+                <css-selector selector="title">div.message-date</css-selector>
+                <clean equal="False">Publié le </clean>
+                <clean equal="False">à </clean>
+                <clean cut=" et"/>
+            </parser>
+        </row>
     </rows>
     <index>
         <primary-key name="id" type="int"/>
@@ -39,4 +82,4 @@
             </constraint>
         </foreign-index>
     </index>
-</profil>
+</message>

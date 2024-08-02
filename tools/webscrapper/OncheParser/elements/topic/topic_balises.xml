@@ -3,24 +3,24 @@
     <topic root="//div[@class='messages']">
         <message>
             <pseudo>
-                <xpath>//div[@class='message']/@data-username</xpath>
+                <css-selector>//div[@class='message']/@data-username</css-selector>
                 <clean></clean>
             </pseudo>
             <message-id>
-                <xpath>//div[@class='message']/@data-id</xpath>
+                <css-selector>//div[@class='message']/@data-id</css-selector>
                 <clean></clean>
             </message-id>
             <message-content>
-                <xpath>//div[@class='message']/text()</xpath>
+                <css-selector>//div[@class='message']/text()</css-selector>
                 <clean></clean>
             </message-content>
             <date type="date">>
-                <xpath>//div[@class='message']/div[@class='message-bottom']/div[@class='message-date']/@title</xpath>
+                <css-selector>//div[@class='message']/div[@class='message-bottom']/div[@class='message-date']/@title</css-selector>
                 <clean></clean>
             </date>
         </message>
         <response>
-            <xpath>//div[@class='message']/div[@class='message answer']/@data-username</xpath>
+            <css-selector>//div[@class='message']/div[@class='message answer']/@data-username</css-selector>
         </response>
     </topic>
     <table name="Onchois">
