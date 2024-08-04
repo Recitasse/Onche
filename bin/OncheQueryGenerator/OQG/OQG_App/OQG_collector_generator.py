@@ -21,6 +21,8 @@ def generate_JSON_infos() -> dict:
             for param in root.findall('.//param'):
                 all_[collector_name]["params"].update({param.get("name"): {"mode": param.get("mode"), "type": param.get("type"), "_spec": param.get('_spec', default=None)}})
             all_[collector_name].update({"url": base_url})
+        else:
+            all_[collector_name].update({"params": None})
         all_[collector_name].update({"elements": {}})
         for row in root.findall('.//row'):
             name = row.get('name')
@@ -52,6 +54,8 @@ def generate_parser(name_file: str, JSON: dict):
     glb += "@dataclass(init=False)\n"
     glb += f"class {uppercase_first(name_file)}:\n"
 
+    tmp_ = ['text: str']
+    tmp2_ = ['text']
     # create collector
     if JSON[name_file]["params"] is not None:
         # génération de l'url
@@ -73,91 +77,96 @@ def generate_parser(name_file: str, JSON: dict):
         glb += f"{tab}def _{name_file}_collector({', '.join(tmp_)}) -> BeautifulSoup:\n"
         glb += f"{2*tab}link = f'{JSON[name_file]['url']}{glb_query}'\n"
         glb += f"{2*tab}return Requests().req_html(link, bs4_mode=True)\n\n"
-
-        # fonction pour le clean
+    else:
         glb += f"{tab}@staticmethod\n"
-        glb += f"{tab}def collector({', '.join(tmp_)}) -> dict:\n"
-        glb += f"{2*tab}soup = {uppercase_first(name_file)}._{name_file}_collector({', '.join(tmp2_)})\n"
-        glb += f"{2*tab}info = {{}}\n"
-        # Traitement des éléments
-        for name, el in JSON[name_file]["elements"].items():
-            selector = "text"
-            if el['path'][1] is not None:
-                selector = f"get('{el['path'][1]}')"
-            path_ = el['path'][0]
-            if el['trigger'] != "":
-                glb += f"{2*tab}if soup.select('{path_}').__len__() > 1:\n"
-                glb += f"{3*tab}tmp_ = []\n"
-                glb += f"{3*tab}for el in soup.select('{path_}'):\n"
-                glb += f"{4*tab}if el.{selector} == '{el['trigger']}':\n"
-                glb += f"{5*tab}tmp_.append(1)\n"
-                glb += f"{4*tab}else:\n"
-                glb += f"{5*tab}tmp_.append(0)\n"
-                glb += f"{3*tab}info.update({{'{name}': tmp_}})\n"
+        glb += f"{tab}def _{name_file}_collector(text: str) -> BeautifulSoup:\n"
+        glb += f"{2*tab}return BeautifulSoup(text, 'html.parser')\n\n"
 
-                glb += f"{2*tab}else:\n"
-                glb += f"{3*tab}if soup.select('{path_}')[0].{selector} == '{el['trigger']}':\n"
-                glb += f"{4*tab}info.update({{'{name}': 1}})\n"
-                glb += f"{3*tab}else:\n"
-                glb += f"{4*tab}info.update({{'{name}': 0}})\n"
-            else:
-                glb += f"{2*tab}if soup.select('{path_}').__len__() > 1:\n"
-                glb += f"{3*tab}tmp_ = []\n"
-                glb += f"{3*tab}for el in soup.select('{path_}'):\n"
+    # TODO compléter
+    # fonction pour le clean
+    glb += f"{tab}@staticmethod\n"
+    glb += f"{tab}def collector({', '.join(tmp_)}) -> dict:\n"
+    glb += f"{2*tab}soup = {uppercase_first(name_file)}._{name_file}_collector({', '.join(tmp2_)})\n"
+    glb += f"{2*tab}info = {{}}\n"
+    # Traitement des éléments
+    for name, el in JSON[name_file]["elements"].items():
+        selector = "text"
+        if el['path'][1] is not None:
+            selector = f"get('{el['path'][1]}')"
+        path_ = el['path'][0]
+        if el['trigger'] != "":
+            glb += f"{2*tab}if soup.select('{path_}').__len__() > 1:\n"
+            glb += f"{3*tab}tmp_ = []\n"
+            glb += f"{3*tab}for el in soup.select('{path_}'):\n"
+            glb += f"{4*tab}if el.{selector} == '{el['trigger']}':\n"
+            glb += f"{5*tab}tmp_.append(1)\n"
+            glb += f"{4*tab}else:\n"
+            glb += f"{5*tab}tmp_.append(0)\n"
+            glb += f"{3*tab}info.update({{'{name}': tmp_}})\n"
 
-                glb += f"{4*tab}tmp_.append(el.{selector} if {el['path'][2] == None} else el)\n"
+            glb += f"{2*tab}else:\n"
+            glb += f"{3*tab}if soup.select('{path_}')[0].{selector} == '{el['trigger']}':\n"
+            glb += f"{4*tab}info.update({{'{name}': 1}})\n"
+            glb += f"{3*tab}else:\n"
+            glb += f"{4*tab}info.update({{'{name}': 0}})\n"
+        else:
+            glb += f"{2*tab}if soup.select('{path_}').__len__() > 1:\n"
+            glb += f"{3*tab}tmp_ = []\n"
+            glb += f"{3*tab}for el in soup.select('{path_}'):\n"
 
-                glb += f"{3*tab}info.update({{'{name}': tmp_}})\n"
-                glb += f"{2*tab}else:\n"
-                glb += f"{3*tab}info.update({{'{name}': soup.select('{path_}')[0].{selector}}})\n"
-            if el['cleans'] != [('', '', '', '')]:
-                glb += f"{2*tab}cleans = {el['cleans']}\n"
-                glb += f"{2*tab}for clean in cleans:\n"
+            glb += f"{4*tab}tmp_.append(el.{selector} if {el['path'][2] == None} else el)\n"
 
-                glb += f"{3*tab}if info['{name}'].__len__() > 1 and not isinstance(info['{name}'], str):\n"
-                glb += f"{4*tab}for i in range(info['{name}'].__len__()):\n"
-                glb += f"{5*tab}info['{name}'][i] = info['{name}'][i].replace(clean[0], '')\n"
-                glb += f"{5*tab}if clean[1] != '':\n"
-                glb += f"{6*tab}match = re.search(clean[1], info['{name}'][i])\n"
-                glb += f"{6*tab}if match:\n"
-                glb += f"{7*tab}rep = ' ' + match[0]\n"
-                glb += f"{7*tab}info['{name}'][i] = info['{name}'][i].replace(rep, '') if clean[2] == 'False' else rep\n"
-                glb += f"{5*tab}if clean[3] != '':\n"
-                glb += f"{6*tab}info['{name}'][i] = info['{name}'][i].split(clean[3])[0]\n"
+            glb += f"{3*tab}info.update({{'{name}': tmp_}})\n"
+            glb += f"{2*tab}else:\n"
+            glb += f"{3*tab}info.update({{'{name}': soup.select('{path_}')[0].{selector}}})\n"
+        if el['cleans'] != [('', '', '', '')]:
+            glb += f"{2*tab}cleans = {el['cleans']}\n"
+            glb += f"{2*tab}for clean in cleans:\n"
 
-                glb += f"{3*tab}else:\n"
-                glb += f"{4*tab}info['{name}'] = info['{name}'].replace(clean[0], '')\n"
-                glb += f"{4*tab}if clean[1] != '':\n"
-                glb += f"{5*tab}match = re.search(clean[1], info['{name}'])\n"
-                glb += f"{5*tab}if match:\n"
-                glb += f"{6*tab}rep = ' ' + match[0]\n"
-                glb += f"{6*tab}info['{name}'] = info['{name}'].replace(rep, '') if clean[2] == 'False' else rep\n"
-                glb += f"{4*tab}if clean[3] != '':\n"
-                glb += f"{5*tab}info['{name}'] = info['{name}'].split(clean[3])[0]\n"
+            glb += f"{3*tab}if info['{name}'].__len__() > 1 and not isinstance(info['{name}'], str):\n"
+            glb += f"{4*tab}for i in range(info['{name}'].__len__()):\n"
+            glb += f"{5*tab}info['{name}'][i] = info['{name}'][i].replace(clean[0], '')\n"
+            glb += f"{5*tab}if clean[1] != '':\n"
+            glb += f"{6*tab}match = re.search(clean[1], info['{name}'][i])\n"
+            glb += f"{6*tab}if match:\n"
+            glb += f"{7*tab}rep = ' ' + match[0]\n"
+            glb += f"{7*tab}info['{name}'][i] = info['{name}'][i].replace(rep, '') if clean[2] == 'False' else rep\n"
+            glb += f"{5*tab}if clean[3] != '':\n"
+            glb += f"{6*tab}info['{name}'][i] = info['{name}'][i].split(clean[3])[0]\n"
+
+            glb += f"{3*tab}else:\n"
+            glb += f"{4*tab}info['{name}'] = info['{name}'].replace(clean[0], '')\n"
+            glb += f"{4*tab}if clean[1] != '':\n"
+            glb += f"{5*tab}match = re.search(clean[1], info['{name}'])\n"
+            glb += f"{5*tab}if match:\n"
+            glb += f"{6*tab}rep = ' ' + match[0]\n"
+            glb += f"{6*tab}info['{name}'] = info['{name}'].replace(rep, '') if clean[2] == 'False' else rep\n"
+            glb += f"{4*tab}if clean[3] != '':\n"
+            glb += f"{5*tab}info['{name}'] = info['{name}'].split(clean[3])[0]\n"
 
 
-            if el["type"] == "datetime":
-                glb += f"{2*tab}if not isinstance(info['{name}'], list):\n"
-                glb += f"{3*tab}info['{name}'] = info['{name}'][:-1] if info['{name}'][-1] == ' ' else info['{name}']\n"
-                glb += f"{3*tab}info['{name}'] = datetime.strptime(info['{name}'], '%d/%m/%Y %H:%M:%S')\n"
-                glb += f"{2*tab}else:\n"
-                glb += f"{3*tab}for i in range(info['{name}'].__len__()):\n"
-                glb += f"{4*tab}info['{name}'][i] = info['{name}'][i][:-1] if info['{name}'][i][-1] == ' ' else info['{name}'][i]\n"
-                glb += f"{3*tab}info['{name}'] = [datetime.strptime(el_, '%d/%m/%Y %H:%M:%S') for el_ in info['{name}']]\n"
-            elif el['type'] == "int":
-                glb += f"{2*tab}if not isinstance(info['{name}'], list):\n"
-                glb += f"{3*tab}info['{name}'] = int(info['{name}'])\n"
-                glb += f"{2*tab}else:\n"
-                glb += f"{3*tab}info['{name}'] = [int(el_) if isinstance(el_, str) else int(el_) for el_ in info['{name}']]\n"
-            elif el['type'] == "float":
-                glb += f"{2*tab}if isinstance(info['{name}'], str):\n"
-                glb += f"{3*tab}info['{name}'] = float(info['{name}'])\n"
-                glb += f"{2*tab}else:\n"
-                glb += f"{3*tab}info['{name}'] = [float(el_.strip()) if isinstance(el_, str) else float(el_) for el_ in info['{name}']]\n"
-        glb += "\n"
-        for el in tmp2_:
-            glb += f"{2*tab}info['{el}'] = {el}\n"
-        glb += f"\n{2*tab}return info\n"
+        if el["type"] == "datetime":
+            glb += f"{2*tab}if not isinstance(info['{name}'], list):\n"
+            glb += f"{3*tab}info['{name}'] = info['{name}'][:-1] if info['{name}'][-1] == ' ' else info['{name}']\n"
+            glb += f"{3*tab}info['{name}'] = datetime.strptime(info['{name}'], '%d/%m/%Y %H:%M:%S')\n"
+            glb += f"{2*tab}else:\n"
+            glb += f"{3*tab}for i in range(info['{name}'].__len__()):\n"
+            glb += f"{4*tab}info['{name}'][i] = info['{name}'][i][:-1] if info['{name}'][i][-1] == ' ' else info['{name}'][i]\n"
+            glb += f"{3*tab}info['{name}'] = [datetime.strptime(el_, '%d/%m/%Y %H:%M:%S') for el_ in info['{name}']]\n"
+        elif el['type'] == "int":
+            glb += f"{2*tab}if not isinstance(info['{name}'], list):\n"
+            glb += f"{3*tab}info['{name}'] = int(info['{name}'])\n"
+            glb += f"{2*tab}else:\n"
+            glb += f"{3*tab}info['{name}'] = [int(el_) if isinstance(el_, str) else int(el_) for el_ in info['{name}']]\n"
+        elif el['type'] == "float":
+            glb += f"{2*tab}if isinstance(info['{name}'], str):\n"
+            glb += f"{3*tab}info['{name}'] = float(info['{name}'])\n"
+            glb += f"{2*tab}else:\n"
+            glb += f"{3*tab}info['{name}'] = [float(el_.strip()) if isinstance(el_, str) else float(el_) for el_ in info['{name}']]\n"
+    glb += "\n"
+    for el in tmp2_:
+        glb += f"{2*tab}info['{el}'] = {el}\n"
+    glb += f"\n{2*tab}return info\n"
 
     return glb
 

@@ -1,10 +1,6 @@
 <?xml version="1.0" ?>
 <stickers onche-version="3.8.4h" table="stickers">
-    <url base="https://onche.org/profil/">
-        <params>
-            <param type="str" name="name" mode="path"/>
-        </params>
-    </url>
+    <url base="None"/>
     <parameters>
         <settings engine="InnoDB" encoding="utf8mb4" collation="utf8mb4_general_ci"/>
         <comment>Tables des stickers au format onche</comment>
@@ -15,13 +11,13 @@
         </row>
         <row name="nom" sql-type="VARCHAR(1000)" null="False" type="str">
             <parser sql-type="str" table="stickers" name="nom" where="message" name-equal="True">
-                <css-selector>//div[@class='profile-cover']/div[1]/@title</css-selector>
+                <css-selector selector="data-name">div.sticker</css-selector>
                 <clean></clean>
             </parser>
         </row>
         <row name="collection" sql-type="INT" null="False" type="int">
             <parser sql-type="int" table="stickers" name="collection" where="message" name-equal="True">
-                <css-selector>//div[@class='profile-cover']/div[1]/@title</css-selector>
+                <css-selector selector="data-collection">div.sticker</css-selector>
                 <clean></clean>
             </parser>
         </row>
