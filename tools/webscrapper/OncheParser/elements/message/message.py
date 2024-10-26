@@ -61,17 +61,6 @@ class Message:
         print(_message)
             
         return ""
-            
-    def sgt_to_text(self, text: str) -> str:
-        self.__get_balises()
-        divs = self.balises.find(".//division[@name='signature']")
-
-        element = divs.attrib.get('element')
-        class_value = divs.attrib.get('class')
-        text = text.replace(f"""<{element} class="{class_value}">""", "")
-        text = text.replace(f"</{element}>", "")
-
-        return text
 
     def msg_to_text(self, text: str) -> str:
         self.__get_balises()

@@ -1,9 +1,9 @@
 """
 ==================================================
-Python class StickersBdd générée par OncheQueryGenerator BDD TOOLS GENERATOR
+Python class StickersBdd générée par OQG BDD TOOLS GENERATOR
 Author: recitasse
 Model: Onche	 Version: 0.8.3
-Made by Recitasse 2024-06-13 20:34:24.348233
+Made by Recitasse 2024-08-05 19:28:31.351564
 ==================================================
 """
 

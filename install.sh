@@ -89,15 +89,9 @@ elif [ "$1" == "server" ]; then
     MYSQL_USER="onche"
     MYSQL_PASSWORD="OnchePass1#"
     MYSQL_DATABASE="Onche"
-    SQL_SCRIPT="BDD/schema/DDBONCHE.sql"
+    SQL_SCRIPT="data/Database/src/*.sql"
 
     sudo apt install mysql-server
-    echo "     Installation MySQL terminée"
-    sudo apt install sqlite
-    #mysql -u root -p -e "CREATE USER '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_PASSWORD';"
-    #mysql -u root -p -e "GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USER'@'localhost';"
-    #mysql -u root -p -e "FLUSH PRIVILEGES;"
-    echo -e "     Installation SQLite terminée"
     sudo mysql < "$SQL_SCRIPT"
     sudo systemctl restart mysql.service
     echo -e "     Configuration MySQL établie"
@@ -113,9 +107,10 @@ echo -e "\n"
 echo "===== GÉNÉRATION DU FICHIER DE CONFIGURATION ====="
 mkdir config/Variables
 touch config/Variables/variables.py
-cat << EOF > "config/Variables/variables.py"
+cat << EOF > "config/variables.py"
 # CONFIG
 GLOBAL_PATH = "${installation_path}/"
+CALICE = GLOBAL_PATH + "bin/OncheQueryGenerator/OQG/Calice"
 
 # Mysql
 SAVE_FREQUENCY = 10

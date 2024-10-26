@@ -1,18 +1,60 @@
 <?xml version="1.0" ?>
-<profil onche-version="3.8.4h" table="topic">
+<topic onche-version="3.8.4h" table="topic">
+    <url base="https://onche.org/forum/">
+        <params>
+            <param type="int" name="id" mode="path"/>
+            <param type="str" name="name" mode="path"/>
+            <param type="int" name="page" mode="path"/>
+        </params>
+    </url>
     <parameters>
         <settings engine="InnoDB" encoding="utf8mb4" collation="utf8mb4_general_ci"/>
         <comment>Tables des onchois</comment>
     </parameters>
     <rows>
-        <row name="id" sql-type="INT" null="False" auto_increment="True" type="int"></row>
-        <row name="oid" sql-type="INT" null="False" type="int"></row>
-        <row name="operateur" sql-type="INT" null="False" type="int"></row>
-        <row name="nom" sql-type="VARCHAR(3000)" null="False" type="str"></row>
-        <row name="date" sql-type="TIMESTAMP(2)" null="False" default="CURRENT_TIMESTAMP(2)" type="datetime"></row>
-        <row name="message" sql-type="INT" null="False" type="int"></row>
-        <row name="lien" sql-type="VARCHAR(1000)" null="False" type="str"></row>
-        <row name="forum" sql-type="TINYINT(15)" null="False" type="int"></row>
+        <row name="id" sql-type="INT" null="False" auto_increment="True" type="int">
+            <parser where="user-created"/>
+        </row>
+        <row name="oid" sql-type="INT" null="False" type="int">
+            <parser sql-type="int" table="topic" name="oid" where="topic" name-equal="True">
+                <css-selector selector="href">div.topic > a:nth-child(2)</css-selector>
+                <clean re="/topic/(\d+)" equal="True"></clean>
+                <clean equal="False">/topic/</clean>
+            </parser>
+        </row>
+        <row name="operateur" sql-type="INT" null="False" type="int">
+            <parser sql-type="str" table="topic" name="operateur" where="topic" name-equal="True">
+                <css-selector>div.topic > a:nth-child(2) > div:nth-child(3)</css-selector>
+                <clean></clean>
+            </parser>
+        </row>
+        <row name="nom" sql-type="VARCHAR(3000)" null="False" type="str">
+            <parser sql-type="str" table="topic" name="nom" where="topic" name-equal="True">
+                <css-selector>div.topic > a:nth-child(2) > span:nth-child(1)</css-selector>
+                <clean></clean>
+            </parser>
+        </row>
+        <row name="date" sql-type="TIMESTAMP(2)" null="False" default="CURRENT_TIMESTAMP(2)" type="datetime">
+            <parser sql-type="date" table="topic" name="date" where="message" name-equal="False">
+                <css-selector>//div[@class='profile-badges']/img/@title</css-selector>
+                <clean></clean>
+            </parser>
+        </row>
+        <row name="message" sql-type="INT" null="False" type="int">
+            <parser sql-type="int" table="topic" name="message" where="topic" name-equal="True">
+                <css-selector>div.topic > a:nth-child(2) > span:nth-child(2)</css-selector>
+                <clean></clean>
+            </parser>
+        </row>
+        <row name="lien" sql-type="VARCHAR(1000)" null="False" type="str">
+            <parser sql-type="str" table="topic" name="lien" where="topic" name-equal="True">
+                <css-selector selector="href">div.topic > a:nth-child(2)</css-selector>
+                <clean></clean>
+            </parser>
+        </row>
+        <row name="forum" sql-type="TINYINT(15)" null="False" type="int">
+            <parser where="user-created"/>
+        </row>
     </rows>
     <index>
         <unic-index>
@@ -28,4 +70,4 @@
             </constraint>
         </foreign-index>
     </index>
-</profil>
+</topic>

@@ -1,5 +1,10 @@
 <?xml version="1.0" ?>
 <profil onche-version="3.8.4h" table="onchois">
+    <url base="https://onche.org/profil/">
+        <params>
+            <param type="str" name="pseudo" mode="path"/>
+        </params>
+    </url>
     <parameters>
         <settings engine="InnoDB" encoding="utf8mb4" collation="utf8mb4_general_ci"/>
         <comment>Tables des onchois</comment>
@@ -7,71 +12,71 @@
     </parameters>
     <rows>
         <row name="id" sql-type="INT" null="False" auto_increment="True" type="int">
-            <parser prev="user-created"/>
+            <parser where="user-created"/>
         </row>
         <row name="oid" sql-type="INT" null="False" type="int" default="-1">
-            <parser sql-type="int" table="profil" name="oid" where="message">
-                <xpath>//div[@class='profile-cover']/div[1]/@title</xpath>
+            <parser sql-type="int" table="profil" name="oid" where="message" name-equal="False">
+                <css-selector>//div[@class='profile-cover']/div[1]/@title</css-selector>
                 <clean></clean>
             </parser>
         </row>
         <row name="ban" sql-type="TINYINT(1)" null="False" type="int" default="0">
-            <parser sql-type="int" table="profil" name="ban" where="profil">
-                <xpath>//div[@class='profile-cover-badge bg-color dark']/text()</xpath>
+            <parser sql-type="int" table="profil" name="ban" where="profil" name-equal="True">
+                <css-selector trigger="Banni">.profile-cover-badge</css-selector>
                 <clean></clean>
             </parser>
         </row>
         <row name="niveau" sql-type="INT" null="False" type="int" default="1">
-            <parser sql-type="int" for="profil" name="niveau" where="profil">
-                <xpath>//div[@class='profile-cover-badge']/text()</xpath>
-                <clean>Niveau </clean>
+            <parser sql-type="int" table="profil" name="niveau" where="profil" name-equal="True">
+                <css-selector>.profile-cover-badge</css-selector>
+                <clean equal="False">Niveau </clean>
             </parser>
         </row>
         <row name="nom" sql-type="VARCHAR(100)" null="False" type="str" where="message">
-            <parser sql-type="str" table="profil" name="nom" where="message">
-                <xpath>//div[@class='message']/@data-username</xpath>
+            <parser sql-type="str" table="profil" name="nom" where="message" name-equal="False">
+                <css-selector>.profile-cover-username</css-selector>
                 <clean></clean>
             </parser>
         </row>
         <row name="sexe" sql-type="VARCHAR(30)" null="True" type="str">
-            <parser prev="user-created"/>
+            <parser where="user-created"/>
         </row>
         <row name="age" sql-type="INT" null="True" type="int">
-            <parser prev="user-created"/>
+            <parser where="user-created"/>
         </row>
         <row name="qualite" sql-type="INT" null="True" default="5" type="int">
-            <parser prev="user-created"/>
+            <parser where="user-created"/>
         </row>
         <row name="pos" sql-type="FLOAT" null="True" type="int">
-            <parser prev="user-created"/>
+            <parser where="user-created"/>
         </row>
         <row name="neg" sql-type="FLOAT" null="True" type="int">
-            <parser prev="user-created"/>
+            <parser where="user-created"/>
         </row>
         <row name="neu" sql-type="FLOAT" null="True" type="int">
-            <parser prev="user-created"/>
+            <parser where="user-created"/>
         </row>
         <row name="message" sql-type="INT" null="False" type="int" default="0">
-            <parser sql-type="int" table="profil" name="message" where="profil">
-                <xpath>//div[@class='profile-bloc']/div[4]/div[@class='item-value']/text()</xpath>
+            <parser sql-type="int" table="profil" name="message" where="profil" name-equal="True">
+                <css-selector>div.item:nth-child(4) > div:nth-child(2)</css-selector>
                 <clean></clean>
             </parser>
         </row>
         <row name="date" sql-type="DATETIME(0)" type="datetime" null="False">
-            <parser sql-type="date" table="profil" name="date" where="profil">
-                <xpath>//div[@class='profile-bloc']/div[2]/div[@class='item-value']/text()</xpath>
-                <clean> (un an)</clean>
-                <clean> (une heure)</clean>
-                <clean> (une minute)</clean>
-                <clean> (une seconde)</clean>
-                <clean> (un mois)</clean>
-                <clean> (un jour)</clean>
-                <clean re="\((\d+) ans\)"></clean>
-                <clean re="\((\d+) mois\)"></clean>
-                <clean re="\((\d+) heures\)"></clean>
-                <clean re="\((\d+) minutes\)"></clean>
-                <clean re="\((\d+) jours\)"></clean>
-                <clean re="\((\d+) secondes\)"></clean>
+            <parser sql-type="date" table="profil" name="date" where="profil" name-equal="True">
+                <css-selector>div.profile-bloc:nth-child(1) > div:nth-child(2) > div:nth-child(2)</css-selector>
+                <clean equal="False"> (un an)</clean>
+                <clean equal="False"> (une heure)</clean>
+                <clean equal="False"> (une minute)</clean>
+                <clean equal="False"> (une seconde)</clean>
+                <clean equal="False"> (un mois)</clean>
+                <clean equal="False"> (un jour)</clean>
+                <clean re="\((\d+) ans\)" equal="False"></clean>
+                <clean re="\((\d+) mois\)" equal="False"></clean>
+                <clean re="\((\d+) heures\)" equal="False"></clean>
+                <clean re="\((\d+) minutes\)" equal="False"></clean>
+                <clean re="\((\d+) jours\)" equal="False"></clean>
+                <clean re="\((\d+) secondes\)" equal="False"></clean>
             </parser>
         </row>
     </rows>

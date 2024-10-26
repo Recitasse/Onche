@@ -1,9 +1,9 @@
 """
 ==================================================
-Python class MessagesBdd générée par OncheQueryGenerator BDD TOOLS GENERATOR
+Python class MessagesBdd générée par OQG BDD TOOLS GENERATOR
 Author: recitasse
 Model: Onche	 Version: 0.8.3
-Made by Recitasse 2024-06-13 20:34:24.350176
+Made by Recitasse 2024-08-05 19:28:31.352857
 ==================================================
 """
 
@@ -43,9 +43,9 @@ class MessagesBdd(Link):
         return False
 
 
-    def add_messages(self, oid: int, user: int, topic: int, message: str, date: datetime) -> None:
-        query = 'INSERT INTO messages (messages_oid, messages_user, messages_topic, messages_message, messages_date);'
-        params = (oid, user, topic, message, date,)
+    def add_messages(self, oid: int, user: int, message: str, date: datetime) -> None:
+        query = 'INSERT INTO messages (messages_oid, messages_user, messages_message, messages_date);'
+        params = (oid, user, message, date,)
         if not self.is_in_oid(oid):
             cursor = self.connexion.cursor()
             try:
@@ -86,20 +86,6 @@ class MessagesBdd(Link):
             finally:
                 cursor.close()
 
-    def update_messages_topic(self, id_: int, topic: int) -> None:
-        query = "UPDATE messages SET messages_topic = %s WHERE messages_id = %s;"
-        params = (id_, topic)
-        if not self.is_in_id(id_):
-            cursor = self.connexion.cursor()
-            try:
-                cursor.execute(query, params)
-                self.connexion.commit()
-                self._logger.info(f'Modification de topic de messages effectué par {topic}')
-            except Exception as e:
-                self._logger.error(f'Une erreur MySQL est survenue : {e}')
-            finally:
-                cursor.close()
-
     def update_messages_message(self, id_: int, message: str) -> None:
         query = "UPDATE messages SET messages_message = %s WHERE messages_id = %s;"
         params = (id_, message)
@@ -123,6 +109,34 @@ class MessagesBdd(Link):
                 cursor.execute(query, params)
                 self.connexion.commit()
                 self._logger.info(f'Modification de touser de messages effectué par {touser}')
+            except Exception as e:
+                self._logger.error(f'Une erreur MySQL est survenue : {e}')
+            finally:
+                cursor.close()
+
+    def update_messages_pemt(self, id_: int, pemt: int) -> None:
+        query = "UPDATE messages SET messages_pemt = %s WHERE messages_id = %s;"
+        params = (id_, pemt)
+        if not self.is_in_id(id_):
+            cursor = self.connexion.cursor()
+            try:
+                cursor.execute(query, params)
+                self.connexion.commit()
+                self._logger.info(f'Modification de pemt de messages effectué par {pemt}')
+            except Exception as e:
+                self._logger.error(f'Une erreur MySQL est survenue : {e}')
+            finally:
+                cursor.close()
+
+    def update_messages_answeroid(self, id_: int, answeroid: int) -> None:
+        query = "UPDATE messages SET messages_answeroid = %s WHERE messages_id = %s;"
+        params = (id_, answeroid)
+        if not self.is_in_id(id_):
+            cursor = self.connexion.cursor()
+            try:
+                cursor.execute(query, params)
+                self.connexion.commit()
+                self._logger.info(f'Modification de answeroid de messages effectué par {answeroid}')
             except Exception as e:
                 self._logger.error(f'Une erreur MySQL est survenue : {e}')
             finally:
@@ -190,13 +204,18 @@ class MessagesBdd(Link):
         params = (from_, to_,)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_messages_from_topic(self, from_: list | tuple, to_: list | tuple) -> list[Messages]:
-        query = f'SELECT * FROM messages WHERE messages_topic BETWEEN % AND %;'
+    def get_messages_from_touser(self, from_: list | tuple, to_: list | tuple) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_touser BETWEEN % AND %;'
         params = (from_, to_,)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_messages_from_touser(self, from_: list | tuple, to_: list | tuple) -> list[Messages]:
-        query = f'SELECT * FROM messages WHERE messages_touser BETWEEN % AND %;'
+    def get_messages_from_pemt(self, from_: list | tuple, to_: list | tuple) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_pemt BETWEEN % AND %;'
+        params = (from_, to_,)
+        return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_messages_from_answeroid(self, from_: list | tuple, to_: list | tuple) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_answeroid BETWEEN % AND %;'
         params = (from_, to_,)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
@@ -220,13 +239,18 @@ class MessagesBdd(Link):
         params = (to_,)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_messages_ge_topic(self, to_: int) -> list[Messages]:
-        query = f'SELECT * FROM messages WHERE messages_topic >= %s;'
+    def get_messages_ge_touser(self, to_: int) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_touser >= %s;'
         params = (to_,)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_messages_ge_touser(self, to_: int) -> list[Messages]:
-        query = f'SELECT * FROM messages WHERE messages_touser >= %s;'
+    def get_messages_ge_pemt(self, to_: int) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_pemt >= %s;'
+        params = (to_,)
+        return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_messages_ge_answeroid(self, to_: int) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_answeroid >= %s;'
         params = (to_,)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
@@ -250,13 +274,18 @@ class MessagesBdd(Link):
         params = (to_,)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_messages_eq_topic(self, to_: int) -> list[Messages]:
-        query = f'SELECT * FROM messages WHERE messages_topic == %s;'
+    def get_messages_eq_touser(self, to_: int) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_touser == %s;'
         params = (to_,)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_messages_eq_touser(self, to_: int) -> list[Messages]:
-        query = f'SELECT * FROM messages WHERE messages_touser == %s;'
+    def get_messages_eq_pemt(self, to_: int) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_pemt == %s;'
+        params = (to_,)
+        return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_messages_eq_answeroid(self, to_: int) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_answeroid == %s;'
         params = (to_,)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
@@ -280,13 +309,18 @@ class MessagesBdd(Link):
         params = (to_,)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_messages_ne_topic(self, to_: int) -> list[Messages]:
-        query = f'SELECT * FROM messages WHERE messages_topic <> %s;'
+    def get_messages_ne_touser(self, to_: int) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_touser <> %s;'
         params = (to_,)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_messages_ne_touser(self, to_: int) -> list[Messages]:
-        query = f'SELECT * FROM messages WHERE messages_touser <> %s;'
+    def get_messages_ne_pemt(self, to_: int) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_pemt <> %s;'
+        params = (to_,)
+        return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_messages_ne_answeroid(self, to_: int) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_answeroid <> %s;'
         params = (to_,)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
@@ -310,13 +344,18 @@ class MessagesBdd(Link):
         params = (to_,)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_messages_gt_topic(self, to_: int) -> list[Messages]:
-        query = f'SELECT * FROM messages WHERE messages_topic > %s;'
+    def get_messages_gt_touser(self, to_: int) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_touser > %s;'
         params = (to_,)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_messages_gt_touser(self, to_: int) -> list[Messages]:
-        query = f'SELECT * FROM messages WHERE messages_touser > %s;'
+    def get_messages_gt_pemt(self, to_: int) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_pemt > %s;'
+        params = (to_,)
+        return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_messages_gt_answeroid(self, to_: int) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_answeroid > %s;'
         params = (to_,)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
@@ -340,13 +379,18 @@ class MessagesBdd(Link):
         params = (to_,)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_messages_le_topic(self, to_: int) -> list[Messages]:
-        query = f'SELECT * FROM messages WHERE messages_topic =< %s;'
+    def get_messages_le_touser(self, to_: int) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_touser =< %s;'
         params = (to_,)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_messages_le_touser(self, to_: int) -> list[Messages]:
-        query = f'SELECT * FROM messages WHERE messages_touser =< %s;'
+    def get_messages_le_pemt(self, to_: int) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_pemt =< %s;'
+        params = (to_,)
+        return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_messages_le_answeroid(self, to_: int) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_answeroid =< %s;'
         params = (to_,)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
@@ -370,13 +414,18 @@ class MessagesBdd(Link):
         params = (to_,)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_messages_lt_topic(self, to_: int) -> list[Messages]:
-        query = f'SELECT * FROM messages WHERE messages_topic < %s;'
+    def get_messages_lt_touser(self, to_: int) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_touser < %s;'
         params = (to_,)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_messages_lt_touser(self, to_: int) -> list[Messages]:
-        query = f'SELECT * FROM messages WHERE messages_touser < %s;'
+    def get_messages_lt_pemt(self, to_: int) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_pemt < %s;'
+        params = (to_,)
+        return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_messages_lt_answeroid(self, to_: int) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_answeroid < %s;'
         params = (to_,)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
@@ -400,13 +449,18 @@ class MessagesBdd(Link):
         params = tuple(list_)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_messages_in_topic(self, list_: list | tuple) -> list[Messages]:
-        query = f'SELECT * FROM messages WHERE messages_topic IN ({",".join(["%s"] * len(list_))});'
+    def get_messages_in_touser(self, list_: list | tuple) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_touser IN ({",".join(["%s"] * len(list_))});'
         params = tuple(list_)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 
-    def get_messages_in_touser(self, list_: list | tuple) -> list[Messages]:
-        query = f'SELECT * FROM messages WHERE messages_touser IN ({",".join(["%s"] * len(list_))});'
+    def get_messages_in_pemt(self, list_: list | tuple) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_pemt IN ({",".join(["%s"] * len(list_))});'
+        params = tuple(list_)
+        return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
+
+    def get_messages_in_answeroid(self, list_: list | tuple) -> list[Messages]:
+        query = f'SELECT * FROM messages WHERE messages_answeroid IN ({",".join(["%s"] * len(list_))});'
         params = tuple(list_)
         return [Messages(*row) for row in self.get_results(query, params, ind_='all')]
 

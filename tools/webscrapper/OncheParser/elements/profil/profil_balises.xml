@@ -2,7 +2,7 @@
 <balises onche-version="3.8.4h">
     <profil>
         <join type="date">
-            <xpath>//div[@class='profile-blocs']/div[1]/div[2]/div[2]/text()</xpath>
+            <css-selector>//div[@class='profile-blocs']/div[1]/div[2]/div[2]/text()</css-selector>
             <clean> (un an)</clean>
             <clean> (une heure)</clean>
             <clean> (une minute)</clean>
@@ -17,19 +17,19 @@
             <clean re="\((\d+) secondes\)"></clean>
         </join>
         <last type="date">
-            <xpath>//div[@class='profile-blocs']/div[1]/div[3]/div[2]/text()</xpath>
+            <css-selector>//div[@class='profile-blocs']/div[1]/div[3]/div[2]/text()</css-selector>
             <clean></clean>
         </last>
         <messages type="int">
-            <xpath>//div[@class='profile-blocs']/div[1]/div[4]/div[2]/text()</xpath>
+            <css-selector>//div[@class='profile-blocs']/div[1]/div[4]/div[2]/text()</css-selector>
             <clean></clean>
         </messages>
         <badges type="tuple">
-            <xpath>//div[@class='profile-badges']/img/@title</xpath>
+            <css-selector>//div[@class='profile-badges']/img/@title</css-selector>
             <clean></clean>
         </badges>
         <niveau type="int">
-            <xpath>//div[@class='profile-cover-badge']/text()</xpath>
+            <css-selector>//div[@class='profile-cover-badge']/text()</css-selector>
             <clean>Niveau </clean>
         </niveau>
     </profil>

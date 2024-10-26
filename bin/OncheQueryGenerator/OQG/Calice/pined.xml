@@ -1,13 +1,24 @@
 <?xml version="1.0" ?>
-<profil onche-version="3.8.4h" table="pined">
+<pined onche-version="3.8.4h" table="pined">
+    <url base="https://onche.org/profil/">
+        <params>
+            <param type="str" name="pseudo" mode="path"/>
+        </params>
+    </url>
     <parameters>
         <settings engine="InnoDB" encoding="utf8mb4" collation="utf8mb4_general_ci"/>
         <comment>Répertorie les onchois badgés</comment>
     </parameters>
     <rows>
-        <row name="id" sql-type="INT" null="False" auto_increment="True" type="int"></row>
-        <row name="userid" sql-type="INT" null="False" type="int"></row>
-        <row name="badgeid" sql-type="INT" null="False" type="int"></row>
+        <row name="id" sql-type="INT" null="False" auto_increment="True" type="int">
+            <parser prev="user-created"/>
+        </row>
+        <row name="userid" sql-type="INT" null="False" type="int">
+            <parser prev="user-created"/>
+        </row>
+        <row name="badgeid" sql-type="INT" null="False" type="int">
+            <parser prev="user-created"/>
+        </row>
     </rows>
     <index>
         <primary-key name="id" type="int"/>
@@ -26,4 +37,4 @@
             </constraint>
         </foreign-index>
     </index>
-</profil>
+</pined>

@@ -2,19 +2,19 @@
 <balises onche-version="3.8.4h">
     <board>
         <titre>
-            <xpath>//div[@class='topic compact' or @class='topic']/a[2]/span[1]/text()</xpath>
+            <css-selector>//div[@class='topic compact' or @class='topic']/a[2]/span[1]/text()</css-selector>
             <clean></clean>
         </titre>
         <messages type="int">
-            <xpath>//div[@class='topic compact' or @class='topic']/a[2]/span[2]/text()</xpath>
+            <css-selector>//div[@class='topic compact' or @class='topic']/a[2]/span[2]/text()</css-selector>
             <clean></clean>
         </messages>
         <operator>
-            <xpath>//div[@class='topic compact' or @class='topic']/a[2]/div/text()</xpath>
+            <css-selector>//div[@class='topic compact' or @class='topic']/a[2]/div/text()</css-selector>
             <clean></clean>
         </operator>
         <link>
-            <xpath>//div[@class='topic compact' or @class='topic']/a[2]/@href</xpath>
+            <css-selector>//div[@class='topic compact' or @class='topic']/a[2]/@href</css-selector>
             <clean></clean>
         </link>
     </board>

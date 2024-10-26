@@ -1,13 +1,26 @@
 <?xml version="1.0" ?>
-<profil onche-version="3.8.4h" table="stickers">
+<stickers onche-version="3.8.4h" table="stickers">
+    <url base="None"/>
     <parameters>
         <settings engine="InnoDB" encoding="utf8mb4" collation="utf8mb4_general_ci"/>
         <comment>Tables des stickers au format onche</comment>
     </parameters>
     <rows>
-        <row name="id" sql-type="INT" null="False" auto_increment="True" type="int"></row>
-        <row name="nom" sql-type="VARCHAR(1000)" null="False" type="str"></row>
-        <row name="collection" sql-type="INT" null="False" type="int"></row>
+        <row name="id" sql-type="INT" null="False" auto_increment="True" type="int">
+            <parser where="user-created"/>
+        </row>
+        <row name="nom" sql-type="VARCHAR(1000)" null="False" type="str">
+            <parser sql-type="str" table="stickers" name="nom" where="message" name-equal="True">
+                <css-selector selector="data-name">div.sticker</css-selector>
+                <clean></clean>
+            </parser>
+        </row>
+        <row name="collection" sql-type="INT" null="False" type="int">
+            <parser sql-type="int" table="stickers" name="collection" where="message" name-equal="True">
+                <css-selector selector="data-collection">div.sticker</css-selector>
+                <clean></clean>
+            </parser>
+        </row>
     </rows>
     <index>
         <primary-key name="id" type="int"/>
@@ -15,4 +28,4 @@
             <name mode="ASC" visible="True" type="str">nom</name>
         </unic-index>
     </index>
-</profil>
+</stickers>

@@ -5,30 +5,30 @@
             <clean re='&lt;div class="message-content"&gt;(.*?)&lt;\/div&gt;'></clean>
         </root>
         <sticker>
-            <xpath>//div[@class='sticker']</xpath>
+            <css-selector>//div[@class='sticker']</css-selector>
             <clean re='&lt;div.*?class="sticker".*?&gt;(.*?)&lt;/div&gt;'></clean>
             <infos re='&lt;div class="sticker" data-collection="(\d+)" data-name="([^"]+)"' ></infos>
         </sticker>
         <gif>
-            <xpath>//div[@class='_format _gif']</xpath>
+            <css-selector>//div[@class='_format _gif']</css-selector>
             <clean re='src="([^"]+)"' left="[gif:" right="]"></clean>
         </gif>
         <smiley>
-            <xpath>//div[@class='smiley']</xpath>
+            <css-selector>//div[@class='smiley']</css-selector>
             <clean re='&lt;div class="smiley"&gt;\s*&lt;img [^&gt;]*title="([^"]+)'></clean>
             <total re='&lt;div class="smiley"[^&gt;]*&gt;.*?&lt;/div&gt;'></total>
         </smiley>
         <smiley-svg>
-            <xpath>//div[contains(@class, 'smiley') and contains(@class, 'svg')]</xpath>
+            <css-selector>//div[contains(@class, 'smiley') and contains(@class, 'svg')]</css-selector>
             <clean re='&lt;div class="smiley svg"&gt;.*?&lt;img[^&gt;]+title="([^"]+)"'></clean>
             <replace re='&lt;div class="smiley svg"&gt;.*?(&lt;img[^&gt;]+title="[^"]+"[^&gt;]*&gt;)'></replace>
         </smiley-svg>
         <image>
-            <xpath>//a[@class='_format _image']</xpath>
+            <css-selector>//a[@class='_format _image']</css-selector>
             <clean re='data-image="([^"]+)"' left='[img:' right=']'></clean>
         </image>
         <link>
-            <xpath>//a[@class='link']</xpath>
+            <css-selector>//a[@class='link']</css-selector>
             <clean re='&lt;a class="link"[^&gt;]*href="([^"]*)"'></clean>
             <replace re='&lt;a class="link"[^&gt;]*&gt;(.*?)&lt;/a&gt;'></replace>
             <youtube re='&lt;a class="link"[^&gt;]*&gt;\s*&lt;div class="youtube"&gt;\s*&lt;iframe[^&gt;]+src="([^"]+)"'></youtube>

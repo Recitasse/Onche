@@ -1,5 +1,10 @@
 <?xml version="1.0" ?>
 <profil onche-version="3.8.4h" table="badges">
+    <url base="https://onche.org/profil/">
+        <params>
+            <param type="str" name="pseudo" mode="path"/>
+        </params>
+    </url>
     <parameters>
         <settings engine="InnoDB" encoding="utf8mb4" collation="utf8mb4_general_ci"/>
         <comment>Tables des badges</comment>
@@ -9,8 +14,8 @@
             <parser prev="user-created"/>
         </row>
         <row name="nom" sql-type="VARCHAR(100)" null="False" type="str">
-            <parser sql-type="tuple" table="badges" name="nom" where="profil">
-                <xpath>//div[@class='profile-badges']/img/@title</xpath>
+            <parser sql-type="tuple" table="badges" name="nom" where="profil" name-equal="True">
+                <css-selector selector="title">.profile-badges > img</css-selector>
                 <clean></clean>
             </parser>
         </row>
