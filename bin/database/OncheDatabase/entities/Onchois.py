@@ -1,9 +1,9 @@
 """
 ==================================================
-Python class Onchois générée par OncheQueryGenerator BDD ENTITIES GENERATOR
+Python class Onchois générée par OQG BDD ENTITIES GENERATOR
 Author: recitasse
 Model: Onche	 Version: 0.8.3
-Made by Recitasse 2024-06-13 20:34:24.350998
+Made by Recitasse 2024-08-05 19:28:31.353831
 ==================================================
 """
 

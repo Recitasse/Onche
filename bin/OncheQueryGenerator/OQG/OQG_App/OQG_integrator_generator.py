@@ -50,5 +50,3 @@ def write_file() -> None:
     for name in JSON.keys():
         with open(path.join(GLOBAL_PATH, f"bin/database/OncheDatabase/integrator/{name}.py"), "w", encoding="utf-8") as rew:
             rew.write(generate_integrator(name, JSON))
-
-write_file()

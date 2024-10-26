@@ -170,10 +170,9 @@ def generate_parser(name_file: str, JSON: dict):
 
     return glb
 
+
 def write_file() -> None:
     JSON = generate_JSON_infos()
     for name in JSON.keys():
         with open(path.join(GLOBAL_PATH, f"bin/OncheQueryGenerator/OQG/OQG_Collector/{name}.py"), "w", encoding="utf-8") as rew:
             rew.write(generate_parser(name, JSON))
-
-write_file()

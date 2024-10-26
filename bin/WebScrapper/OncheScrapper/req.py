@@ -1,3 +1,5 @@
+import json
+
 import requests
 from requests import get, Session
 from dataclasses import dataclass, field
@@ -59,7 +61,7 @@ class Requests:
             print("Response text:", response.text)
         return None
 
-    def req_html(self, url: str = "", bs4_mode: bool = True) -> Union[str, BeautifulSoup]:
+    def req_html(self, url: str = "", bs4_mode: bool = True, json_mode: bool = False) -> Union[str, BeautifulSoup]:
         """
         Renvoie le document HTML de la requête
         """
@@ -74,6 +76,8 @@ class Requests:
                     f"Impossible de se connecter, le mot de passe, pseudonyme, le salt ou le profile est/sont mauvais. Err : {response.status_code}.")
         if response.status_code // 500 > 0:
             self._logger.warning(f"Impossible de vous connecter à la page (client).")
-        if not bs4_mode:
+        if not bs4_mode and not json_mode:
             return response.text
+        elif json_mode:
+            return response.json()
         return BeautifulSoup(response.text, 'html.parser')
